@@ -1,0 +1,88 @@
+<div data-ng-controller="JournalizingController" data-ng-init="getJournal()" >
+  <div class="progressbar-heading grids-heading">
+    <h2>ทำบัญชีรายวัน (Journalizing)</h2>
+  </div>
+  <div class="panel panel-widget">
+    <div class="block-page">
+      <h3>สมุดบัญชีรายวันของวันที่ {{date | date:'yyyy-MM-dd'}}</h3>
+      <table class="table table-bordered" >
+        <style>
+          .table.table-bordered th,.table.table-bordered td{
+            text-align: center;
+          }
+          .table.table-bordered thead tr th{
+            background-color: #efe5e5;
+          }
+          .table.table-bordered tfoot tr td{
+            border-top: 2px !important;
+            border-top-style: solid !important;
+            border-top-color: black !important;
+          }
+          .table.table-bordered thead tr th:nth-child(1){
+            width:10px;
+          }
+          .table.table-bordered thead tr th:nth-child(2){
+            width:300px;
+          }
+
+          .table.table-bordered tbody tr td:nth-child(2){
+            text-align: left;
+          }
+
+          .table.table-bordered tbody tr td:nth-child(2).text-indent{
+            text-indent: 100px;
+          }
+
+
+
+        </style>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>รายการ</th>
+            <th>เลขที่บัญชี</th>
+            <th>เดบิต</th>
+            <th>เครดิต</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in journal_details">
+            <td></td>
+            <td ng-class="{'text-indent':item.drcr=='2'}">
+              <!-- <span ng-if="item.drcr=='2'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> -->
+              {{item.item_detail}}
+            </td>
+            <td>{{item.ledger_id}}</td>
+            <td ng-if="item.drcr=='1'">{{item.amount}}</td>
+            <td ng-if="item.drcr=='1' || item.drcr=='2' "></td>
+            <td ng-if="item.drcr=='2'">{{item.amount}}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <td colspan="3" style="text-align:center"> รวม </td>
+          <td>{{SumDrCr("1")}}</td>
+          <td>{{SumDrCr("2")}}</td>
+        </tfoot>
+      </table>
+      <hr>
+      <h3>เพิ่มรายการ</h3>
+      <div class="row">
+        <div class="col-md-4 addJournal">
+          <style>
+            .addJournal select,.addJournal input{
+              margin:10px;
+            }
+          </style>
+          <select class="form-control" name="drcr" id="">
+            <option value="" disabled selected>Debit/Credit</option>
+            <option value="1">Debit</option>
+            <option value="2">Credit</option>
+          </select>
+          <input class="form-control" type="text" name="item_detail" placeholder="รายการ" />
+          <input class="form-control" type="text" name="amount" placeholder="จำนวนเงิน" />
+          <input class="btn btn-primary form-control" type="button"  value="เพิ่มรายการ" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

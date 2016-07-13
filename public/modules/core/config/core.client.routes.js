@@ -1,0 +1,9 @@
+angular.module("core").config([
+  "$stateProvider",
+  "$locationProvider",
+  "$urlRouterProvider",
+  function($stateProvider,$locationProvider,$urlRouterProvider){
+    $locationProvider.hashPrefix("!");
+    $urlRouterProvider.otherwise("/");
+  }
+]);

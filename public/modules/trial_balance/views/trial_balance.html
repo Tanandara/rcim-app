@@ -1,0 +1,92 @@
+<div data-ng-controller="TrialBalanceController" data-ng-init="getTrialBalance()" >
+  <div class="progressbar-heading grids-heading">
+    <h2>รายงานงบทดลอง (Trial Balance)</h2>
+  </div>
+  <div class="panel panel-widget">
+    <div class="block-page text-center">
+      <style media="screen">
+        .block-page h4{
+          margin:10px;
+        }
+      </style>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="pull-right btn btn-info"><i class="fa fa-print"></i>  พิมพ์รายงาน</div>
+        </div>
+      </div>
+      <h4>มทร.รัตนโกสินทร์ วิทยาลัยนวัตกรรม</h4>
+      <h4>งบทดลอง</h4>
+      <h4>วันที่ 1 มกราคม 2559 - วันที่ 9 กรกฎาคม 2559</h4>
+      <table class="table table-bordered table-hover">
+      <style>
+        .table-hover tr:hover{
+          cursor: pointer;
+        }
+        .table.table-bordered th,.table.table-bordered td{
+          text-align: center;
+        }
+        .table.table-bordered thead tr th{
+          background-color: #efe5e5;
+        }
+        .table.table-bordered thead tr th:nth-child(1){
+          width:10px;
+        }
+        .table.table-bordered thead tr th:nth-child(2){
+          width:300px;
+        }
+        .table.table-bordered thead tr th:nth-child(3){
+          width:70px;
+        }
+        .table.table-bordered thead tr th:nth-child(4),
+        .table.table-bordered thead tr th:nth-child(5){
+          width:100px;
+        }
+        .table.table-bordered tbody tr td:nth-child(2){
+          text-indent:  25px !important;
+          text-align: left;
+        }
+        .table.table-bordered tbody tr td:nth-child(4),
+        .table.table-bordered tbody tr td:nth-child(5),
+        .table.table-bordered tfoot tr td:nth-child(4),
+        .table.table-bordered tfoot tr td:nth-child(5){
+          text-align: right;
+        }
+        .table.table-bordered tfoot tr td{
+          border-top:3px !important;
+          border-top-color:black !important;
+          border-top-style:solid !important;
+        }
+      </style>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>ชื่อบัญชี</th>
+            <th>เลขที่บัญชี</th>
+            <th>เดบิต</th>
+            <th>เครดิต</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="i in trial">
+            <td>{{$index+1}}</td>
+            <td>{{i.ledger_name}}</td>
+            <td>{{i.ledger_id}}</td>
+            <td ng-if="i.drcr=='1'">{{i.amount}}</td>
+            <td ng-if="i.drcr=='1' || i.drcr=='2'"></td>
+            <td ng-if="i.drcr=='2'">{{i.amount}}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{SumDrCr("1")}}</td>
+            <td>{{SumDrCr("2")}}</td>
+          </tr>
+        </tfoot>
+      </table>
+
+    </div>
+  </div>
+</div>

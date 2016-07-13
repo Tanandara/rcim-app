@@ -1,0 +1,108 @@
+<div data-ng-controller="LedgerDetailController" data-ng-init="getLedgerDetail()" >
+  <div class="progressbar-heading grids-heading">
+    <h2>รายการบัญชีแยกประเภท (Ledger)</h2>
+  </div>
+  <div class="panel panel-widget">
+    <div class="block-page">
+      <h3>รายการบัญชีแยกประเภท : 101 เงินสด </h3>
+      <hr>
+      <div class="row">
+        <style>
+        .searchLedger select,.searchLedger input{
+          margin:10px;
+        }
+        </style>
+        <div class="col-md-12 searchLedger">
+          <div class="col-md-6">
+            วันที่เริ่ม :
+            <input type="date" class="form-control" />
+          </div>
+          <div class="col-md-6">
+            วันที่สิ้นสุด :
+            <input type="date" class="form-control" />
+          </div>
+          <div class="col-md-12">
+            <input type="button" class="btn btn-primary form-control" value="ค้นหา">
+          </div>
+
+        </div>
+      </div>
+      <hr>
+      <table class="table table-bordered" >
+        <style>
+          .table.table-bordered th,.table.table-bordered td{
+            text-align: center;
+          }
+          .table.table-bordered thead tr th{
+            background-color: #efe5e5;
+          }
+          .table.table-bordered thead tr th:nth-child(1){
+            width:10px;
+          }
+          .table.table-bordered thead tr th:nth-child(2){
+            width:200px;
+          }
+          .table.table-bordered thead tr th:nth-child(4),
+          .table.table-bordered thead tr th:nth-child(7){
+            width:80px;
+          }
+          .table.table-bordered tbody tr td:nth-child(3),
+          .table.table-bordered tbody tr td:nth-child(6){
+            text-indent:  25px !important;
+            text-align: left;
+          }
+          .table.table-bordered tr th:nth-child(5),
+          .table.table-bordered tr td:nth-child(5){
+            border-right:2px;
+            border-right-color:black;
+            border-right-style:solid;
+          }
+          .table.table-bordered tfoot tr td{
+            border-top:2px !important;
+            border-top-color:black !important;
+            border-top-style:solid !important;
+          }
+
+
+        </style>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>วันเดือนปี</th>
+            <th>รายการ</th>
+            <th>เลขที่บัญชี</th>
+            <th>เดบิต</th>
+            <th>รายการ</th>
+            <th>เลขที่บัญชี</th>
+            <th>เครดิต</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="i in ledger">
+            <td></td>
+            <td>{{i.date}}</td>
+            <td ng-if="i.drcr=='1'">{{i.ledger_detail}}</td>
+            <td ng-if="i.drcr=='1'">{{i.ledger_detail_id}}</td>
+            <td ng-if="i.drcr=='1'">{{i.amount}}</td>
+            <td ng-if="i.drcr=='1' || i.drcr=='2'"></td>
+            <td ng-if="i.drcr=='1' || i.drcr=='2'"></td>
+            <td ng-if="i.drcr=='1' || i.drcr=='2'"></td>
+            <td ng-if="i.drcr=='2'">{{i.ledger_detail}}</td>
+            <td ng-if="i.drcr=='2'">{{i.ledger_detail_id}}</td>
+            <td ng-if="i.drcr=='2'">{{i.amount}}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>{{SumDrCr("1")}}</td>
+          <td></td>
+          <td></td>
+          <td>{{SumDrCr("2")}}</td>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+<div data-ng-controller="JournalsController" data-ng-init="getJournals()" >
+  <div class="progressbar-heading grids-heading">
+    <h2>รายการบัญชีรายวัน (Journals List)</h2>
+  </div>
+  <div class="panel panel-widget">
+    <div class="block-page">
+      <h3>ค้นหารายการบัญชีทั่วไปรายวัน</h3>
+      <hr>
+      <div class="row">
+        <style>
+        .searchJournal select,.searchJournal input{
+          margin:10px;
+        }
+        </style>
+        <div class="col-md-6 searchJournal">
+
+          <div class="col-md-6">
+            วันที่เริ่ม :
+            <input type="date" class="form-control" />
+          </div>
+          <div class="col-md-6">
+            วันที่สิ้นสุด :
+            <input type="date" class="form-control" />
+          </div>
+          <div class="col-md-12">
+            <input type="button" class="btn btn-primary form-control" value="ค้นหา">
+          </div>
+
+        </div>
+      </div>
+      <hr>
+      <table class="table table-bordered" >
+        <style>
+          .table.table-bordered th,.table.table-bordered td{
+            text-align: center;
+          }
+          .table.table-bordered thead tr th{
+            background-color: #efe5e5;
+          }
+          .table.table-bordered thead tr th:nth-child(1){
+            width:10px;
+          }
+          .table.table-bordered thead tr th:nth-child(2){
+            width:300px;
+          }
+        </style>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>สมุดบัญชีรายวัน</th>
+            <th>จำนวนรายการ<br>ที่เกิดขึ้น</th>
+            <th>เดบิต/เครดิต</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="i in journals">
+            <td>{{$index+1}}</td>
+            <td>{{i.general_date}}</td>
+            <td>{{i.item_count}}</td>
+            <td>{{i.amount}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,109 @@
+<div data-ng-controller="UserController" data-ng-init="initForm()" >
+  <div class="progressbar-heading grids-heading">
+			<h2>เพิ่มผู้ใช้งานระบบ {{ hello}}</h2>
+	</div>
+  <div class="forms-grids">
+      <div class="col-md-offset-1 col-md-10">
+        <div class="panel panel-widget">
+					<div class="my-div row">
+
+            <form name="userForm" ng-submit="submitForm()" novalidate enctype="multipart/form-data">
+              <div class="col-md-6">
+                <!-- USERID -->
+                <div class="form-group" ng-class="{ 'has-error' : userForm.userid.$invalid && !userForm.userid.$pristine }">
+                    <label>UserID</label>
+                    <input placeholder='UserID' type="text" name="userid" class="form-control" ng-model="user.userid" ng-pattern="/^[\w0-9]+$/" required>
+                    <p ng-show="userForm.userid.$invalid && !userForm.userid.$pristine" class="help-block">ต้องกรอก UserID</p>
+                </div>
+
+                <!-- USERNAME -->
+                <div class="form-group" ng-class="{ 'has-error' : userForm.username.$invalid && !userForm.username.$pristine }">
+                    <label>Username</label>
+                    <input placeholder='Username' type="text" name="username" class="form-control" ng-model="user.username" ng-pattern="/^[A-Za-z0-9ก-๙ ]+$/" required >
+                    <p ng-show="userForm.username.$invalid && !userForm.username.$pristine" class="help-block">Username ต้องไม่มีตัวอักษรพิเศษ</p>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group" ng-class="{ 'has-error' : userForm.password.$invalid && !userForm.password.$pristine }">
+                    <label>Password</label>
+                    <input placeholder='Password' type="password" name="password" class="form-control" ng-model="user.password" ng-minlength="6"  required>
+                    <p ng-show="userForm.password.$error.minlength" class="help-block">รหัสไม่ควรสั้นกว่า 6 ตัวอักษร</p>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.confirmpassword.$invalid && !userForm.confirmpassword.$pristine }">
+                    <label>Confirm Password</label>
+                    <input class="form-control" ng-model='user.confirmpassword' type="password" name='confirmpassword' placeholder='Confirm Password' required data-password-verify="user.password">
+                    <p ng-show="userForm.confirmpassword.$error.passwordVerify && userForm.username.$pristine" class="help-block">รหัสไม่ตรงกัน</p>
+
+                    <!--
+                    <div ng-show="userForm.confirmpassword.$error.required">Field required!</div>
+                    <div ng-show="userForm.confirmpassword.$error.passwordVerify">Fields are not equal!</div>
+                    -->
+                </div>
+              </div>
+              <div class="col-md-6">
+                <!-- EMAIL -->
+                <div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
+                    <label>Email</label>
+                    <input placeholder='Email' type="email" name="email" class="form-control" ng-model="user.email" required>
+                    <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">รูปแบบของ email ผิด</p>
+                </div>
+
+                <!-- POSITION -->
+                <div  class="form-group" ng-class="{ 'has-error' : userForm.position.$invalid && !userForm.position.$pristine }">
+                    <label>Position</label>
+                    <select name="position" id="position" class="form-control"
+                      ng-options="option.position_name for option in position.availableOptions track by option.position_id"
+                      ng-model="position.selectedOption" required>
+                      <option value="" disabled selected>Select</option>
+                    </select>
+                    <p ng-show="userForm.position.$error.required" class="help-block">ยังไม่ได้เลือกตำแหน่ง</p>
+                </div>
+
+                <!-- CAMPUS -->
+                <div class="form-group" ng-class="{ 'has-error' : userForm.campus.$invalid && !userForm.campus.$pristine }">
+                    <label>Campus</label>
+                    <select name="campus" id="campus" class="form-control"
+                      ng-options="option.campus_name for option in campus.availableOptions track by option.campus_id"
+                      ng-model="campus.selectedOption" required>
+                      <option value="" disabled selected>Select</option>
+                    </select>
+                    <p ng-show="userForm.campus.$error.required" class="help-block">ยังไม่ได้เลือกวิทยาเขต</p>
+                </div>
+
+
+                <!-- AVATAR UPLOAD -->
+                <div class="form-group" ng-class="{ 'has-error' : userForm.campus.$invalid && !userForm.campus.$pristine }">
+                    <label>Avatar</label>
+                   <input type="file" name="avatar" f>
+              </div>
+
+              <div class="col-md-12">
+									<button type="submit" class="btn btn-primary form-control" ng-disabled="userForm.$invalid" ng-click="insertUser()">Create User</button>
+							</div>
+
+            </form>
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+
+		</div>
+
+    <script type="text/ng-template" id="myModalContent">
+        <div class="modal-header">
+            <h3 class="modal-title">ข้อความ</h3>
+        </div>
+        <div class="modal-body">
+            <h1>{{message}}</h1>
+        </div>
+        <div class="modal-footer">
+            <a class="btn btn-primary" type="button"  ng-click="ok()" >ตกลง</a>
+        </div>
+    </script>
+</div>

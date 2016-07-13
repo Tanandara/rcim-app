@@ -1,0 +1,19 @@
+angular.module("users").config([
+  "$stateProvider",
+  function($stateProvider){
+    $stateProvider
+      .state("userlist",
+        {
+            url:"/userlist",
+            templateUrl:"/modules/users/views/userlist.ejs"
+        }
+      )
+      .state("adduser",
+      {
+        url:"/user/add",
+        templateUrl:"/modules/users/views/adduser.ejs"
+      }
+    )
+  }
+
+]);
