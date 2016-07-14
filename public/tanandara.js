@@ -23,6 +23,10 @@ angular.module("general_journals").config([
     .state("journals",{
       url:"/journals",
       templateUrl:"/modules/general_journals/views/journals.html"
+    })
+    .state("journaldetail",{
+      url:"/journals/details",
+      templateUrl:"/modules/general_journals/views/journal_detail.html"
     });
   }
 ]);
@@ -75,6 +79,36 @@ function($scope,$http){
       });
   }
 
+
+}]);
+
+angular.module("general_journals").controller("JournalDetailController",
+["$scope","$http",
+function($scope,$http){
+
+  $scope.date = new Date();
+
+  $scope.getJournalDetail = function(){
+      $http({
+        method: 'GET',
+        url: $scope.dbURL + '/general_journals'
+      }).success(function(data, status) {
+        $scope.journal_details = data;
+      });
+  }
+
+
+
+  $scope.SumDrCr = function(drcr){
+    var sum = 0;
+      angular.forEach($scope.journal_details,function(item,index){
+        if(item.drcr==drcr){
+          sum += ((parseFloat(item.amount).toFixed(2))/1);
+          console.log(sum);
+        }
+      });
+      return sum;
+  }
 
 }]);
 

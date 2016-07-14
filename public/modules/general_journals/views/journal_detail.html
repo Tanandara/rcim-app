@@ -1,0 +1,89 @@
+<div data-ng-controller="JournalDetailController" data-ng-init="getJournalDetail()" >
+  <div class="progressbar-heading grids-heading">
+    <h2>รายการบัญชีรายวัน (Journal Details)</h2>
+  </div>
+  <div class="panel panel-widget">
+    <div class="block-page">
+      <h3>สมุดบัญชีรายวันของวันที่ {{date | date:'dd-MM-yyyy'}} ถึง {{date | date:'dd-MM-yyyy'}}</h3>
+      <hr>
+      <table class="table table-bordered" >
+        <style>
+          .table.table-bordered th,.table.table-bordered td{
+            text-align: center;
+          }
+          .table.table-bordered thead tr th{
+            background-color: #efe5e5;
+          }
+          .table.table-bordered tfoot tr td{
+            border-top: 2px !important;
+            border-top-style: solid !important;
+            border-top-color: black !important;
+          }
+          .table.table-bordered thead tr th:nth-child(1),
+          .table.table-bordered thead tr th:nth-child(2),
+          .table.table-bordered thead tr th:nth-child(4){
+            width:140px;
+          }
+          .table.table-bordered thead tr th:nth-child(3){
+            /*width:300px;*/
+          }
+          .table.table-bordered thead tr th:nth-child(5),
+          .table.table-bordered thead tr th:nth-child(6){
+            width:130px;
+          }
+
+
+
+
+          .table.table-bordered tbody tr td:nth-child(3){
+            text-align: left;
+          }
+          .table.table-bordered tbody tr td:nth-child(5),
+          .table.table-bordered tbody tr td:nth-child(6),
+          .table.table-bordered tfoot tr td:nth-child(2),
+          .table.table-bordered tfoot tr td:nth-child(3){
+            text-align: right;
+          }
+
+          .table.table-bordered tbody tr td:nth-child(3).text-indent{
+            text-indent: 100px;
+          }
+
+
+
+        </style>
+        <thead>
+          <tr>
+            <th>วัน/เดือน/ปี</th>
+            <th>เลขที่รายการ</th>
+            <th>รายการ</th>
+            <th>เลขที่บัญชี</th>
+            <th>เดบิต</th>
+            <th>เครดิต</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in journal_details">
+            <td>13/07/2016</td>
+            <td>5907130001</td>
+            <td ng-class="{'text-indent':item.drcr=='2'}">
+              <!-- <span ng-if="item.drcr=='2'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> -->
+              {{item.item_detail}}
+            </td>
+            <td>{{item.ledger_id}}</td>
+            <td ng-if="item.drcr=='1'">{{item.amount}}</td>
+            <td ng-if="item.drcr=='1' || item.drcr=='2' "></td>
+            <td ng-if="item.drcr=='2'">{{item.amount}}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <td colspan="4" style="text-align:center"> รวม </td>
+          <td>{{SumDrCr("1")}}</td>
+          <td>{{SumDrCr("2")}}</td>
+        </tfoot>
+      </table>
+
+
+    </div>
+  </div>
+</div>

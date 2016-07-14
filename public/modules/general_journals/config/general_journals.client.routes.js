@@ -9,6 +9,10 @@ angular.module("general_journals").config([
     .state("journals",{
       url:"/journals",
       templateUrl:"/modules/general_journals/views/journals.html"
+    })
+    .state("journaldetail",{
+      url:"/journals/details",
+      templateUrl:"/modules/general_journals/views/journal_detail.html"
     });
   }
 ]);
