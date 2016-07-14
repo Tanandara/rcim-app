@@ -6,6 +6,7 @@ module.exports = function(app){
   app.post("/users/create",users.CreateUser);
   app.post("/users/delete",users.DeleteUser);
   app.post("/users/update",users.UpdateUser);
+  app.post("/users/login",users.LoginUser);
   // Custom Query in users model
   app.get("/user/query",users.Query);
 
