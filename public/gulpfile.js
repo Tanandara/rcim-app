@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var concat = require('gulp-concat');
 var watch = require('gulp-watch');
+var rename = require('gulp-rename');
 //var livereload = require('gulp-livereload');
 
 gulp.task('concat', function() {
@@ -31,10 +32,18 @@ gulp.task('concat', function() {
         .pipe(gulp.dest(__dirname));
 });
 
+gulp.task("copy",function(){
+  console.log("copy index.html to ../views/index.ejs");
+  gulp.src("index.html")
+    .pipe(rename('index.ejs'))
+    .pipe(gulp.dest('../views'));
+  });
+
 gulp.task('default', function() {
 	//livereload.listen();
 	gulp.watch(["modules/**/**.js","application.js","!./node_modules","!tanandara.js"],["concat"]);
-	//gulp.watch(["**/**.*","!./node_modules","!tanandara.js"],function(){
+  gulp.watch("./index.html",["copy"]);
+  //gulp.watch(["**/**.*","!./node_modules","!tanandara.js"],function(){
 	//	gulp.src(["index.html"]).pipe(livereload());
 	//});
 	//gulp.watch(["**/**.*","!tanandara.js"],[""]);
