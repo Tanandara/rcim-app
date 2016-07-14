@@ -24,7 +24,7 @@ gulp.task('concat', function() {
         "modules/dashboard/dashboard.client.module.js",
         "modules/dashboard/config/dashboard.client.routes.js",
         "modules/dashboard/controllers/dashboard.client.controller.js",
-		"application.js"
+		    "application.js"
       ]
         )
         .pipe(concat('tanandara.js'))
