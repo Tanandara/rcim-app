@@ -79,6 +79,9 @@ function($scope,$http){
       });
   }
 
+  $scope.goDetail = function(){
+    location.href = "#!/journals/details"
+  }
 
 }]);
 
@@ -86,12 +89,13 @@ angular.module("general_journals").controller("JournalDetailController",
 ["$scope","$http",
 function($scope,$http){
 
-  $scope.date = new Date();
+  $scope.date = "14/07/2016";
+  $scope.date2 = "15/07/2016";
 
   $scope.getJournalDetail = function(){
       $http({
         method: 'GET',
-        url: $scope.dbURL + '/general_journals'
+        url: $scope.dbURL + '/journal_detail'
       }).success(function(data, status) {
         $scope.journal_details = data;
       });

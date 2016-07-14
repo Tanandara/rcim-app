@@ -22,7 +22,7 @@
               <input type="text" class="form-control" id="dateend"   placeholder="dd/mm/yyyy" data-provide="datepicker" data-date-language="th" />
           </div>
           <div class="col-md-12">
-            <input type="button" class="btn btn-primary form-control" value="ค้นหา">
+            <input type="button" class="btn btn-primary form-control" value="ค้นหา" ng-click="goDetail()">
           </div>
 
         </div>
@@ -51,8 +51,11 @@ $(function () {
           }
       }).keydown(false);
 
-      $('input[id$=txtContractTo]').datepicker({
-          format: 'dd/mm/yyyy'
+      $('#dateend').datepicker({
+            format: 'dd/mm/yyyy',
+            todayBtn: "linked",
+            autoclose: true,
+            toggleActive: true
       }).on('changeDate', function (selected) {
           if ($(this).val() == "") {
               $('#datestart').datepicker('setEndDate', null);

@@ -11,5 +11,8 @@ function($scope,$http){
       });
   }
 
+  $scope.goDetail = function(){
+    location.href = "#!/journals/details"
+  }
 
 }]);

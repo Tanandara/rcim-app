@@ -4,7 +4,7 @@
   </div>
   <div class="panel panel-widget">
     <div class="block-page">
-      <h3>สมุดบัญชีรายวันของวันที่ {{date | date:'dd-MM-yyyy'}} ถึง {{date | date:'dd-MM-yyyy'}}</h3>
+      <h3>สมุดบัญชีรายวันของวันที่ {{date | date:'dd-MM-yyyy'}} ถึง {{date2 | date:'dd-MM-yyyy'}}</h3>
       <hr>
       <table class="table table-bordered" >
         <style>
@@ -20,16 +20,20 @@
             border-top-color: black !important;
           }
           .table.table-bordered thead tr th:nth-child(1),
-          .table.table-bordered thead tr th:nth-child(2),
-          .table.table-bordered thead tr th:nth-child(4){
-            width:140px;
+          .table.table-bordered thead tr th:nth-child(2){
+            /*width:140px;*/
+            width:10%;
           }
           .table.table-bordered thead tr th:nth-child(3){
             /*width:300px;*/
+            width:50%;
           }
+
+          .table.table-bordered thead tr th:nth-child(4)
           .table.table-bordered thead tr th:nth-child(5),
           .table.table-bordered thead tr th:nth-child(6){
-            width:130px;
+            /*width:120px;*/
+            width:10%;
           }
 
 
@@ -45,8 +49,14 @@
             text-align: right;
           }
 
+
+
+          /* in table */
           .table.table-bordered tbody tr td:nth-child(3).text-indent{
             text-indent: 100px;
+          }
+          .table.table-bordered tbody tr td:nth-child(3).border-end{
+            border-bottom: 2px solid black;
           }
 
 
@@ -63,17 +73,18 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="item in journal_details">
-            <td>13/07/2016</td>
-            <td>5907130001</td>
-            <td ng-class="{'text-indent':item.drcr=='2'}">
-              <!-- <span ng-if="item.drcr=='2'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> -->
-              {{item.item_detail}}
+          <tr ng-repeat="(key,i) in journal_details">
+            <td ng-if="journal_details[key-1].journal_date != i.journal_date">{{i.journal_date}}</td>
+            <td ng-if="journal_details[key-1].journal_date == i.journal_date"></td>
+            <td ng-if="journal_details[key-1].journal_id != i.journal_id">{{i.journal_id}}</td>
+            <td ng-if="journal_details[key-1].journal_id == i.journal_id"></td>
+            <td ng-class="{'text-indent':i.drcr=='2','border-end':i.drcr=='3'}">
+              {{i.detail}}
             </td>
-            <td>{{item.ledger_id}}</td>
-            <td ng-if="item.drcr=='1'">{{item.amount}}</td>
-            <td ng-if="item.drcr=='1' || item.drcr=='2' "></td>
-            <td ng-if="item.drcr=='2'">{{item.amount}}</td>
+            <td>{{i.ledger_id}}</td>
+            <td ng-if="i.drcr=='1' || i.drcr=='3'">{{i.amount}}</td>
+            <td ng-if="i.drcr=='1' || i.drcr=='2' "></td>
+            <td ng-if="i.drcr=='2' || i.drcr=='3'">{{i.amount}}</td>
           </tr>
         </tbody>
         <tfoot>
