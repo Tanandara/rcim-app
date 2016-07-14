@@ -1,10 +1,10 @@
 <div data-ng-controller="JournalDetailController" data-ng-init="getJournalDetail()" >
   <div class="progressbar-heading grids-heading">
-    <h2>รายการบัญชีรายวัน (Journal Details)</h2>
+    <h2>รายการบัญชีรายวัน (Journal Details)</h2>{{xxx}}
   </div>
   <div class="panel panel-widget">
     <div class="block-page">
-      <h3>สมุดบัญชีรายวันของวันที่ {{date | date:'dd-MM-yyyy'}} ถึง {{date2 | date:'dd-MM-yyyy'}}</h3>
+      <h3>สมุดบัญชีรายวันของวันที่ {{datestart | date:"dd/MM/yyyy" }} ถึง {{dateend | date:"dd/MM/yyyy" }}</h3>
       <hr>
       <table class="table table-bordered" >
         <style>

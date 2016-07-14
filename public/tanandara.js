@@ -15,6 +15,8 @@ angular.module("general_journals",[]);
 angular.module("general_journals").config([
   "$stateProvider",
   function($stateProvider){
+    var date = new Date();
+
     $stateProvider
     .state("journalizing",{
       url:"/journalizing",
@@ -26,6 +28,10 @@ angular.module("general_journals").config([
     })
     .state("journaldetail",{
       url:"/journals/details",
+      params: {
+            datestart :date,
+            dateend:date
+        },
       templateUrl:"/modules/general_journals/views/journal_detail.html"
     });
   }
@@ -67,9 +73,11 @@ $scope.SumDrCr = function(drcr){
 }]);
 
 angular.module("general_journals").controller("JournalsController",
-["$scope","$http",
-function($scope,$http){
+["$scope","$http","$state",
+function($scope,$http,$state){
 
+  $scope.datestart = moment().format("DD/MM/YYYY");
+  $scope.dateend = moment().format("DD/MM/YYYY");
   $scope.getJournals = function(){
       $http({
         method: 'GET',
@@ -80,19 +88,23 @@ function($scope,$http){
   }
 
   $scope.goDetail = function(){
-    location.href = "#!/journals/details"
+    //location.href = "#!/journals/details"
+    $state.go("journaldetail",
+    {
+      datestart:$scope.datestart,
+      dateend:$scope.dateend
+    });
   }
 
 }]);
 
 angular.module("general_journals").controller("JournalDetailController",
-["$scope","$http",
-function($scope,$http){
-
-  $scope.date = "14/07/2016";
-  $scope.date2 = "15/07/2016";
+["$scope","$http","$stateParams",
+function($scope,$http,$stateParams){
 
   $scope.getJournalDetail = function(){
+      $scope.datestart = $stateParams.datestart;
+      $scope.dateend = $stateParams.dateend;
       $http({
         method: 'GET',
         url: $scope.dbURL + '/journal_detail'
@@ -108,7 +120,6 @@ function($scope,$http){
       angular.forEach($scope.journal_details,function(item,index){
         if(item.drcr==drcr){
           sum += ((parseFloat(item.amount).toFixed(2))/1);
-          console.log(sum);
         }
       });
       return sum;

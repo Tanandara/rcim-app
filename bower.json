@@ -19,6 +19,7 @@
     "angular-ui-router": "^0.3.1",
     "angular-bootstrap": "*",
     "angular-animate": "*",
-    "angular-touch": "*"
+    "angular-touch": "*",
+    "moment": "^2.14.1"
   }
 }

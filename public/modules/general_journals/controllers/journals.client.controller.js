@@ -1,7 +1,9 @@
 angular.module("general_journals").controller("JournalsController",
-["$scope","$http",
-function($scope,$http){
+["$scope","$http","$state",
+function($scope,$http,$state){
 
+  $scope.datestart = moment().format("DD/MM/YYYY");
+  $scope.dateend = moment().format("DD/MM/YYYY");
   $scope.getJournals = function(){
       $http({
         method: 'GET',
@@ -12,7 +14,12 @@ function($scope,$http){
   }
 
   $scope.goDetail = function(){
-    location.href = "#!/journals/details"
+    //location.href = "#!/journals/details"
+    $state.go("journaldetail",
+    {
+      datestart:$scope.datestart,
+      dateend:$scope.dateend
+    });
   }
 
 }]);

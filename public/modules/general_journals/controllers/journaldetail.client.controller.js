@@ -1,11 +1,10 @@
 angular.module("general_journals").controller("JournalDetailController",
-["$scope","$http",
-function($scope,$http){
-
-  $scope.date = "14/07/2016";
-  $scope.date2 = "15/07/2016";
+["$scope","$http","$stateParams",
+function($scope,$http,$stateParams){
 
   $scope.getJournalDetail = function(){
+      $scope.datestart = $stateParams.datestart;
+      $scope.dateend = $stateParams.dateend;
       $http({
         method: 'GET',
         url: $scope.dbURL + '/journal_detail'
@@ -21,7 +20,6 @@ function($scope,$http){
       angular.forEach($scope.journal_details,function(item,index){
         if(item.drcr==drcr){
           sum += ((parseFloat(item.amount).toFixed(2))/1);
-          console.log(sum);
         }
       });
       return sum;

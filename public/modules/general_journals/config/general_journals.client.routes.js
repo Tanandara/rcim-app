@@ -1,6 +1,8 @@
 angular.module("general_journals").config([
   "$stateProvider",
   function($stateProvider){
+    var date = new Date();
+
     $stateProvider
     .state("journalizing",{
       url:"/journalizing",
@@ -12,6 +14,10 @@ angular.module("general_journals").config([
     })
     .state("journaldetail",{
       url:"/journals/details",
+      params: {
+            datestart :date,
+            dateend:date
+        },
       templateUrl:"/modules/general_journals/views/journal_detail.html"
     });
   }
