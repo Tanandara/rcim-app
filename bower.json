@@ -20,6 +20,7 @@
     "angular-bootstrap": "*",
     "angular-animate": "*",
     "angular-touch": "*",
-    "moment": "^2.14.1"
+    "moment": "^2.14.1",
+    "lodash": "^4.13.1"
   }
 }

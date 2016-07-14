@@ -4,7 +4,7 @@
   </div>
   <div class="panel panel-widget">
     <div class="block-page">
-      <h3>สมุดบัญชีรายวันของวันที่ {{date | date:'yyyy-MM-dd'}}</h3>
+      <h3>สมุดบัญชีรายวันของวันที่ ----</h3>
       <table class="table table-bordered" >
         <style>
           .table.table-bordered th,.table.table-bordered td{
@@ -19,10 +19,15 @@
             border-top-color: black !important;
           }
           .table.table-bordered thead tr th:nth-child(1){
-            width:10px;
+            width:10%;
           }
           .table.table-bordered thead tr th:nth-child(2){
-            width:300px;
+            /*width:300px;*/
+          }
+          .table.table-bordered thead tr th:nth-child(3),
+          .table.table-bordered thead tr th:nth-child(4),
+          .table.table-bordered thead tr th:nth-child(5){
+            width:10%;
           }
 
           .table.table-bordered tbody tr td:nth-child(2){
@@ -46,16 +51,15 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="item in journal_details">
+          <tr ng-repeat="i in details">
             <td></td>
-            <td ng-class="{'text-indent':item.drcr=='2'}">
-              <!-- <span ng-if="item.drcr=='2'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> -->
-              {{item.item_detail}}
+            <td ng-class="{'text-indent':i.drcr=='2'}">
+              {{i.detail}}
             </td>
-            <td>{{item.ledger_id}}</td>
-            <td ng-if="item.drcr=='1'">{{item.amount}}</td>
-            <td ng-if="item.drcr=='1' || item.drcr=='2' "></td>
-            <td ng-if="item.drcr=='2'">{{item.amount}}</td>
+            <td>{{i.ledger_id}}</td>
+            <td ng-if="i.drcr=='1'">{{i.amount}}</td>
+            <td ng-if="i.drcr=='1' || i.drcr=='2' "></td>
+            <td ng-if="i.drcr=='2'">{{i.amount}}</td>
           </tr>
         </tbody>
         <tfoot>
@@ -67,20 +71,21 @@
       <hr>
       <h3>เพิ่มรายการ</h3>
       <div class="row">
-        <div class="col-md-4 addJournal">
+        <div class="col-md-12 addJournal" ng-init="drcr = '';detail='';amount=''">
           <style>
             .addJournal select,.addJournal input{
               margin:10px;
             }
           </style>
-          <select class="form-control" name="drcr" id="">
+          <select class="form-control" name="drcr" id="" ng-model="drcr">
             <option value="" disabled selected>Debit/Credit</option>
             <option value="1">Debit</option>
             <option value="2">Credit</option>
           </select>
-          <input class="form-control" type="text" name="item_detail" placeholder="รายการ" />
-          <input class="form-control" type="text" name="amount" placeholder="จำนวนเงิน" />
-          <input class="btn btn-primary form-control" type="button"  value="เพิ่มรายการ" />
+          <input class="form-control" type="text" name="detail" placeholder="รายการ" ng-model="detail" />
+          <input class="form-control" type="hidden" value="{{ledger_id}}" />
+          <input class="form-control" type="number" name="amount" placeholder="จำนวนเงิน" ng-model="amount" />
+          <input class="btn btn-primary form-control" type="button"  value="เพิ่มรายการ" ng-click="addDetail()" ng-disabled="detail == '' || amount == '' || drcr =='' " />
         </div>
       </div>
     </div>
