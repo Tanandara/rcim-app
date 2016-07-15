@@ -4,7 +4,31 @@
   </div>
   <div class="panel panel-widget">
     <div class="block-page">
-      <h3>สมุดบัญชีรายวันของวันที่ ----</h3>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="pull-left">
+            <table >
+              <tr>
+                <td>
+                  <h3>สมุดบัญชีรายวันของวันที่ :&nbsp;</h3>
+                </td>
+                <td>
+                  <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datejournal" ng-model="datejournal" data-provide="datepicker" data-date-language="th" />
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="pull-right btn btn-info" style="margin:2px"><i class="fa fa-save"></i>  บันทึกรายการ</div>
+        </div>
+      </div>
+      <hr>
+      <div class="col-md-12">
+        คำอธิบาย : 
+        <textarea name="description" ng-model="description"  class="form-control" row="2"></textarea>
+        <hr>
+      </div>
+
+
       <table class="table table-bordered" >
         <style>
           .table.table-bordered th,.table.table-bordered td{
@@ -52,7 +76,7 @@
         </thead>
         <tbody>
           <tr ng-repeat="i in details">
-            <td></td>
+            <td>{{$index+1}}</td>
             <td ng-class="{'text-indent':i.drcr=='2'}">
               {{i.detail}}
             </td>
@@ -82,8 +106,16 @@
             <option value="1">Debit</option>
             <option value="2">Credit</option>
           </select>
-          <input class="form-control" type="text" name="detail" placeholder="รายการ" ng-model="detail" />
-          <input class="form-control" type="hidden" value="{{ledger_id}}" />
+          <autocomplete ng-model="detail"
+          attr-placeholder="รายการบัญชี"
+          click-activation="true"
+          attr-input-class="form-control"
+          data="ledgers"
+          on-type="searchText"
+          on-select="selectedText">
+          </autocomplete>
+          <!-- <input class="form-control" type="text" name="detail" placeholder="รายการ" ng-model="detail" /> -->
+          <!-- <input class="form-control" type="hidden" value="{{ledger_id}}" /> -->
           <input class="form-control" type="number" name="amount" placeholder="จำนวนเงิน" ng-model="amount" />
           <input class="btn btn-primary form-control" type="button"  value="เพิ่มรายการ" ng-click="addDetail()" ng-disabled="detail == '' || amount == '' || drcr =='' " />
         </div>
@@ -91,3 +123,13 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+$(function () {
+      $("#datejournal").datepicker({
+          format: 'dd/mm/yyyy',
+          todayBtn: "linked",
+          autoclose: true,
+          toggleActive: true
+      }).keydown(false);
+});
+</script>

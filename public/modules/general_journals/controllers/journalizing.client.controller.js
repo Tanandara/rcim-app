@@ -2,28 +2,47 @@ angular.module("general_journals").controller("JournalizingController",
 ["$scope","$http",
 function($scope,$http){
 
+    $scope.searchText = function(typedthings){
+      console.log("Do something like reload data with this: " + typedthings );
+        $http({
+            method: 'GET',
+            url:"https://rcim-json.herokuapp.com/ledgers/?q=" + typedthings
+            }).success(function(data, status) {
+                $scope.ledgersJSON = data;
+                $scope.ledgersJSON.map(function(item){
+                  // เพิ่ม ledger detail   101 : เงินสด
+                  item.ledger_detail=item.ledger_id+" : "+item.ledger_name;
+                  item.ledger_name=item.ledger_name;
+                });
+                $scope.ledgers = _.map($scope.ledgersJSON, 'ledger_detail');
+            });
+    }
+
+    $scope.selectedText = function(suggestion){
+      console.log("Suggestion selected: " + suggestion ,
+                  _.find($scope.ledgersJSON, { 'ledger_detail':  suggestion })
+      );
+      $scope.ledger_id = _.find($scope.ledgersJSON, { 'ledger_detail':  suggestion }).ledger_id;
+      $scope.ledger_name = _.find($scope.ledgersJSON, { 'ledger_detail':  suggestion }).ledger_name;
+    }
+
 $scope.details = [];
 $scope.getJournal = function(){
-    // $http({
-    //   method: 'GET',
-    //   url: $scope.dbURL + '/general_journals'
-    // }).success(function(data, status) {
-    //   $scope.journal_details = data;
-    // });
 }
 
 
 $scope.addDetail = function(){
     var transaction =   {
-                          "detail":$scope.detail,
+                          "detail":$scope.ledger_name,
                           "ledger_id":$scope.ledger_id || "X01",
                           "drcr":$scope.drcr,
                           "amount":$scope.amount
                         }
     $scope.details.push(transaction);
     // clear ค่าทิ้ง
-    $scope.detail = "";
+    $scope.ledger_name = "";
     $scope.ledger_id  = "";
+    $scope.detail  = "";
     $scope.drcr = "";
     $scope.amount = "";
 
