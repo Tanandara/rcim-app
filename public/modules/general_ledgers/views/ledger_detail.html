@@ -3,31 +3,47 @@
     <h2>รายการบัญชีแยกประเภท (Ledger)</h2>
   </div>
   <div class="panel panel-widget">
-    <div class="block-page">
-      <h3>รายการบัญชีแยกประเภท : 101 เงินสด </h3>
-      <hr>
-      <div class="row">
-        <style>
-        .searchLedger select,.searchLedger input{
+    <div class="block-page text-center">
+      <style media="screen">
+        .block-page h4{
           margin:10px;
         }
-        </style>
-        <div class="col-md-12 searchLedger">
-          <div class="col-md-6">
-            วันที่เริ่ม :
-            <input type="date" class="form-control" />
-          </div>
-          <div class="col-md-6">
-            วันที่สิ้นสุด :
-            <input type="date" class="form-control" />
-          </div>
-          <div class="col-md-12">
-            <input type="button" class="btn btn-primary form-control" value="ค้นหา">
-          </div>
-
+        .value-font{
+          color:red;
+          font-weight: bold;
+        }
+      </style>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="pull-right btn btn-info"><i class="fa fa-print"></i>  พิมพ์รายงาน</div>
         </div>
       </div>
+      <h4>มทร.รัตนโกสินทร์ วิทยาลัยนวัตกรรมการจัดการ</h4>
+      <h4>วิทยาเขต : <span class="value-font">บิพิตรพิมุข</span></h4>
+      <h4>ชื่อบัญชีแยกประเภท : <span class="value-font">บัญชีเงินสด</span></h4>
+      <h4>วันที่ <span class="value-font">14/07/2016</span> - <span class="value-font">14/07/2016</span></h4>
       <hr>
+      <table class="tbhead-ledger" style="width:100%">
+        <style>
+        .tbhead-ledger{
+          margin:10px;
+        }
+        .tbhead-ledger tr:nth-child(2) td{
+          text-align: left;
+        }
+        .tbhead-ledger tr:nth-child(1) td{
+          text-align: center;
+          font-size: large;
+        }
+        </style>
+        <tr>
+          <td>บัญชีเงินสด</td>
+        </tr>
+        <tr>
+          <td>เลขที่บัญชี 101</td>
+        </tr>
+      </table>
+
       <table class="table table-bordered" >
         <style>
           .table.table-bordered th,.table.table-bordered td{
@@ -37,25 +53,26 @@
             background-color: #efe5e5;
           }
           .table.table-bordered thead tr th:nth-child(1){
-            width:10px;
+            width:120px;
           }
-          .table.table-bordered thead tr th:nth-child(2){
-            width:200px;
+          .table.table-bordered thead tr th:nth-child(3),
+          .table.table-bordered thead tr th:nth-child(6){
+            width:110px;
           }
-          .table.table-bordered thead tr th:nth-child(4),
-          .table.table-bordered thead tr th:nth-child(7){
-            width:80px;
-          }
-          .table.table-bordered tbody tr td:nth-child(3),
-          .table.table-bordered tbody tr td:nth-child(6){
-            text-indent:  25px !important;
+          .table.table-bordered tbody tr td:nth-child(2),
+          .table.table-bordered tbody tr td:nth-child(5){
+            /*text-indent:  10px !important;*/
             text-align: left;
           }
-          .table.table-bordered tr th:nth-child(5),
-          .table.table-bordered tr td:nth-child(5){
+          .table.table-bordered tr th:nth-child(4),
+          .table.table-bordered tr td:nth-child(4){
             border-right:2px;
             border-right-color:black;
             border-right-style:solid;
+          }
+          .table.table-bordered tr td:nth-child(4),
+          .table.table-bordered tr td:nth-child(7){
+            text-align: right;
           }
           .table.table-bordered tfoot tr td{
             border-top:2px !important;
@@ -67,33 +84,30 @@
         </style>
         <thead>
           <tr>
-            <th>#</th>
             <th>วันเดือนปี</th>
             <th>รายการ</th>
-            <th>เลขที่บัญชี</th>
+            <th>เลขที่รายการ<br>รายวัน</th>
             <th>เดบิต</th>
             <th>รายการ</th>
-            <th>เลขที่บัญชี</th>
+            <th>เลขที่รายการ<br>รายวัน</th>
             <th>เครดิต</th>
           </tr>
         </thead>
         <tbody>
           <tr ng-repeat="i in ledger">
-            <td></td>
             <td>{{i.date}}</td>
             <td ng-if="i.drcr=='1'">{{i.ledger_detail}}</td>
-            <td ng-if="i.drcr=='1'">{{i.ledger_detail_id}}</td>
+            <td ng-if="i.drcr=='1'">{{i.journal_ref_id}}</td>
             <td ng-if="i.drcr=='1'">{{i.amount}}</td>
             <td ng-if="i.drcr=='1' || i.drcr=='2'"></td>
             <td ng-if="i.drcr=='1' || i.drcr=='2'"></td>
             <td ng-if="i.drcr=='1' || i.drcr=='2'"></td>
             <td ng-if="i.drcr=='2'">{{i.ledger_detail}}</td>
-            <td ng-if="i.drcr=='2'">{{i.ledger_detail_id}}</td>
+            <td ng-if="i.drcr=='2'">{{i.journal_ref_id}}</td>
             <td ng-if="i.drcr=='2'">{{i.amount}}</td>
           </tr>
         </tbody>
         <tfoot>
-          <td></td>
           <td></td>
           <td></td>
           <td></td>

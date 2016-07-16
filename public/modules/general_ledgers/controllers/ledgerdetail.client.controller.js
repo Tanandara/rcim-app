@@ -1,6 +1,6 @@
 angular.module("general_ledgers").controller("LedgerDetailController",
-["$scope","$http",
-function($scope,$http){
+["$scope","$http","$stateParams",
+function($scope,$http,$stateParams){
 
   $scope.getLedgerDetail = function(){
       $http({

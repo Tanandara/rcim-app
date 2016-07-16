@@ -176,21 +176,30 @@ angular.module("general_ledgers",[]);
 angular.module("general_ledgers").config([
   "$stateProvider",
   function($stateProvider){
+    var date = new Date();
+
     $stateProvider
     .state("ledgers",{
       url:"/ledgers",
       templateUrl:"/modules/general_ledgers/views/ledgers.html"
-    })
-    .state("ledgerdetail",{
-      url:"/ledgers/{ledger_id:int}",
-      templateUrl:"/modules/general_ledgers/views/ledger_detail.html",
-      controller:"LedgerDetailController"
     })
     .state("addledger",{
       url:"/ledgers/add",
       templateUrl:"/modules/general_ledgers/views/add_ledger.html",
       controller:"AddLedgerController"
     })
+    .state("ledgerdetail",{
+      url:"/ledgers/detail",
+      templateUrl:"/modules/general_ledgers/views/ledger_detail.html",
+      params: {
+            campus_id:"1",
+            ledger_id:"101",
+            datestart:date,
+            dateend:date
+        },
+      controller:"LedgerDetailController"
+    })
+
   }
 ]);
 
@@ -198,25 +207,71 @@ angular.module("general_ledgers").controller("LedgersController",
 ["$scope","$http","$state",
 function($scope,$http,$state){
 
-  $scope.getLedgers = function(){
-      $http({
-        method: 'GET',
-        url: $scope.dbURL + '/ledgers'
-      }).success(function(data, status) {
-        $scope.ledgers = data;
-      });
+  // $scope.getLedgers = function(){
+  //     $http({
+  //       method: 'GET',
+  //       url: $scope.dbURL + '/ledgers'
+  //     }).success(function(data, status) {
+  //       $scope.ledgers = data;
+  //     });
+  // }
+  //
+  // $scope.goLedgerDetail = function(id){
+  //   location.href = "#!/ledgers/" + id;
+  // }
+
+
+
+
+  $scope.datestart = moment().format("DD/MM/YYYY");
+  $scope.dateend = moment().format("DD/MM/YYYY");
+
+  $scope.checkSearchLedger = function(){
+    return !($scope.campus_id && $scope.datestart && $scope.dateend && $scope.ledger_id );
   }
 
-  $scope.goLedgerDetail = function(id){
-    location.href = "#!/ledgers/" + id;
+  $scope.viewLedgerDetails = function(){
+    //location.href = "#!/ledgers/" + $scope.ledger_id;
+    $state.go("ledgerdetail",{
+      campus_id:$scope.campus_id,
+      ledger_id:"101",
+      datestart:$scope.datestart,
+      dateend:$scope.dateend
+    });
+
+  }
+
+
+  $scope.searchText = function(typedthings){
+    console.log("Do something like reload data with this: " + typedthings );
+      $http({
+          method: 'GET',
+          url:"https://rcim-json.herokuapp.com/ledgers/?q=" + typedthings
+          }).success(function(data, status) {
+              $scope.ledgersJSON = data;
+              $scope.ledgersJSON.map(function(item){
+                // เพิ่ม ledger detail   101 : เงินสด
+                item.ledger_detail=item.ledger_id+" : "+item.ledger_name;
+                item.ledger_name=item.ledger_name;
+              });
+              $scope.ledgers = _.map($scope.ledgersJSON, 'ledger_detail');
+          });
+  }
+
+  $scope.selectedText = function(suggestion){
+    console.log("Suggestion selected: " + suggestion ,
+                _.find($scope.ledgersJSON, { 'ledger_detail':  suggestion })
+    );
+    $scope.ledger_id = _.find($scope.ledgersJSON, { 'ledger_detail':  suggestion }).ledger_id;
+    $scope.ledger_name = _.find($scope.ledgersJSON, { 'ledger_detail':  suggestion }).ledger_name;
   }
 
 
 }]);
 
 angular.module("general_ledgers").controller("LedgerDetailController",
-["$scope","$http",
-function($scope,$http){
+["$scope","$http","$stateParams",
+function($scope,$http,$stateParams){
 
   $scope.getLedgerDetail = function(){
       $http({
