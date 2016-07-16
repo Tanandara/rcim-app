@@ -1,0 +1,137 @@
+<div data-ng-controller="SearchTrialController" data-ng-init="getTrialYear();getTrialMonth();" >
+  <div class="progressbar-heading grids-heading">
+    <h2>ค้นหางบทดลอง (Search Trial Balance)</h2>
+  </div>
+  <div class="panel panel-widget">
+    <div class="block-page">
+      <h3>เงื่อนไขในการแสดงงบทดลอง </h3>
+      <hr>
+      <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+									<ul id="myTab" class="nav nav-tabs" role="tablist">
+									  <li role="presentation" class="active"><a href="#!/searchtrial#current" id="current-tab" role="tab" data-toggle="tab" aria-controls="current" aria-expanded="true">ปีปัจจุบัน</a></li>
+                    <li role="presentation" class=""><a href="#!/searchtrial#past" role="tab" id="past-tab" data-toggle="tab" aria-controls="past" aria-expanded="false">งบทดลองอดีด</a></li>
+									  <li role="presentation" class=""><a href="#!/searchtrial#custom" role="tab" id="custom-tab" data-toggle="tab" aria-controls="custom" aria-expanded="false">กำหนดเอง</a></li>
+
+									</ul>
+								<div id="myTabContent" class="tab-content" style="display: inline-block;width: 100%;">
+								  <div role=""  class="tab-pane fade active in" id="current" aria-labelledby="current-tab">
+
+                      <div class="col-md-12">
+                        <a href="#!/trialbalance" class="hvr-bounce-to-right">ต้นปี - วันปัจจุบัน</a>
+                        <a href="#!/trialbalance" class="hvr-bounce-to-right">ต้นเดือน - วันปัจจุบัน</a>
+                      </div>
+                      <div class="col-md-12">
+                        <table class="table table-bordered table-hover">
+                        <style>
+                          .table-hover tr:hover{
+                            cursor: pointer;
+                          }
+                          .table.table-bordered th,.table.table-bordered td{
+                            text-align: center;
+                          }
+                          .table.table-bordered thead tr th{
+                            background-color: #efe5e5;
+                          }
+                          .table.table-bordered thead tr th:nth-child(1){
+                            width:10px;
+                          }
+                          .table.table-bordered thead tr th:nth-child(2){
+                            width:300px;
+                          }
+                          .table.table-bordered thead tr th:nth-child(3){
+                            width:100px;
+                          }
+                          .table.table-bordered tbody tr td:nth-child(2){
+                            text-indent:  25px !important;
+                            text-align: left;
+                          }
+                          .table.table-bordered tbody tr td:nth-child(3){
+                            text-align: right;
+                          }
+                        </style>
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>เดือน</th>
+                              <th>เดบิต/เครดิต</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr ng-repeat="i in month">
+                              <td>{{$index+1}}</td>
+                              <td>{{i.month}}</td>
+                              <td>{{i.amount}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+								  </div>
+								  <div role="tabpanel"  class="tab-pane fade" id="past" aria-labelledby="past-tab">
+									  <div class="col-md-12">
+                      <table class="table table-bordered table-hover">
+                      <style>
+                        .table-hover tr:hover{
+                          cursor: pointer;
+                        }
+                        .table.table-bordered th,.table.table-bordered td{
+                          text-align: center;
+                        }
+                        .table.table-bordered thead tr th{
+                          background-color: #efe5e5;
+                        }
+                        .table.table-bordered thead tr th:nth-child(1){
+                          width:10px;
+                        }
+                        .table.table-bordered thead tr th:nth-child(2){
+                          width:300px;
+                        }
+                        .table.table-bordered thead tr th:nth-child(3){
+                          width:100px;
+                        }
+                        .table.table-bordered tbody tr td:nth-child(2){
+                          text-indent:  25px !important;
+                          text-align: left;
+                        }
+                        .table.table-bordered tbody tr td:nth-child(3){
+                          text-align: right;
+                        }
+                      </style>
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>ปี</th>
+                            <th>เดบิต/เครดิต</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="i in year">
+                            <td>{{$index+1}}</td>
+                            <td>{{i.year}}</td>
+                            <td>{{i.amount}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+									  </div>
+								  </div>
+								  <div role="tabpanel" class="tab-pane fade" id="custom" aria-labelledby="custom-tab">
+                    <style media="screen">
+                      #custom input{
+                        margin:10px;
+                      }
+                    </style>
+                    <div class="col-md-12">
+                      วันที่เริ่มต้น :
+                      <input type="date" class="form-control">
+                      วันที่สิ้นสุด :
+                      <input type="date" class="form-control">
+                      <input type="button" class="btn btn-primary form-control" value="แสดงงบทดลอง">
+                    </div>
+                  </div>
+
+								</div>
+			</div>
+
+
+    </div>
+  </div>
+</div>

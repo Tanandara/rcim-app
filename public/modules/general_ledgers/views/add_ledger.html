@@ -1,4 +1,4 @@
-<div data-ng-controller="AddLedgerController" data-ng-init="" >
+<div data-ng-controller="AddLedgerController" data-ng-init="getLedgers()" >
   <div class="progressbar-heading grids-heading">
     <h2>เพิ่มสมุดบัญชีแยกประเภท (Add Ledgers)</h2>
   </div>
@@ -15,14 +15,6 @@
         </style>
         <div class="col-md-12 searchLedger">
           <div class="col-md-12">
-            เลขที่สมุดบัญชีแยกประเภท :
-            <input type="text" class="form-control" placeholder="ใส่เลขที่บัญชีแยกประเภท" />
-          </div>
-          <div class="col-md-12">
-            ชื่อสมุดบัญชีแยกประเภท :
-            <input type="text" class="form-control" placeholder="ใส่ชื่อบัญชีแยกประเภท" />
-          </div>
-          <div class="col-md-12">
             หมวดบัญชี :
             <select name="coa" class="form-control" id="">
               <option value="" disabled selected>หมวดบัญชี</option>
@@ -34,13 +26,62 @@
             </select>
           </div>
           <div class="col-md-12">
+            เลขที่สมุดบัญชีแยกประเภท :
+            <input type="text" class="form-control" placeholder="ใส่เลขที่บัญชีแยกประเภท" />
+          </div>
+          <div class="col-md-12">
+            ชื่อสมุดบัญชีแยกประเภท :
+            <input type="text" class="form-control" placeholder="ใส่ชื่อบัญชีแยกประเภท" />
+          </div>
+          <div class="col-md-12">
             <input type="button" class="btn btn-primary form-control" value="เพิ่มสมุดบัญชี">
           </div>
+        </div>
+        <div class="col-md-12">
+          <hr>
+          <div class="col-md-12 text-center" style="margin:20px;"><h3>รายการบัญชีแยกประเภททั้งหมดในระบบ</h3></div>
 
+          <table class="table table-bordered table-hover" >
+            <style>
+              .table-hover tr:hover{
+                cursor: pointer;
+              }
+              .table.table-bordered th,.table.table-bordered td{
+                text-align: center;
+              }
+              .table.table-bordered thead tr th{
+                background-color: #efe5e5;
+              }
+              .table.table-bordered thead tr th:nth-child(1){
+                width:10px;
+              }
+              .table.table-bordered thead tr th:nth-child(2){
+                width:100px;
+              }
+              .table.table-bordered tbody tr td:nth-child(3){
+                text-indent:  25px !important;
+                text-align: left;
+              }
+            </style>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>เลขที่บัญชี</th>
+                <th>รายการบัญชี</th>
+                <th>หมวดบัญชี</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="i in ledgers"  >
+                  <td></td>
+                  <td>{{i.ledger_id}}</td>
+                  <td>{{i.ledger_name}}</td>
+                  <td>{{i.coa}}</td>
+                </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-      <hr>
-
     </div>
   </div>
 </div>
