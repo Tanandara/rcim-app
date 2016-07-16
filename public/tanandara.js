@@ -417,6 +417,56 @@ function($scope,$http){
 
 }]);
 
+angular.module("balance_sheet",[]);
+
+angular.module("balance_sheet").config([
+  "$stateProvider",
+  function($stateProvider){
+    var date = new Date();
+
+    $stateProvider
+    .state("searchbalance",{
+      url:"/searchbalance",
+      templateUrl:"/modules/balance_sheet/views/search_balance_sheet.html"
+    })
+    .state("balancesheet",{
+      url:"/balancesheet",
+      params: {
+            campus_id:"1",
+            datestart:date,
+            dateend:date
+        },
+      templateUrl:"/modules/balance_sheet/views/balance_sheet.html"
+    })
+  }
+]);
+
+angular.module("balance_sheet").controller("BalanceSheetController",
+["$scope","$http","$stateParams",
+function($scope,$http,$stateParams){
+
+}]);
+
+angular.module("balance_sheet").controller("SearchBalanceSheetController",
+["$scope","$http","$state",
+function($scope,$http,$state){
+  $scope.datestart = moment().format("DD/MM/YYYY");
+  $scope.dateend = moment().format("DD/MM/YYYY");
+
+
+  $scope.checkCondition = function(){
+    return !($scope.campus_id && $scope.datestart && $scope.dateend );
+  }
+
+  $scope.viewTrialBalance = function(){
+    $state.go("balacesheet",{
+      campus_id:$scope.campus_id,
+      datestart:$scope.datestart,
+      dateend:$scope.dateend
+    });
+  }
+}]);
+
 angular.module("dashboard", []);
 
 angular.module("dashboard").config([
@@ -446,7 +496,8 @@ angular.module("Main",
 "dashboard",
 "general_journals",
 "general_ledgers",
-"trial_balance"]);
+"trial_balance",
+"balance_sheet"]);
 
 
 angular.module("Main")
@@ -458,14 +509,14 @@ angular.module("Main")
     $rootScope
         .$on('$stateChangeStart',
             function(event, toState, toParams, fromState, fromParams){
-                console.log("State Change: transition begins!");
+                //console.log("State Change: transition begins!");
                 $('.page-transition').toggleClass('loading');
         });
 
     $rootScope
         .$on('$stateChangeSuccess',
             function(event, toState, toParams, fromState, fromParams){
-                console.log("State Change: State change success!");
+                //console.log("State Change: State change success!");
                 $('.page-transition').toggleClass('loading');
 
         });

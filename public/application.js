@@ -8,7 +8,8 @@ angular.module("Main",
 "dashboard",
 "general_journals",
 "general_ledgers",
-"trial_balance"]);
+"trial_balance",
+"balance_sheet"]);
 
 
 angular.module("Main")
@@ -20,14 +21,14 @@ angular.module("Main")
     $rootScope
         .$on('$stateChangeStart',
             function(event, toState, toParams, fromState, fromParams){
-                console.log("State Change: transition begins!");
+                //console.log("State Change: transition begins!");
                 $('.page-transition').toggleClass('loading');
         });
 
     $rootScope
         .$on('$stateChangeSuccess',
             function(event, toState, toParams, fromState, fromParams){
-                console.log("State Change: State change success!");
+                //console.log("State Change: State change success!");
                 $('.page-transition').toggleClass('loading');
 
         });
