@@ -2,29 +2,32 @@ angular.module("general_journals").controller("JournalizingController",
 ["$scope","$http",
 function($scope,$http){
 
-    $scope.searchText = function(typedthings){
-      console.log("Do something like reload data with this: " + typedthings );
-        $http({
-            method: 'GET',
-            url:"https://rcim-json.herokuapp.com/ledgers/?q=" + typedthings
-            }).success(function(data, status) {
-                $scope.ledgersJSON = data;
-                $scope.ledgersJSON.map(function(item){
-                  // เพิ่ม ledger detail   101 : เงินสด
-                  item.ledger_detail=item.ledger_id+" : "+item.ledger_name;
-                  item.ledger_name=item.ledger_name;
-                });
-                $scope.ledgers = _.map($scope.ledgersJSON, 'ledger_detail');
+$scope.checkJournalizing = function(){
+  return !(_.size($scope.details) && ($scope.Dr ==$scope.Cr) && $scope.description && $scope.datejournal);
+}
+$scope.searchText = function(typedthings){
+  console.log("Do something like reload data with this: " + typedthings );
+    $http({
+        method: 'GET',
+        url:"https://rcim-json.herokuapp.com/ledgers/?q=" + typedthings
+        }).success(function(data, status) {
+            $scope.ledgersJSON = data;
+            $scope.ledgersJSON.map(function(item){
+              // เพิ่ม ledger detail   101 : เงินสด
+              item.ledger_detail=item.ledger_id+" : "+item.ledger_name;
+              item.ledger_name=item.ledger_name;
             });
-    }
+            $scope.ledgers = _.map($scope.ledgersJSON, 'ledger_detail');
+        });
+}
 
-    $scope.selectedText = function(suggestion){
-      console.log("Suggestion selected: " + suggestion ,
-                  _.find($scope.ledgersJSON, { 'ledger_detail':  suggestion })
-      );
-      $scope.ledger_id = _.find($scope.ledgersJSON, { 'ledger_detail':  suggestion }).ledger_id;
-      $scope.ledger_name = _.find($scope.ledgersJSON, { 'ledger_detail':  suggestion }).ledger_name;
-    }
+$scope.selectedText = function(suggestion){
+  console.log("Suggestion selected: " + suggestion ,
+              _.find($scope.ledgersJSON, { 'ledger_detail':  suggestion })
+  );
+  $scope.ledger_id = _.find($scope.ledgersJSON, { 'ledger_detail':  suggestion }).ledger_id;
+  $scope.ledger_name = _.find($scope.ledgersJSON, { 'ledger_detail':  suggestion }).ledger_name;
+}
 
 $scope.details = [];
 $scope.getJournal = function(){
@@ -55,6 +58,12 @@ $scope.SumDrCr = function(drcr){
     angular.forEach($scope.details,function(item,index){
       if(item.drcr==drcr){
         sum += ((parseFloat(item.amount).toFixed(2))/1);
+        // รวม DrCr ไว้เช็คตอนบันทึก
+        if(drcr=="1"){
+          $scope.Dr = sum ;
+        }else{
+          $scope.Cr = sum ;
+        }
       }
     });
     return sum;
