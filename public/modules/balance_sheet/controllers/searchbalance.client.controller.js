@@ -9,7 +9,7 @@ function($scope,$http,$state){
     return !($scope.campus_id && $scope.datestart && $scope.dateend );
   }
 
-  $scope.viewTrialBalance = function(){
+  $scope.viewBalanceSheet = function(){
     $state.go("balacesheet",{
       campus_id:$scope.campus_id,
       datestart:$scope.datestart,
