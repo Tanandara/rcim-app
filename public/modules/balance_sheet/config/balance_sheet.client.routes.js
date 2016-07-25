@@ -12,8 +12,7 @@ angular.module("balance_sheet").config([
       url:"/balancesheet",
       params: {
             campus_id:"1",
-            datestart:date,
-            dateend:date
+            date:date
         },
       templateUrl:"/modules/balance_sheet/views/balance_sheet.html"
     })

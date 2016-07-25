@@ -1,19 +1,17 @@
 angular.module("balance_sheet").controller("SearchBalanceSheetController",
 ["$scope","$http","$state",
 function($scope,$http,$state){
-  $scope.datestart = moment().format("DD/MM/YYYY");
-  $scope.dateend = moment().format("DD/MM/YYYY");
+  $scope.date = moment().format("DD/MM/YYYY");
 
 
   $scope.checkCondition = function(){
-    return !($scope.campus_id && $scope.datestart && $scope.dateend );
+    return !($scope.campus_id && $scope.date);
   }
 
   $scope.viewBalanceSheet = function(){
-    $state.go("balacesheet",{
+    $state.go("balancesheet",{
       campus_id:$scope.campus_id,
-      datestart:$scope.datestart,
-      dateend:$scope.dateend
+      date:$scope.date
     });
   }
 }]);

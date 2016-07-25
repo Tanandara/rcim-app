@@ -23,13 +23,9 @@
               <option value="4">ทุกวิทยาเขต</option>
             </select>
           </div>
-          <div class="col-md-6">
-              วันที่เริ่ม :
-              <input type="text" class="form-control" id="datestart"  placeholder="dd/mm/yyyy" data-provide="datepicker" data-date-language="th" ng-model="datestart" />
-          </div>
-          <div class="col-md-6">
-              วันที่สิ้นสุด :
-              <input type="text" class="form-control" id="dateend"   placeholder="dd/mm/yyyy" data-provide="datepicker" data-date-language="th" ng-model="dateend" />
+          <div class="col-md-12">
+              วันที่ต้องการดูรายละเอียดของงบดุล :
+              <input type="text" class="form-control" id="date"   placeholder="dd/mm/yyyy" data-provide="datepicker" data-date-language="th" ng-model="date" />
           </div>
           <div class="col-md-12">
             <input type="button" ng-disabled="checkCondition()" ng-click="viewBalanceSheet()" class="btn btn-primary form-control" value="แสดงรายงานงบดุล">
@@ -44,36 +40,13 @@
 <script type="text/javascript">
 
 $(function () {
-      $("#datestart").datepicker({
-          format: 'dd/mm/yyyy',
-          todayBtn: "linked",
-          autoclose: true,
-          toggleActive: true
-      }).on('changeDate', function (selected) {
-          if ($(this).val() == "") {
-              $('#datestart').datepicker('setEndDate', null);
 
-              $('#dateend').datepicker('setStartDate', null);
-              $('#dateend').datepicker('setEndDate', null);
-              $('#dateend').val("");
-          } else {
-              var dateFrom = new Date(selected.date.valueOf());
-              $('#dateend').datepicker('setStartDate', dateFrom);
-          }
-      }).keydown(false);
-
-      $('#dateend').datepicker({
+      $('#date').datepicker({
             format: 'dd/mm/yyyy',
             todayBtn: "linked",
             autoclose: true,
             toggleActive: true
       }).on('changeDate', function (selected) {
-          if ($(this).val() == "") {
-              $('#datestart').datepicker('setEndDate', null);
-          } else {
-              var dateTo = new Date(selected.date.valueOf());
-              $('#datestart').datepicker('setEndDate', dateTo);
-          }
       }).keydown(false);
 });
 </script>
