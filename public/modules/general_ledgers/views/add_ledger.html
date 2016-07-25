@@ -16,7 +16,7 @@
         <div class="col-md-12 searchLedger">
           <div class="col-md-12">
             หมวดบัญชี :
-            <select name="coa" class="form-control" id="">
+            <select name="coa" ng-model="coa" class="form-control" ng-change="currentCheck()" id="">
               <option value="" disabled selected>หมวดบัญชี</option>
               <option value="1">สินทรัพย์</option>
               <option value="2">หนี้สิน</option>
@@ -27,14 +27,22 @@
           </div>
           <div class="col-md-12">
             เลขที่สมุดบัญชีแยกประเภท :
-            <input type="text" class="form-control" placeholder="ใส่เลขที่บัญชีแยกประเภท" />
+            <input type="text" ng-model="ledger_id" class="form-control" placeholder="ใส่เลขที่บัญชีแยกประเภท" />
           </div>
           <div class="col-md-12">
             ชื่อสมุดบัญชีแยกประเภท :
-            <input type="text" class="form-control" placeholder="ใส่ชื่อบัญชีแยกประเภท" />
+            <input type="text" ng-model="ledger_name" class="form-control" placeholder="ใส่ชื่อบัญชีแยกประเภท" />
+          </div>
+          <div class="col-md-12" ng-show="coa=='1' || coa=='2'">
+            หมุนเวียน/ไม่หมุนเวียน :
+            <select  ng-model="current" class="form-control" id="">
+              <option value="" disabled selected>เลือกหมุน/ไม่หมุน</option>
+              <option value="1">{{coa_text}}หมุนเวียน</option>
+              <option value="2">{{coa_text}}ไม่หมุนเวียน</option>
+            </select>
           </div>
           <div class="col-md-12">
-            <input type="button" class="btn btn-primary form-control" value="เพิ่มสมุดบัญชี">
+            <input ng-disabled="checkData()" type="button" class="btn btn-primary form-control" value="เพิ่มสมุดบัญชี">
           </div>
         </div>
         <div class="col-md-12">

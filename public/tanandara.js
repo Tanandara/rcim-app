@@ -309,6 +309,29 @@ function($scope,$http){
       });
   }
 
+  $scope.currentCheck = function(){
+    switch ($scope.coa) {
+      case "1":
+      $scope.coa_text ="สินทรัพย์";
+        break;
+      case "2":
+      $scope.coa_text ="หนี้สิน";
+        break;
+      default:
+      $scope.current = "";
+      $scope.coa_text = "";
+        break
+    }
+  }
+
+  $scope.checkData = function(){
+    if($scope.coa=='1' || $scope.coa=='2'){
+      return !($scope.coa && $scope.ledger_id && $scope.ledger_name && $scope.current);
+    }else{
+      return !($scope.coa && $scope.ledger_id && $scope.ledger_name );
+    }
+  }
+
 
 
 
@@ -464,6 +487,57 @@ function($scope,$http,$state){
   }
 }]);
 
+angular.module("profit_loss",[]);
+
+angular.module("profit_loss").config([
+  "$stateProvider",
+  function($stateProvider){
+    var date = new Date();
+
+    $stateProvider
+    .state("searchprofitloss",{
+      url:"/searchprofitloss",
+      templateUrl:"/modules/profit_loss/views/search_profit_loss.html"
+    })
+    .state("profitloss",{
+      url:"/profitloss",
+      params: {
+            campus_id:"1",
+            datestart:date,
+            dateend:date
+        },
+      templateUrl:"/modules/profit_loss/views/profit_loss.html"
+    })
+  }
+]);
+
+
+angular.module("profit_loss").controller("SearchProfitLossController",
+["$scope","$http","$state",
+function($scope,$http,$state){
+  $scope.datestart = moment().format("DD/MM/YYYY");
+  $scope.dateend = moment().format("DD/MM/YYYY");
+
+
+  $scope.checkCondition = function(){
+    return !($scope.campus_id && $scope.datestart && $scope.dateend );
+  }
+
+  $scope.viewProfitLoss = function(){
+    $state.go("profitloss",{
+      campus_id:$scope.campus_id,
+      datestart:$scope.datestart,
+      dateend:$scope.dateend
+    });
+  }
+
+
+
+
+
+
+}]);
+
 angular.module("dashboard", []);
 
 angular.module("dashboard").config([
@@ -494,7 +568,8 @@ angular.module("Main",
 "general_journals",
 "general_ledgers",
 "trial_balance",
-"balance_sheet"]);
+"balance_sheet",
+"profit_loss"]);
 
 
 angular.module("Main")

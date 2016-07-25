@@ -1,10 +1,10 @@
-<div data-ng-controller="SearchTrialController" data-ng-init="" >
+<div data-ng-controller="SearchProfitLossController" data-ng-init="" >
   <div class="progressbar-heading grids-heading">
-    <h2>ค้นหางบทดลอง (Search Trial Balance)</h2>
+    <h2>ค้นหางบกำไรขาดทุน (Search Profit Loss Statement)</h2>
   </div>
   <div class="panel panel-widget">
     <div class="block-page">
-      <h3>เงื่อนไขในการแสดงงบทดลอง </h3>
+      <h3>เงื่อนไขในการแสดงงบกำไรขาดทุน </h3>
       <hr>
       <div class="row">
         <style>
@@ -23,16 +23,16 @@
               <option value="4">ทุกวิทยาเขต</option>
             </select>
           </div>
-            <div class="col-md-6">
-                วันที่เริ่ม :
-                <input type="text" class="form-control" id="datestart"  placeholder="dd/mm/yyyy" data-provide="datepicker" data-date-language="th" ng-model="datestart" />
-            </div>
-            <div class="col-md-6">
-                วันที่สิ้นสุด :
-                <input type="text" class="form-control" id="dateend"   placeholder="dd/mm/yyyy" data-provide="datepicker" data-date-language="th" ng-model="dateend" />
-            </div>
+          <div class="col-md-6">
+              วันที่เริ่ม :
+              <input type="text" class="form-control" id="datestart"  placeholder="dd/mm/yyyy" data-provide="datepicker" data-date-language="th" ng-model="datestart" />
+          </div>
+          <div class="col-md-6">
+              วันที่สิ้นสุด :
+              <input type="text" class="form-control" id="dateend"   placeholder="dd/mm/yyyy" data-provide="datepicker" data-date-language="th" ng-model="dateend" />
+          </div>
           <div class="col-md-12">
-            <input type="button" ng-disabled="checkCondition()" ng-click="viewTrialBalance()" class="btn btn-primary form-control" value="แสดงรายงานงบทดลอง">
+            <input type="button" ng-disabled="checkCondition()" ng-click="viewProfitLoss()" class="btn btn-primary form-control" value="แสดงรายงานงบกำไรขาดทุน">
           </div>
 
         </div>

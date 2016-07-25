@@ -9,7 +9,8 @@ angular.module("Main",
 "general_journals",
 "general_ledgers",
 "trial_balance",
-"balance_sheet"]);
+"balance_sheet",
+"profit_loss"]);
 
 
 angular.module("Main")
