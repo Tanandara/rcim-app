@@ -511,6 +511,12 @@ angular.module("profit_loss").config([
   }
 ]);
 
+angular.module("profit_loss").controller("ProfitLossController",
+["$scope","$http","$state",
+function($scope,$http,$state){
+
+
+}]);
 
 angular.module("profit_loss").controller("SearchProfitLossController",
 ["$scope","$http","$state",
