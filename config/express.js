@@ -14,7 +14,7 @@ module.exports = function(){
     resave:false,
     saveUninitialized:true
   }));
-  
+
   // Debug
   if(process.env.NODE_ENV==="development"){
     app.use(morgan("dev"));
@@ -37,6 +37,7 @@ module.exports = function(){
   // Routes
   require("../routes/index.routes")(app);
   require("../routes/users.routes")(app);
+  require("../routes/coa.routes")(app);
 
 
   return app;

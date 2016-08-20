@@ -7,15 +7,28 @@ $scope.checkJournalizing = function(){
 }
 $scope.searchText = function(typedthings){
   console.log("Do something like reload data with this: " + typedthings );
+    // $http({
+    //     method: 'GET',
+    //     url:"https://rcim-json.herokuapp.com/ledgers/?q=" + typedthings
+    //     }).success(function(data, status) {
+    //         $scope.ledgersJSON = data;
+    //         $scope.ledgersJSON.map(function(item){
+    //           // เพิ่ม ledger detail   101 : เงินสด
+    //           item.ledger_detail=item.ledger_id+" : "+item.ledger_name;
+    //           item.ledger_name=item.ledger_name;
+    //         });
+    //         $scope.ledgers = _.map($scope.ledgersJSON, 'ledger_detail');
+    //     });
     $http({
-        method: 'GET',
-        url:"https://rcim-json.herokuapp.com/ledgers/?q=" + typedthings
+        method: 'POST',
+        url:"https://rcim-app.herokuapp.com/coa",
+        data:"search="+typedthings,
         }).success(function(data, status) {
             $scope.ledgersJSON = data;
             $scope.ledgersJSON.map(function(item){
               // เพิ่ม ledger detail   101 : เงินสด
-              item.ledger_detail=item.ledger_id+" : "+item.ledger_name;
-              item.ledger_name=item.ledger_name;
+              item.ledger_detail=item.coa_id+" : "+item.coa_detail;
+              item.coa_detail=item.coa_detail;
             });
             $scope.ledgers = _.map($scope.ledgersJSON, 'ledger_detail');
         });
