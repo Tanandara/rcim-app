@@ -22,7 +22,7 @@ $scope.searchText = function(typedthings){
     $http({
         method: 'POST',
         url:"https://rcim-app.herokuapp.com/coa",
-        data:"search="+typedthings,
+        data:{"search":typedthings},
         }).success(function(data, status) {
             $scope.ledgersJSON = data;
             $scope.ledgersJSON.map(function(item){
