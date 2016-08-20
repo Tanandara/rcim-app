@@ -8,6 +8,8 @@ var validator = require("express-validator");
 module.exports = function(){
   var app = express();
 
+
+
   // Session config
   app.use(session({
     secret:"12345iloveyou",
@@ -33,6 +35,14 @@ module.exports = function(){
   app.set('view engine', 'ejs');
   app.use(express.static("./public"));
 
+
+  // Cors
+  app.all('/*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+  });
+  
 
   // Routes
   require("../routes/index.routes")(app);

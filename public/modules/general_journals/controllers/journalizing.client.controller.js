@@ -29,7 +29,8 @@ $scope.searchText = function(typedthings){
             $scope.ledgersJSON.map(function(item){
               // เพิ่ม ledger detail   101 : เงินสด
               item.ledger_detail=item.coa_id+" : "+item.coa_detail;
-              item.coa_detail=item.coa_detail;
+              item.ledger_name=item.coa_detail;
+              item.ledger_id=item.coa_id;
             });
             $scope.ledgers = _.map($scope.ledgersJSON, 'ledger_detail');
         });
