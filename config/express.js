@@ -8,6 +8,13 @@ var validator = require("express-validator");
 module.exports = function(){
   var app = express();
 
+  // Cors
+  app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
 
   // Session config
@@ -29,14 +36,6 @@ module.exports = function(){
   app.use(bodyParser.json());
   app.use(validator());
 
-  // Cors
-  app.use(function(req, res, next) {
-    console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxx");
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
-    next();
-  });
 
   // View Engine
   app.set("views",["./views"]);
