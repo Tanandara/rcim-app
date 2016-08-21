@@ -60,7 +60,7 @@ $scope.searchText = function(typedthings){
     //     });
     $http({
         method: 'POST',
-        url:"http://localhost:3000/coa",
+        url:"https://rcim-app.herokuapp.com/coa",
         data:"search="+typedthings,
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function(data, status) {
