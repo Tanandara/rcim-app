@@ -5,6 +5,8 @@ module.exports = function(sequelize, DataTypes) {
                 primaryKey: true
               },
     coa_detail: DataTypes.STRING
+  },{
+    freezeTableName: true
   });
   return coa;
 };

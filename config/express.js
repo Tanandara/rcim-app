@@ -42,12 +42,13 @@ module.exports = function(){
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     next();
   });
-  
+
 
   // Routes
   require("../routes/index.routes")(app);
   require("../routes/users.routes")(app);
   require("../routes/coa.routes")(app);
+  require("../routes/journals.routes")(app);
 
 
   return app;
