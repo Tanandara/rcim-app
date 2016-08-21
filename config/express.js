@@ -1,4 +1,5 @@
 var express = require("express");
+var cors = require("cors");
 var morgan = require("morgan");
 var bodyParser = require("body-parser");
 var ejs = require('ejs');
@@ -9,12 +10,7 @@ module.exports = function(){
   var app = express();
 
   // Cors
-  app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
+  app.use(cors());
 
 
   // Session config
