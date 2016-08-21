@@ -29,6 +29,14 @@ module.exports = function(){
   app.use(bodyParser.json());
   app.use(validator());
 
+  // Cors
+  app.use(function(req, res, next) {
+    console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxx");
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+    next();
+  });
 
   // View Engine
   app.set("views",["./views"]);
@@ -36,12 +44,6 @@ module.exports = function(){
   app.use(express.static("./public"));
 
 
-  // Cors
-  app.all('/*', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next();
-  });
 
 
   // Routes

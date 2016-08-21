@@ -84,7 +84,52 @@ $scope.SumDrCr = function(drcr){
     return sum;
 }
 
+$scope.saveJournalizing = function(){
 
+
+
+
+  var journalsData = [], datejournal = function(i){return i[3]+"-"+i[2]+"-"+i[1];}(/(\d+)\/(\d+)\/(\d+)/g.exec($scope.datejournal));
+
+  // set Debit Credit
+  $scope.details.forEach(function(data){
+    journalsData.push(
+      {
+        "coa_detail":data.detail,
+        "coa_id":data.ledger_id,
+        "drcr":data.drcr,
+        "amount":data.amount,
+        "date_time":datejournal
+      }
+    );
+  });
+
+  // set Description
+  journalsData.push(
+    {
+      "coa_detail":$scope.description,
+      "coa_id":"",
+      "drcr":3,
+      "amount":0,
+      "date_time":datejournal
+    }
+  );
+
+
+
+
+  $http({
+      method: 'POST',
+      url:"http://localhost:3000/journals/add",
+      data:journalsData,
+      headers: {'Content-Type': 'application/json'}
+      })
+  .success(function(data,status){
+    console.log(data);
+    console.log("save success");
+
+  });
+}
 
 
 
