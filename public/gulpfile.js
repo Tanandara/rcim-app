@@ -7,6 +7,7 @@ var rename = require('gulp-rename');
 gulp.task('concat', function() {
     gulp.src(
       [
+        "myfunction.js",
         "modules/core/core.client.module.js",
         "modules/core/config/core.client.routes.js",
         "modules/general_journals/general_journals.client.module.js",
@@ -50,7 +51,7 @@ gulp.task("copy",function(){
 
 gulp.task('default', function() {
 	//livereload.listen();
-	gulp.watch(["modules/**/**.js","application.js","!./node_modules","!tanandara.js"],["concat"]);
+	gulp.watch(["modules/**/**.js","application.js","!./node_modules","!tanandara.js","myfunction.js"],["concat"]);
   gulp.watch("./index.html",["copy"]);
   //gulp.watch(["**/**.*","!./node_modules","!tanandara.js"],function(){
 	//	gulp.src(["index.html"]).pipe(livereload());

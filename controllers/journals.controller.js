@@ -82,3 +82,35 @@ exports.AddJournals = function(req,res){
     });
 
 }
+
+
+
+
+exports.ShowDetails = function(req,res){
+      // set campus_id ดูได้เฉพาะวิทยาเขตของตนเอง
+      var campus_id = 3;
+
+      models.sequelize.query(
+        "select " +
+        "date_time as journal_date," +
+        "journal_id as journal_id," +
+        "coa_detail as detail," +
+        "coa_id as ledger_id," +
+        "drcr as drcr," +
+        "amount as amount " +
+        "from journals " +
+        "where (date_time BETWEEN :datestart AND :dateend) AND campus_id = :campus_id " +
+        "order by date_time,journal_id",
+        {
+          replacements: {
+                          datestart: req.body.datestart,
+                          dateend: req.body.dateend,
+                          campus_id: campus_id
+                        },
+          type: Sequelize.QueryTypes.SELECT
+        })
+        .then(function(data) {
+          console.log(data);
+          res.json(data);
+        });
+}

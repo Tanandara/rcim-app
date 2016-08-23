@@ -1,3 +1,8 @@
+function dateStringFormat(date){
+  // แปลง dd/MM/yyyy เป็น yyyy-mm-dd
+  return function (i){return i[3]+"-"+i[2]+"-"+i[1];}(/(\d+)\/(\d+)\/(\d+)/g.exec(date));
+}
+
 angular.module("core",[]);
 
 angular.module("core").config([
@@ -226,9 +231,11 @@ function($scope,$http,$stateParams){
       $scope.datestart = $stateParams.datestart;
       $scope.dateend = $stateParams.dateend;
       $http({
-        method: 'GET',
-        url: $scope.dbURL + '/journal_detail'
+        method: 'POST',
+        url: 'https://rcim-app.herokuapp.com/journal_detail',
+        data: {"datestart" : dateStringFormat($scope.datestart) ,"dateend" : dateStringFormat($scope.dateend)}
       }).success(function(data, status) {
+        data.map(function(i){ i.journal_date = moment(i.journal_date).format("DD/MM/YYYY")});
         $scope.journal_details = data;
       });
   }

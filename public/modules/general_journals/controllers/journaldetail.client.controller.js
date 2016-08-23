@@ -6,9 +6,11 @@ function($scope,$http,$stateParams){
       $scope.datestart = $stateParams.datestart;
       $scope.dateend = $stateParams.dateend;
       $http({
-        method: 'GET',
-        url: $scope.dbURL + '/journal_detail'
+        method: 'POST',
+        url: 'https://rcim-app.herokuapp.com/journal_detail',
+        data: {"datestart" : dateStringFormat($scope.datestart) ,"dateend" : dateStringFormat($scope.dateend)}
       }).success(function(data, status) {
+        data.map(function(i){ i.journal_date = moment(i.journal_date).format("DD/MM/YYYY")});
         $scope.journal_details = data;
       });
   }
