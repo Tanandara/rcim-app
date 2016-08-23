@@ -1,6 +1,6 @@
 angular.module("general_journals").controller("JournalizingController",
-["$scope","$http",
-function($scope,$http){
+["$scope","$http","$uibModal",
+function($scope,$http,$uibModal){
 
 $scope.checkJournalizing = function(){
   return !(_.size($scope.details) && ($scope.Dr ==$scope.Cr) && $scope.description && $scope.datejournal);
@@ -85,12 +85,7 @@ $scope.SumDrCr = function(drcr){
 }
 
 $scope.saveJournalizing = function(){
-
-
-
-
   var journalsData = [], datejournal = function(i){return i[3]+"-"+i[2]+"-"+i[1];}(/(\d+)\/(\d+)\/(\d+)/g.exec($scope.datejournal));
-
   // set Debit Credit
   $scope.details.forEach(function(data){
     journalsData.push(
@@ -103,7 +98,6 @@ $scope.saveJournalizing = function(){
       }
     );
   });
-
   // set Description
   journalsData.push(
     {
@@ -114,10 +108,6 @@ $scope.saveJournalizing = function(){
       "date_time":datejournal
     }
   );
-
-
-
-
   $http({
       method: 'POST',
       url:"http://localhost:3000/journals/add",
@@ -125,14 +115,40 @@ $scope.saveJournalizing = function(){
       headers: {'Content-Type': 'application/json'}
       })
   .success(function(data,status){
+    // แสดง modal
+    var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: 'myModalContent',
+            size: undefined,
+            controller: 'ModalAlert',
+            resolve: {
+              message: function () {return "บันทึกสำเร็จ"}
+             }
+          });
+
     console.log(data);
     console.log("save success");
-
+    clearData();
   });
 }
 
 
 
+function clearData(){
+  $scope.details=[];
+  $scope.datejournal="";
+  $scope.description="";
+}
+
 
 
 }]);
+
+
+angular.module('general_journals').controller('ModalAlert', function ($scope, $uibModalInstance,$state, message) {
+  $scope.message =message;
+  $scope.ok = function () {
+    $uibModalInstance.dismiss();
+  };
+
+});

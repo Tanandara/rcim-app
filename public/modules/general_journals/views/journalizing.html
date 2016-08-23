@@ -133,3 +133,14 @@ $(function () {
       }).keydown(false);
 });
 </script>
+<script type="text/ng-template" id="myModalContent">
+       <div class="modal-header">
+           <h3 class="modal-title">ข้อความ</h3>
+       </div>
+       <div class="modal-body">
+           <h3>{{message}}</h3>
+       </div>
+       <div class="modal-footer">
+           <a class="btn btn-primary" type="button"  ng-click="ok()" >ตกลง</a>
+       </div>
+</script>
