@@ -110,7 +110,7 @@ $scope.saveJournalizing = function(){
   );
   $http({
       method: 'POST',
-      url:"http://localhost:3000/journals/add",
+      url:"https://rcim-app.herokuapp.com/journals/add",
       data:journalsData,
       headers: {'Content-Type': 'application/json'}
       })
