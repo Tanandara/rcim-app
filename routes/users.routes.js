@@ -4,6 +4,7 @@ module.exports = function(app){
   app.get("/users",users.GetAllUsers);
   app.get("/users/:id",users.GetUser);
   app.post("/users/create",users.CreateUser);
+  app.post("/users/create2",users.CreateUser2);
   app.post("/users/delete",users.DeleteUser);
   app.post("/users/update",users.UpdateUser);
   app.post("/users/login",users.LoginUser);

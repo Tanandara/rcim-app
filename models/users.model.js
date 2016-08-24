@@ -10,16 +10,19 @@ module.exports = function(sequelize, DataTypes) {
     email: DataTypes.STRING,
     salt: DataTypes.TEXT,
     tel_no: DataTypes.STRING,
-    address: DataTypes.STRING
+    address: DataTypes.STRING,
+    campus_id:DataTypes.INTEGER,
+    role_id:DataTypes.INTEGER
   });
 
-  users.beforeCreate(function(user, options) {
+
+  users.beforeCreate((user, options) => {
     if(user.password){
       // ต้องเก็บเป็น Binary ==> user.salt = new Buffer(crypto.randomBytes(16).toString("base64"),"base64");
       user.salt = crypto.randomBytes(16).toString("base64");
       user.password = users.hashPassword(user.password,user.salt);
     }
-  })
+  });
 
   users.hashPassword = function(password,salt){
     return crypto.pbkdf2Sync(password,salt,10000,64).toString("base64");
