@@ -52,13 +52,18 @@ exports.LoginUser = function(req,res){
 }
 
 exports.DeleteUser = function(req,res){
-  res.send("xxxx");
+  models.users.destroy({
+    where: {
+      user_id: req.body.user_id
+    }
+  }).then(function() {
+    res.json([{"message":"success"}]);
+  });
 }
 
 exports.UpdateUser = function(req,res){
   // เข้ารหัส password
-  if(req.body.password){
-    req.body.salt = crypto.randomBytes(16).toString("base64"); req.body.password =function(password,salt){return crypto.pbkdf2Sync(password,salt,10000,64).toString("base64")}(req.body.password,req.body.salt)}
+  if(req.body.password){req.body.salt = crypto.randomBytes(16).toString("base64"); req.body.password =function(password,salt){return crypto.pbkdf2Sync(password,salt,10000,64).toString("base64")}(req.body.password,req.body.salt)}
 
   models.users.update({
       user_name:req.body.user_name,
@@ -77,20 +82,6 @@ exports.UpdateUser = function(req,res){
   .then((data)=>{
     res.json([{"message":"success"}]);
   });
-
-  // user.update({
-  //   user_name:req.body.user_name,
-  //   password:req.body.password,
-  //   email: req.body.email,
-  //   tel_no: req.body.telno,
-  //   address: req.body.address,
-  //   campus_id:req.body.campus_id,
-  //   role_id:req.body.role_id
-  // })
-  // .then((data)=>{
-  //   res.json(data);
-  // });
-
 }
 
 exports.CreateUser = function(req,res){
