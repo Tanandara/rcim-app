@@ -81,9 +81,11 @@
                 {{i.detail}}
             </td>
             <td>{{i.ledger_id}}</td>
-            <td ng-if="i.drcr=='1' || i.drcr=='3'">{{i.amount}}</td>
+            <td ng-if="i.drcr=='1'">{{i.amount}}</td>
             <td ng-if="i.drcr=='1' || i.drcr=='2' "></td>
-            <td ng-if="i.drcr=='2' || i.drcr=='3'">{{i.amount}}</td>
+            <td ng-if="i.drcr=='2'">{{i.amount}}</td>
+            <td ng-if="i.drcr=='3'">&nbsp;</td>
+            <td ng-if="i.drcr=='3'">&nbsp;</td>
           </tr>
         </tbody>
         <tfoot>

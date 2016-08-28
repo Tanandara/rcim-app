@@ -28,10 +28,16 @@ var _ = require('lodash');
 
 // Custom query
 exports.Query = function(req,res){
-    models.sequelize.query("SELECT * FROM coa where coa_id like :search or coa_detail like :search", 
+    models.sequelize.query(
+      "SELECT * FROM coa where " +
+      "coa_id regexp '^[1-5][1-9]' and " +
+      "coa_id like :search or " +
+      "coa_detail like :search "
+      ,
         {
           replacements: { search: "%"+req.body.search+"%" },
-          type: Sequelize.QueryTypes.SELECT
+          type: Sequelize.QueryTypes.SELECT,
+          logging: console.log
         })
         .then(function(users) {
           console.log(users);

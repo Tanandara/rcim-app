@@ -138,6 +138,8 @@ function clearData(){
   $scope.details=[];
   $scope.datejournal="";
   $scope.description="";
+  $scope.Dr = 0;
+  $scope.Cr = 0;
 }
 
 
