@@ -11,8 +11,10 @@ module.exports = function(sequelize, DataTypes) {
     amount: DataTypes.DECIMAL,
     date_time: DataTypes.DATE,
     campus_id:DataTypes.INTEGER,
-    user_id:DataTypes.STRING,
-    date_create:DataTypes.DATE
+    user_create:DataTypes.STRING,
+    date_create:DataTypes.DATE,
+    user_update:DataTypes.STRING,
+    date_update:DataTypes.DATE
   },{
     freezeTableName: true
   });

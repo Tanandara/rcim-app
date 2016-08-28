@@ -64,7 +64,7 @@ exports.AddJournals = function(req,res){
             amount: data.amount,
             date_time: data.date_time,
             campus_id:campus_id,
-            user_id:user_id,
+            user_create:user_id,
             date_create:new Date()
           });
       });
