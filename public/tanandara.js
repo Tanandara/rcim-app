@@ -505,7 +505,7 @@ function($scope,$http,$stateParams){
   $scope.getTrialBalance = function(){
     $http({
       method: 'POST',
-      url: 'http://localhost:3000/trial_balance',
+      url: 'https://rcim-app.herokuapp.com/trial_balance',
       data: {
         "datestart" : dateStringFormat($scope.datestart) ,
         "dateend" : dateStringFormat($scope.dateend) ,
