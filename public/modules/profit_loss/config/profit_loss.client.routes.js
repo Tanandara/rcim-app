@@ -11,7 +11,7 @@ angular.module("profit_loss").config([
     .state("profitloss",{
       url:"/profitloss",
       params: {
-            campus_id:"1",
+            campus_id:"4",
             datestart:date,
             dateend:date
         },

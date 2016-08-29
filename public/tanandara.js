@@ -499,7 +499,7 @@ function($scope,$http,$stateParams){
   $scope.campus_id = $stateParams.campus_id;
   $scope.campus_name = $scope.campus_id == "1" ? "ศาลายา"     :
                        $scope.campus_id == "2" ? "วังไกลกังวล"  :
-                       $scope.campus_id == "3" ? "บพิตรพิมุช"   :
+                       $scope.campus_id == "3" ? "บพิตรพิมุข"   :
                                                  "ทุกวิทยาเขต" ;
 
   $scope.getTrialBalance = function(){
@@ -593,7 +593,7 @@ angular.module("profit_loss").config([
     .state("profitloss",{
       url:"/profitloss",
       params: {
-            campus_id:"1",
+            campus_id:"4",
             datestart:date,
             dateend:date
         },
@@ -603,9 +603,44 @@ angular.module("profit_loss").config([
 ]);
 
 angular.module("profit_loss").controller("ProfitLossController",
-["$scope","$http","$state",
-function($scope,$http,$state){
+["$scope","$http","$stateParams",
+function($scope,$http,$stateParams){
+  $scope.datestart = $stateParams.datestart;
+  $scope.dateend = $stateParams.dateend;
+  $scope.campus_id = $stateParams.campus_id;
+  $scope.campus_name = $scope.campus_id == "1" ? "ศาลายา"     :
+                       $scope.campus_id == "2" ? "วังไกลกังวล"  :
+                       $scope.campus_id == "3" ? "บพิตรพิมุข"   :
+                                                 "ทุกวิทยาเขต" ;
 
+  $scope.getProfitLoss = function(){
+    $http({
+      method: 'POST',
+      url: 'http://localhost:3000/profit_loss',
+      data: {
+        "datestart" : dateStringFormat($scope.datestart) ,
+        "dateend" : dateStringFormat($scope.dateend) ,
+        "campus_id" : $stateParams.campus_id
+      }
+    }).success(function(data, status) {
+      $scope.profitloss = data;
+    });
+  }
+
+  $scope.profitFilter = function(i){
+    return /^4/gm.test(i.coa_id);
+  }
+
+  $scope.lossFilter = function(i){
+    return /^5/gm.test(i.coa_id);
+  }
+
+  $scope.sumProfitLoss = function(c){
+    var sum=0 ;
+    var pattern = c == 'Profit' ? /^4/ : /^5/;
+    _.each(_.filter($scope.profitloss, i => pattern.test(i.coa_id) ) , i => sum+=i.amount_total);
+    return sum;
+  }
 
 }]);
 

@@ -6,7 +6,7 @@ function($scope,$http,$stateParams){
   $scope.campus_id = $stateParams.campus_id;
   $scope.campus_name = $scope.campus_id == "1" ? "ศาลายา"     :
                        $scope.campus_id == "2" ? "วังไกลกังวล"  :
-                       $scope.campus_id == "3" ? "บพิตรพิมุช"   :
+                       $scope.campus_id == "3" ? "บพิตรพิมุข"   :
                                                  "ทุกวิทยาเขต" ;
 
   $scope.getTrialBalance = function(){
