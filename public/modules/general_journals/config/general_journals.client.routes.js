@@ -1,7 +1,7 @@
 angular.module("general_journals").config([
   "$stateProvider",
   function($stateProvider){
-    var date = new Date();
+    var date = moment().format("DD/MM/YYYY");
 
     $stateProvider
     .state("journalizing",{

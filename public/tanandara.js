@@ -20,7 +20,7 @@ angular.module("general_journals",[]);
 angular.module("general_journals").config([
   "$stateProvider",
   function($stateProvider){
-    var date = new Date();
+    var date = moment().format("DD/MM/YYYY");
 
     $stateProvider
     .state("journalizing",{
@@ -427,7 +427,7 @@ angular.module("trial_balance",[]);
 angular.module("trial_balance").config([
   "$stateProvider",
   function($stateProvider){
-    var date = new Date();
+    var date = moment().format("DD/MM/YYYY");
 
     $stateProvider
     .state("searchtrial",{
@@ -583,7 +583,7 @@ angular.module("profit_loss",[]);
 angular.module("profit_loss").config([
   "$stateProvider",
   function($stateProvider){
-    var date = new Date();
+    var date = moment().format("DD/MM/YYYY");
 
     $stateProvider
     .state("searchprofitloss",{

@@ -1,7 +1,7 @@
 angular.module("trial_balance").config([
   "$stateProvider",
   function($stateProvider){
-    var date = new Date();
+    var date = moment().format("DD/MM/YYYY");
 
     $stateProvider
     .state("searchtrial",{

@@ -1,7 +1,7 @@
 angular.module("profit_loss").config([
   "$stateProvider",
   function($stateProvider){
-    var date = new Date();
+    var date = moment().format("DD/MM/YYYY");
 
     $stateProvider
     .state("searchprofitloss",{
