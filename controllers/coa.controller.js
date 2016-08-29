@@ -36,8 +36,7 @@ exports.Query = function(req,res){
       ,
         {
           replacements: { search: "%"+req.body.search+"%" },
-          type: Sequelize.QueryTypes.SELECT,
-          logging: console.log
+          type: Sequelize.QueryTypes.SELECT
         })
         .then(function(users) {
           console.log(users);

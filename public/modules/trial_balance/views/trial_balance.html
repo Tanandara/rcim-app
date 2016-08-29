@@ -15,13 +15,13 @@
       </style>
       <div class="row">
         <div class="col-md-12">
-          <div class="pull-left"><h4>วิทยาเขต : <span class="value-font">บพิตรพิมุข</span></h4></div>
+          <div class="pull-left"><h4>วิทยาเขต : <span class="value-font">{{campus_name}}</span></h4></div>
           <div class="pull-right btn btn-info"><i class="fa fa-print"></i>  พิมพ์รายงาน</div>
         </div>
       </div>
       <h4>วิทยาลัยนวัตกรรมการจัดการ มทร.รัตนโกสินทร์ </h4>
       <h4>งบทดลอง</h4>
-      <h4>วันที่ <span class="value-font">14/07/2016</span> - <span class="value-font">14/07/2016</span></h4>
+      <h4>วันที่ <span class="value-font">{{datestart}}</span> - <span class="value-font">{{dateend}}</span></h4>
       <table class="table table-bordered table-hover">
       <style>
         .table-hover tr:hover{
@@ -74,11 +74,10 @@
         <tbody>
           <tr ng-repeat="i in trial">
             <td>{{$index+1}}</td>
-            <td>{{i.ledger_name}}</td>
-            <td>{{i.ledger_id}}</td>
-            <td ng-if="i.drcr=='1'">{{i.amount}}</td>
-            <td ng-if="i.drcr=='1' || i.drcr=='2'"></td>
-            <td ng-if="i.drcr=='2'">{{i.amount}}</td>
+            <td>{{i.coa_detail}}</td>
+            <td>{{i.coa_id}}</td>
+            <td>{{i.amount_dr}}</td>
+            <td>{{i.amount_cr}}</td>
           </tr>
         </tbody>
         <tfoot>

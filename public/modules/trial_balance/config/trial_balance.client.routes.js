@@ -11,7 +11,7 @@ angular.module("trial_balance").config([
     .state("trialbalance",{
       url:"/trialbalance",
       params: {
-            campus_id:"1",
+            campus_id:"4",
             datestart:date,
             dateend:date
         },
