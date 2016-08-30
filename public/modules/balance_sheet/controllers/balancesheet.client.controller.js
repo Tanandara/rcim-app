@@ -11,7 +11,7 @@ function($scope,$http,$stateParams){
   $scope.getProfitLoss = function(){
     $http({
       method: 'POST',
-      url: 'http://localhost:3000/balance_sheet',
+      url: 'https://rcim-app.herokuapp.com/balance_sheet',
       data: {
         "dateend" : dateStringFormat($scope.date) ,
         "campus_id" : $stateParams.campus_id
