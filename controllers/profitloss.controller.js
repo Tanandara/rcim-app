@@ -29,10 +29,10 @@ exports.Query = function(req,res){
       		coa_2digit.coa_detail,
       		if(coa_sum.drcr is null,0,coa_sum.drcr) as drcr,
       		if(coa_sum.amount is null,0,coa_sum.amount) as amount
-      		from (select * from coa where (coa_id regexp '^[4-5][1-9]00000000')) as coa_2digit
+      		from (select * from coa where (coa_id regexp '^[4-5][1-9][0-9][1-9]000000|^5[3-4]0{8}')) as coa_2digit
       		left outer join
       		(
-      			select concat(substring(coa_id,1,2),'00000000') as grp_coa_id,drcr,sum(amount) as amount from
+      			select concat(substring(coa_id,1,4),'000000') as grp_coa_id,drcr,sum(amount) as amount from
       			(	select * from journals
       				where date_time between :datestart and :dateend
       				and campus_id in (:campus_id)
