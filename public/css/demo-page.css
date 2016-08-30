@@ -15,7 +15,7 @@
  * you don't need to include these on your own site.
  */
 
-@import url(http://fonts.googleapis.com/css?family=Roboto);
+@import url(https://fonts.googleapis.com/css?family=Roboto);
 
 body {
   margin: 0;
@@ -104,6 +104,3 @@ a {
 .tutorial:active {
   text-decoration: none;
 }
-
-
-
