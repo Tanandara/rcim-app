@@ -1,7 +1,7 @@
 angular.module("balance_sheet").config([
   "$stateProvider",
   function($stateProvider){
-    var date = new Date();
+    var date = moment().format("DD/MM/YYYY");
 
     $stateProvider
     .state("searchbalance",{

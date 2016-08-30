@@ -15,13 +15,13 @@
       </style>
       <div class="row">
         <div class="col-md-12">
-          <div class="pull-left"><h4>วิทยาเขต : <span class="value-font">บพิตรพิมุข</span></h4></div>
+          <div class="pull-left"><h4>วิทยาเขต : <span class="value-font">{{campus_name}}</span></h4></div>
           <div class="pull-right btn btn-info"><i class="fa fa-print"></i>  พิมพ์รายงาน</div>
         </div>
       </div>
       <h4>วิทยาลัยนวัตกรรมการจัดการ มทร.รัตนโกสินทร์ </h4>
       <h4>งบดุล</h4>
-      <h4>ณ <span class="value-font">23/07/2016</span></h4>
+      <h4>ณ <span class="value-font">{{date}}</span></h4>
       <hr>
       <div class="col-md-12 balancesheet">
         <style media="screen">
@@ -69,26 +69,27 @@
             <tr>
               <th colspan="2">สินทรัพย์หมุนเวียน</th>
             </tr>
-            <tr><td>เงินสด</td><td>150000</td></tr>
-            <tr><td>ลูกหนี้</td><td>75000</td></tr>
-            <tr><td>สินค้าคงเหลือ</td><td>71400</td></tr>
-            <tr><td>ค่าเช่าจ่ายล่วงหน้า</td><td>3600</td></tr>
-            <tr><td>รวมสินทรัพย์หมุนเวียน</td><td>300000</td></tr>
+            <tr ng-repeat="i in balancesheet | filter:currentAssetFilter">
+              <td>{{i.coa_detail}}</td>
+              <td>{{i.amount_total}}</td>
+            </tr>
+            <tr><td>รวมสินทรัพย์หมุนเวียน</td><td>{{sumBalance('currentAsset')}}</td></tr>
           </table>
 
           <table class="table">
             <tr>
               <th colspan="2">สินทรัพย์ไม่หมุนเวียน</th>
             </tr>
-            <tr><td>&nbsp;เงินลงทุนในบริษัทอื่น</td><td>30000</td></tr>
-            <tr><td>&nbsp;ที่ดิน</td><td>120000</td></tr>
-            <tr><td>&nbsp;อาคาร</td><td>150000</td></tr>
-            <tr><td>&nbsp;&nbsp;รวมสินทรัพย์ไม่หมุนเวียน</td><td>300000</td></tr>
+            <tr ng-repeat="i in balancesheet | filter:noncurrentAssetFilter">
+              <td>{{i.coa_detail}}</td>
+              <td>{{i.amount_total}}</td>
+            </tr>
+            <tr><td>รวมสินทรัพย์ไม่หมุนเวียน</td><td>{{sumBalance('noncurrentAsset')}}</td></tr>
           </table>
           <table class="table">
             <tr>
               <th>รวมสินทรัพย์</th>
-              <th>600000</th>
+              <th>{{sumBalance('Asset')}}</th>
             </tr>
           </table>
         </div>
@@ -108,23 +109,28 @@
             <tr>
               <th colspan="2">หนี้สินหมุนเวียน</th>
             </tr>
-            <tr><td>&nbsp;เจ้าหนี้</td><td>21000</td></tr>
-            <tr><td>&nbsp;ลูกหนี้</td><td>9000</td></tr>
-            <tr><td>&nbsp;&nbsp;รวมหนี้หมุนเวียน</td><td>30000</td></tr>
+            <tr ng-repeat="i in balancesheet | filter:currentLiabilityFilter">
+              <td>{{i.coa_detail}}</td>
+              <td>{{i.amount_total}}</td>
+            </tr>
+            <tr><td>&nbsp;&nbsp;รวมหนี้หมุนเวียน</td><td>{{sumBalance('currentLiability')}}</td></tr>
           </table>
 
           <table class="table">
             <tr>
               <th colspan="2">หนี้สินไม่หมุนเวียน</th>
             </tr>
-            <tr><td>&nbsp;เงินกู้ยืมระยะยาว</td><td>150000</td></tr>
-            <tr><td>&nbsp;&nbsp;รวมหนี้ทรัพย์ไม่หมุนเวียน</td><td>150000</td></tr>
+            <tr ng-repeat="i in balancesheet | filter:noncurrentLiabilityFilter">
+              <td>{{i.coa_detail}}</td>
+              <td>{{i.amount_total}}</td>
+            </tr>
+            <tr><td>&nbsp;&nbsp;รวมหนี้ทรัพย์ไม่หมุนเวียน</td><td>{{sumBalance('noncurrentLiability')}}</td></tr>
           </table>
 
           <table class="table">
             <tr>
               <th>รวมหนี้สิน</th>
-              <th>180000</th>
+              <th>{{sumBalance('Liability')}}</th>
             </tr>
           </table>
 
@@ -132,15 +138,17 @@
             <tr>
               <th colspan="2">ส่วนของผู้ถือหุ้น</th>
             </tr>
-            <tr><td>&nbsp;หุ้นสามัญ</td><td>300000</td></tr>
-            <tr><td>&nbsp;กำไรสะสม</td><td>120000</td></tr>
-            <tr><td>&nbsp;&nbsp;รวมส่วนของผู้ถือหุ้น</td><td>420000</td></tr>
+            <tr ng-repeat="i in balancesheet | filter:shareholderFilter">
+              <td>{{i.coa_detail}}</td>
+              <td>{{i.amount_total}}</td>
+            </tr>
+            <tr><td>&nbsp;&nbsp;รวมส่วนของผู้ถือหุ้น</td><td>{{sumBalance('Shareholder')}}</td></tr>
           </table>
 
           <table class="table">
             <tr>
               <th>รวมหนี้สินและส่วนของผู้ถือหุ้น</th>
-              <th>600000</th>
+              <th>{{sumBalance('LiabilityAndShareholder')}}</th>
             </tr>
           </table>
 

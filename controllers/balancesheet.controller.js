@@ -1,12 +1,14 @@
 var models  = require('../models');
 var Sequelize  = require('sequelize');
 var _ = require('lodash');
+var moment = require('moment');
 
 
 
 
 //Custom query
 exports.Query = function(req,res){
+    var datestart = moment(new Date(0)).format("YYYY-MM-DD");
     models.sequelize.query(
       `
       select
@@ -48,7 +50,7 @@ exports.Query = function(req,res){
       ,
       {
         replacements: {
-                        datestart: req.body.datestart,
+                        datestart: datestart,
                         dateend: req.body.dateend,
                         campus_id : req.body.campus_id == 4 ? [1,2,3] : [req.body.campus_id]
                       },
