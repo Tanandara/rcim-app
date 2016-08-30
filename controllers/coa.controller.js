@@ -29,10 +29,14 @@ var _ = require('lodash');
 // Custom query
 exports.Query = function(req,res){
     models.sequelize.query(
-      "SELECT * FROM coa where " +
-      "coa_id regexp '^[1-5][1-9][0-9][1-9]' and " +
-      "coa_id like :search or " +
-      "coa_detail like :search "
+      `
+      select * from
+      (
+      	select * from coa
+        where coa_id like '%100%' or coa_detail like '%100%'
+      ) as ledgers
+      where coa_id regexp '^[1-5][1-9][0-9][1-9]'
+      `
       ,
         {
           replacements: { search: "%"+req.body.search+"%" },

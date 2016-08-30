@@ -23,23 +23,23 @@ function($scope,$http,$stateParams){
 
 
   $scope.currentAssetFilter = function(i){
-    return /^11/gm.test(i.coa_id);
+    return /^11/.test(i.coa_id);
   }
 
-  $scope.noncurentAssetFilter = function(i){
-    return /^12/gm.test(i.coa_id);
+  $scope.noncurrentAssetFilter = function(i){
+    return /^12/.test(i.coa_id);
   }
 
   $scope.currentLiabilityFilter = function(i){
-    return /^21/gm.test(i.coa_id);
+    return /^21/.test(i.coa_id);
   }
 
   $scope.noncurrentLiabilityFilter = function(i){
-    return /^22/gm.test(i.coa_id);
+    return /^22/.test(i.coa_id);
   }
 
   $scope.shareholderFilter = function(i){
-    return /^3/gm.test(i.coa_id);
+    return /^3/.test(i.coa_id);
   }
 
   $scope.sumBalance = function(c){
@@ -49,10 +49,10 @@ function($scope,$http,$stateParams){
                   c == 'Asset'                ? /^1/     :
                   c == 'currentLiability'     ? /^21/    :
                   c == 'noncurrentLiability'  ? /^22/    :
-                  c == 'Liability'            ? /^22/    :
+                  c == 'Liability'            ? /^2/    :
                   c == 'Shareholder'          ? /^3/     :
                                                 /^[1-3]/ ;
-    _.each(_.filter($scope.profitloss, i => pattern.test(i.coa_id) ) , i => sum+=i.amount_total);
+    _.each(_.filter($scope.balancesheet, i => pattern.test(i.coa_id) ) , i => sum+=i.amount_total);
     return sum;
   }
 
