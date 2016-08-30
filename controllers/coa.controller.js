@@ -30,7 +30,7 @@ var _ = require('lodash');
 exports.Query = function(req,res){
     models.sequelize.query(
       "SELECT * FROM coa where " +
-      "coa_id regexp '^[1-5][1-9]' and " +
+      "coa_id regexp '^[1-5][1-9][0-9][1-9]' and " +
       "coa_id like :search or " +
       "coa_detail like :search "
       ,
