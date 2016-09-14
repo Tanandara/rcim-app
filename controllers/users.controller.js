@@ -5,7 +5,21 @@ var crypto = require('crypto');
 
 
 exports.GetAllUsers = function(req,res){
-    models.users.findAll()
+    models.sequelize.query(
+    `
+    SELECT
+    u.user_id,
+    u.user_name,
+    u.email,
+    u.tel_no,
+    u.address,
+    c.campus_name,
+    r.role_name
+    FROM users as u
+    left outer join campus as c on u.campus_id = c.campus_id
+    left outer join roles as r on u.role_id = r.role_id
+    `
+    , { type: Sequelize.QueryTypes.SELECT})
     .then(function(data){
       res.json(data);
     });
@@ -84,22 +98,22 @@ exports.UpdateUser = function(req,res){
   });
 }
 
-exports.CreateUser = function(req,res){
-  models.users.create({
-    user_id:req.body.user_id,
-    user_name:req.body.user_name,
-    password:req.body.password,
-    email: req.body.email,
-    tel_no: req.body.tel_no,
-    address: req.body.address,
-    campus_id:req.body.campus_id,
-    role_id:req.body.role_id
-  }).then(function(user){
-    res.send("success");
-  });
-}
+// exports.CreateUser = function(req,res){
+//   models.users.create({
+//     user_id:req.body.user_id,
+//     user_name:req.body.user_name,
+//     password:req.body.password,
+//     email: req.body.email,
+//     tel_no: req.body.tel_no,
+//     address: req.body.address,
+//     campus_id:req.body.campus_id,
+//     role_id:req.body.role_id
+//   }).then(function(user){
+//     res.send("success");
+//   });
+// }
 
-exports.CreateUser2 = function(req,res){
+exports.CreateUser = function(req,res){
   /*
     role
     1 = พนักงานบัญชี

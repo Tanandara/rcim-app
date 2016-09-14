@@ -2,16 +2,16 @@ angular.module("users").config([
   "$stateProvider",
   function($stateProvider){
     $stateProvider
-      .state("userlist",
+      .state("user",
         {
-            url:"/userlist",
-            templateUrl:"/modules/users/views/userlist.ejs"
+            url:"/user",
+            templateUrl:"/modules/users/views/userlist.html"
         }
       )
       .state("adduser",
       {
         url:"/user/add",
-        templateUrl:"/modules/users/views/adduser.ejs"
+        templateUrl:"/modules/users/views/manageuser.html"
       }
     )
   }

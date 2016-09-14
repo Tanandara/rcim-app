@@ -1,0 +1,142 @@
+<div data-ng-controller="UserController" data-ng-init="getAllUsers()">
+  <div class="progressbar-heading grids-heading">
+    <h2>จัดการผู้ใช้งานในระบบ</h2>
+  </div>
+  <div class="panel panel-widget">
+    <div class="row">
+        <div class="col-md-12">
+          <a class="hvr-bounce-to-right pull-right" ng-click="addUserModal()">เพิ่มผู้ใช้งาน</a>
+        </div>
+    </div>
+    <div class="tables">
+      <h4>&nbsp;</h4>
+      <table class="table table-bordered" data-ng-show="users">
+        <style>
+          .table.table-bordered th,.table.table-bordered td{
+            text-align: center;
+          }
+          .table.table-bordered thead tr:first-child th{
+            background-color: #efe5e5;
+          }
+          .table.table-bordered th:nth-child(7){
+            width:150px;
+          }
+        </style>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>รหัสประจำตัว</th>
+            <th>ชื่อ - นามสกุล</th>
+            <th>อีเมล</th>
+            <th>ตำแหน่งงาน</th>
+            <th>วิทยาเขต</th>
+            <th>Edit / Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr  ng-repeat="user in users">
+            <th scope="row">{{$index+1}}</th>
+            <td>{{user.user_id}}</td>
+            <td>{{user.user_name}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.role_name}}</td>
+            <td>{{user.campus_name}}</td>
+            <td>
+              <div class="btn-group">
+                <button type="button" class="btn btn-danger">เลือก</button>
+                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+                  <span class="caret"></span>
+                  <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">แก้ไข</a></li>
+                  <li><a href="#" ng-click="deleteUserModal(user)">ลบ</a></li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script type="text/ng-template" id="deleteModalContent">
+      <div class="modal-header">
+          <h3 class="modal-title">ข้อความ</h3>
+      </div>
+      <div class="modal-body">
+          <h3>คุณต้องการที่จะลบ {{user_id}} ใช่หรือไม่</h3>
+      </div>
+      <div class="modal-footer">
+          <a class="btn btn-primary" type="button" ng-click="ok()" >ตกลง</a>
+      </div>
+  </script>
+
+
+  <script type="text/ng-template" id="addModalContent">
+      <div class="modal-header">
+          <h3 class="modal-title">เพิ่มผู้ใช้งาน</h3>
+      </div>
+      <div class="modal-body" style="display: inline-block;width: 100%;">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>ชื่อ - นามสกุล</label>
+              <input placeholder='ใส่ชื่อ - นามสกุล' type="text" name="username" ng-model="username" class="form-control"  required>
+            </div>
+            <div class="form-group">
+              <label>พาสเวิร์ด</label>
+              <input placeholder='ใส่พาสเวิร์ดต้องมากกว่า 8 ตัวอักษร' type="password" name="password" ng-model="password" class="form-control"  required>
+            </div>
+            <div class="form-group">
+              <label>ยืนยันพาสเวิร์ด</label>
+              <input placeholder='ยืนยันพาสเวิร์ด' type="password" name="password2" ng-model="password2" class="form-control"  required>
+            </div>
+            <div class="form-group">
+              <label>อีเมล</label>
+              <input placeholder='ใส่อีเมล' type="text" name="email" ng-model="email" class="form-control"  required>
+            </div>
+            <div class="form-group">
+              <label>เบอร์โทรศัพท์</label>
+              <input placeholder='ใส่เบอร์โทรศัพท์' type="text" name="tel" ng-model="tel" class="form-control" required>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>ที่อยู่</label>
+              <input placeholder='ใส่ที่อยู่ปัจจุบัน' ng-model="address" type="text" name="address" class="form-control"  required>
+            </div>
+            <div class="form-group">
+              <label>ตำแหน่งงาน</label>
+              <select name="role" id="role" ng-model="role" class="form-control" required>
+                <option value="" disabled selected>เลือก</option>
+                <option value="1" >พนักงานบัญชี</option>
+                <option value="2" >หัวหน้าพนักงาน</option>
+                <option value="3" >ผู้บริหาร</option>
+                <option value="4" >ผู้ดูแลระบบ</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>วิทยาเขต</label>
+              <select name="campus" id="campus" ng-model="campus" class="form-control" required>
+                <option value="" disabled selected>เลือก</option>
+                <option value="1" >ศาลายา</option>
+                <option value="2" >วังไกลกังวล</option>
+                <option value="3" >บพิตรพิมุข</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>รูปประจำตัว</label>
+              <input type="file" name="avatar" >
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+          <a class="btn btn-primary" type="button" ng-disabled="checkData()" ng-click="ok()" >ตกลง</a>
+      </div>
+  </script>
+
+
+
+
+
+</div>

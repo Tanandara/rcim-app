@@ -35,6 +35,9 @@ gulp.task('concat', function() {
         "modules/dashboard/dashboard.client.module.js",
         "modules/dashboard/config/dashboard.client.routes.js",
         "modules/dashboard/controllers/dashboard.client.controller.js",
+        "modules/users/users.client.module.js",
+        "modules/users/config/users.client.routes.js",
+        "modules/users/controllers/users.client.controller.js",
 		    "application.js"
       ]
         )

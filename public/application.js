@@ -10,7 +10,8 @@ angular.module("Main",
 "general_ledgers",
 "trial_balance",
 "balance_sheet",
-"profit_loss"]);
+"profit_loss",
+"users"]);
 
 
 angular.module("Main")
