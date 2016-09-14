@@ -2,6 +2,7 @@ var models  = require('../models');
 var Sequelize  = require('sequelize');
 var _ = require('lodash');
 var crypto = require('crypto');
+var fs = require('fs');
 
 
 exports.GetAllUsers = function(req,res){
@@ -71,6 +72,14 @@ exports.DeleteUser = function(req,res){
       user_id: req.body.user_id
     }
   }).then(function() {
+    var filename="";
+    for (var i of fs.readdirSync("./public/images/users/")) {
+      if ((new RegExp(req.body.user_id)).test(i)) {
+        filename = i;
+        break;
+      }
+    }
+    if(filename!="") fs.unlink("./public/images/users/" + filename );
     res.json([{"message":"success"}]);
   });
 }
@@ -159,14 +168,50 @@ exports.CreateUser = function(req,res){
       campus_id:req.body.campus_id,
       role_id:req.body.role_id
     }).then(function(data){
-      // res.json(data);
-      res.json([{"message":"success"}]);
+      //res.json(data);
+      res.json([{"id": data.user_id}]);
     });
 
   });
 
+}
 
 
+exports.uploadAvatar = function(req,res){
+  // console.log("req.file");
+  // console.log(req.file);
+  // console.log(req.file.path);
+  // console.log(req.file.originalname);
+  // console.log(req.body.userid);
+    if(req.file){
+
+        var fileExtension = (req.file.originalname).replace(/.+\.(gif|jpe?g|png)$/i,"$1");
+
+        if((/^(gif|jpe?g|png)$/i).test(fileExtension)){
+
+          var src = fs.createReadStream(req.file.path);
+          var dest = fs.createWriteStream( "./public/images/users/" +  req.body.userid +"." + fileExtension);
+          src.pipe(dest);
+          src.on('end', function() {
+             console.log('upload complete');
+             fs.unlink(req.file.path);
+             res.send("upload complete");
+           });
+          src.on('error', function(err) {
+            console.log(err);
+            fs.unlink(req.file.path);
+            res.send("upload fail");
+           });
+
+
+
+        }else{
+          fs.unlink(req.file.path);
+          res.json({"message":"ไม่ได้อัพโหลดรูปภาพมา"});
+        }
+
+
+    }
 }
 
 

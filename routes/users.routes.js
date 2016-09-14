@@ -1,3 +1,5 @@
+var multer  = require('multer');
+
 module.exports = function(app){
   var users = require("../controllers/users.controller");
   var queries = require("../controllers/queries");
@@ -7,6 +9,10 @@ module.exports = function(app){
   app.post("/users/delete",users.DeleteUser);
   app.post("/users/update",users.UpdateUser);
   app.post("/users/login",users.LoginUser);
+
+  // Avatar
+  app.post("/uploadAvatar",multer({ dest: './public/images/users/' }).single('avatar'), users.uploadAvatar );
+
   // Custom Query in users model
   app.get("/user/query",users.Query);
 

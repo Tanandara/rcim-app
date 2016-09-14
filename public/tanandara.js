@@ -861,6 +861,10 @@ angular.module("users").controller("UserController",[
          }
        );
 
+       modalInstance.result.then(function(){
+         $state.go('user', {}, { reload: true });
+       });
+
 
     }
 
@@ -876,17 +880,18 @@ angular.module("users").controller("UserController",[
          }
        );
 
-      //  modalInstance.result.then(function (user_id) {
-      //    $http({
-      //      method: 'post',
-      //      url: '/deleteUser',
-      //      data: {
-      //              userid : user_id
-      //            }
-      //    }).success(function(data, status) {
-      //        $state.go('user', {}, { reload: true });
-      //    });
-      // });
+       modalInstance.result.then(function (id) {
+         $http({
+           method: 'post',
+           url: 'http://localhost:3000/users/delete',
+           data: {
+                   user_id : id
+                 }
+         }).success(function(data, status) {
+             $state.go('user', {}, { reload: true });
+         });
+      });
+
     }
 
 
@@ -926,7 +931,7 @@ angular.module('users').controller('deleteModalCtrl', function ($scope, $uibModa
 
 
 // เพิ่ม user
-angular.module('users').controller('addModalCtrl', function ($scope, $uibModalInstance,$state) {
+angular.module('users').controller('addModalCtrl', function ($scope, $uibModalInstance, $state , $http) {
   $scope.checkData = function(){
     return !(
       $scope.username &&
@@ -942,10 +947,11 @@ angular.module('users').controller('addModalCtrl', function ($scope, $uibModalIn
     )
   };
 
+
   $scope.ok = function () {
       $http({
         method: 'post',
-        url: 'http://localhost:3000/user/create',
+        url: 'http://localhost:3000/users/create',
         data: {
                 user_name : $scope.username,
                 password  : $scope.password,
@@ -957,7 +963,19 @@ angular.module('users').controller('addModalCtrl', function ($scope, $uibModalIn
               }
       })
       .success(function(data){
-
+        if($scope.avatar){
+          var fd = new FormData();
+            fd.append('avatar', $scope.avatar);
+            fd.append('userid', data[0].id);
+          $http({
+            method:"post",
+            url:"http://localhost:3000/uploadAvatar",
+            headers: {'Content-Type': undefined},
+            transformRequest: angular.identity,
+            data:fd
+          }).success(function(){ });
+        }
+        $uibModalInstance.close();
       });
 
 
@@ -986,40 +1004,21 @@ angular.module('users').controller('messageModalCtrl', function ($scope, $uibMod
 
 
 
-
-
-//เอามาจาก http://stackoverflow.com/questions/14012239/password-check-directive-in-angularjs
-angular.module("users").directive("passwordVerify", function() {
+angular.module('users').directive('fileModel', ['$parse', function ($parse) {
    return {
-      require: "ngModel",
-      scope: {
-        passwordVerify: '='
-      },
-      link: function(scope, element, attrs, ctrl) {
-        scope.$watch(function() {
-            var combined;
+      restrict: 'A',
+      link: function(scope, element, attrs) {
+         var model = $parse(attrs.fileModel);
+         var modelSetter = model.assign;
 
-            if (scope.passwordVerify || ctrl.$viewValue) {
-               combined = scope.passwordVerify + '_' + ctrl.$viewValue;
-            }
-            return combined;
-        }, function(value) {
-            if (value) {
-                ctrl.$parsers.unshift(function(viewValue) {
-                    var origin = scope.passwordVerify;
-                    if (origin !== viewValue) {
-                        ctrl.$setValidity("passwordVerify", false);
-                        return undefined;
-                    } else {
-                        ctrl.$setValidity("passwordVerify", true);
-                        return viewValue;
-                    }
-                });
-            }
-        });
-     }
+         element.bind('change', function(){
+            scope.$apply(function(){
+               modelSetter(scope, element[0].files[0]);
+            });
+         });
+      }
    };
-})
+}]);
 
 angular.module("Main",[]);
 angular.module("Main",

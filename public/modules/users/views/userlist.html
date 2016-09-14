@@ -126,11 +126,11 @@
             </div>
             <div class="form-group">
               <label>รูปประจำตัว</label>
-              <input type="file" name="avatar" >
+              <input type="file" name="avatar"  file-model="avatar">
             </div>
           </div>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer">{{avatar.name}}
           <a class="btn btn-primary" type="button" ng-disabled="checkData()" ng-click="ok()" >ตกลง</a>
       </div>
   </script>
