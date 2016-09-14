@@ -14,7 +14,7 @@ angular.module("users").controller("UserController",[
     $scope.getAllUsers = function(){
         $http({
           method: 'GET',
-          url: 'http://localhost:3000/users'
+          url: 'https://rcim-app.herokuapp.com/users'
         }).success(function(data, status) {
           $scope.users = data;
         });
@@ -84,6 +84,27 @@ angular.module("users").controller("UserController",[
 
     }
 
+
+    $scope.editUserModal = function(_user){
+        var modalInstance = $uibModal.open({
+          animation: true,
+          templateUrl: 'editModalContent',
+          size: 'lg',
+          controller: 'editModalCtrl',
+          resolve: {
+            user: function () {return _user}
+           }
+         }
+       );
+
+       modalInstance.result.then(function () {
+             $state.go('user', {}, { reload: true });
+      });
+
+
+    }
+
+
     $scope.deleteUserModal = function (_user) {
         var modalInstance = $uibModal.open({
           animation: true,
@@ -99,7 +120,7 @@ angular.module("users").controller("UserController",[
        modalInstance.result.then(function (id) {
          $http({
            method: 'post',
-           url: 'http://localhost:3000/users/delete',
+           url: 'https://rcim-app.herokuapp.com/users/delete',
            data: {
                    user_id : id
                  }
@@ -135,7 +156,6 @@ angular.module("users").controller("UserController",[
 angular.module('users').controller('deleteModalCtrl', function ($scope, $uibModalInstance, items) {
   $scope.user_id =items.user_id;
   $scope.ok = function () {
-    //$uibModalInstance.close($scope.selected.item);
     $uibModalInstance.close($scope.user_id);
   };
 
@@ -167,7 +187,7 @@ angular.module('users').controller('addModalCtrl', function ($scope, $uibModalIn
   $scope.ok = function () {
       $http({
         method: 'post',
-        url: 'http://localhost:3000/users/create',
+        url: 'https://rcim-app.herokuapp.com/users/create',
         data: {
                 user_name : $scope.username,
                 password  : $scope.password,
@@ -185,7 +205,7 @@ angular.module('users').controller('addModalCtrl', function ($scope, $uibModalIn
             fd.append('userid', data[0].id);
           $http({
             method:"post",
-            url:"http://localhost:3000/uploadAvatar",
+            url:"https://rcim-app.herokuapp.com/uploadAvatar",
             headers: {'Content-Type': undefined},
             transformRequest: angular.identity,
             data:fd
@@ -194,13 +214,80 @@ angular.module('users').controller('addModalCtrl', function ($scope, $uibModalIn
         $uibModalInstance.close();
       });
 
+  };
+
+  $scope.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+
+});
 
 
+// แก้ไขข้อมูล user
+angular.module('users').controller('editModalCtrl', function ($scope, $uibModalInstance, $state ,user, $http) {
 
-    // $uibModalInstance.dismiss();
-    // if(status=="success"){
-    //   $state.go("user");
-    // }
+  $scope.initData = function(){
+    $scope.userid = user.user_id;
+    $scope.username = user.user_name;
+    $scope.email = user.email;
+    $scope.tel = user.tel_no;
+    $scope.address = user.address;
+    $scope.role = user.role_id + "";
+    $scope.campus = user.campus_id + "";
+  };
+
+  $scope.checkData = function(){
+    return !(
+      $scope.username &&
+      $scope.password &&
+      $scope.password2 &&
+      $scope.email &&
+      $scope.tel &&
+      $scope.address &&
+      $scope.role &&
+      $scope.campus &&
+      ($scope.password == $scope.password2) &&
+      ($scope.password.length >= 8)
+    )
+  };
+
+
+  $scope.ok = function () {
+      $http({
+        method: 'post',
+        url: 'https://rcim-app.herokuapp.com/users/update',
+        data: {
+                user_id       : $scope.userid,
+                user_name     : $scope.username,
+                password      : $scope.password,
+                email         : $scope.email,
+                tel_no        : $scope.tel,
+                address       : $scope.address,
+                campus_id     : $scope.campus,
+                role_id       : $scope.role,
+                avatar_flag   : !!($scope.avatar)
+              }
+      })
+      .success(function(data){
+        if($scope.avatar){
+          var fd = new FormData();
+            fd.append('avatar', $scope.avatar);
+            fd.append('userid', $scope.userid);
+          $http({
+            method:"post",
+            url:"https://rcim-app.herokuapp.com/uploadAvatar",
+            headers: {'Content-Type': undefined},
+            transformRequest: angular.identity,
+            data:fd
+          }).success(function(){ });
+        }
+        $uibModalInstance.close();
+      });
+
+  };
+
+  $scope.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
   };
 
 });

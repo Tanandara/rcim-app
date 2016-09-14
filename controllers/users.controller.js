@@ -15,7 +15,9 @@ exports.GetAllUsers = function(req,res){
     u.tel_no,
     u.address,
     c.campus_name,
-    r.role_name
+    r.role_name,
+    u.campus_id,
+    u.role_id
     FROM users as u
     left outer join campus as c on u.campus_id = c.campus_id
     left outer join roles as r on u.role_id = r.role_id
@@ -72,14 +74,7 @@ exports.DeleteUser = function(req,res){
       user_id: req.body.user_id
     }
   }).then(function() {
-    var filename="";
-    for (var i of fs.readdirSync("./public/images/users/")) {
-      if ((new RegExp(req.body.user_id)).test(i)) {
-        filename = i;
-        break;
-      }
-    }
-    if(filename!="") fs.unlink("./public/images/users/" + filename );
+    ClearAvatar(req.body.user_id,true);
     res.json([{"message":"success"}]);
   });
 }
@@ -103,8 +98,21 @@ exports.UpdateUser = function(req,res){
     }
   })
   .then((data)=>{
+    ClearAvatar(req.body.user_id , req.body.avatar_flag);
     res.json([{"message":"success"}]);
   });
+}
+
+function ClearAvatar(user_id,avatar_flag){
+  if(!avatar_flag) return; // ถ้าไม่มีการอัพโหลดไฟล์จะออกจากฟังค์ชั่น
+  var filename="";
+  for (var i of fs.readdirSync("./public/images/users/")) {
+    if ((new RegExp(user_id)).test(i)) {
+      filename = i;
+      break;
+    }
+  }
+  if(filename!="") fs.unlink("./public/images/users/" + filename );
 }
 
 // exports.CreateUser = function(req,res){
@@ -178,15 +186,8 @@ exports.CreateUser = function(req,res){
 
 
 exports.uploadAvatar = function(req,res){
-  // console.log("req.file");
-  // console.log(req.file);
-  // console.log(req.file.path);
-  // console.log(req.file.originalname);
-  // console.log(req.body.userid);
     if(req.file){
-
         var fileExtension = (req.file.originalname).replace(/.+\.(gif|jpe?g|png)$/i,"$1");
-
         if((/^(gif|jpe?g|png)$/i).test(fileExtension)){
 
           var src = fs.createReadStream(req.file.path);

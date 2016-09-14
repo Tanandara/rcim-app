@@ -49,7 +49,7 @@
                   <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href="#">แก้ไข</a></li>
+                  <li><a href="#" ng-click="editUserModal(user)">แก้ไข</a></li>
                   <li><a href="#" ng-click="deleteUserModal(user)">ลบ</a></li>
                 </ul>
               </div>
@@ -68,7 +68,8 @@
           <h3>คุณต้องการที่จะลบ {{user_id}} ใช่หรือไม่</h3>
       </div>
       <div class="modal-footer">
-          <a class="btn btn-primary" type="button" ng-click="ok()" >ตกลง</a>
+          <a class="btn btn-info" type="button" ng-click="ok()" >ตกลง</a>
+          <a class="btn btn-danger" type="button" ng-click="cancel()" >ยกเลิก</a>
       </div>
   </script>
 
@@ -130,8 +131,77 @@
             </div>
           </div>
       </div>
-      <div class="modal-footer">{{avatar.name}}
-          <a class="btn btn-primary" type="button" ng-disabled="checkData()" ng-click="ok()" >ตกลง</a>
+      <div class="modal-footer">
+          <a class="btn btn-info" type="button" ng-disabled="checkData()" ng-click="ok()" >ตกลง</a>
+          <a class="btn btn-danger" type="button" ng-click="cancel()" >ยกเลิก</a>
+      </div>
+  </script>
+
+
+
+
+
+
+  <script type="text/ng-template" id="editModalContent" >
+      <div class="modal-header">
+          <h3 class="modal-title">แก้ไขข้อมูลผู้ใช้งาน : <span style="color:red">{{userid}}</span></h3>
+      </div>
+      <div class="modal-body" style="display: inline-block;width: 100%;" ng-init="initData()">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>ชื่อ - นามสกุล</label>
+              <input placeholder='ใส่ชื่อ - นามสกุล' type="text" name="username" ng-model="username" class="form-control"  required>
+            </div>
+            <div class="form-group">
+              <label>พาสเวิร์ด</label>
+              <input placeholder='ใส่พาสเวิร์ดต้องมากกว่า 8 ตัวอักษร' type="password" name="password" ng-model="password" class="form-control"  required>
+            </div>
+            <div class="form-group">
+              <label>ยืนยันพาสเวิร์ด</label>
+              <input placeholder='ยืนยันพาสเวิร์ด' type="password" name="password2" ng-model="password2" class="form-control"  required>
+            </div>
+            <div class="form-group">
+              <label>อีเมล</label>
+              <input placeholder='ใส่อีเมล' type="text" name="email" ng-model="email" class="form-control"  required>
+            </div>
+            <div class="form-group">
+              <label>เบอร์โทรศัพท์</label>
+              <input placeholder='ใส่เบอร์โทรศัพท์' type="text" name="tel" ng-model="tel" class="form-control" required>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>ที่อยู่</label>
+              <input placeholder='ใส่ที่อยู่ปัจจุบัน' ng-model="address" type="text" name="address" class="form-control"  required>
+            </div>
+            <div class="form-group">
+              <label>ตำแหน่งงาน</label>
+              <select name="role" id="role" ng-model="role" class="form-control" required>
+                <option value="" disabled selected>เลือก</option>
+                <option value="1" >พนักงานบัญชี</option>
+                <option value="2" >หัวหน้าพนักงาน</option>
+                <option value="3" >ผู้บริหาร</option>
+                <option value="4" >ผู้ดูแลระบบ</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>วิทยาเขต</label>
+              <select name="campus" id="campus" ng-model="campus" class="form-control" required>
+                <option value="" disabled selected>เลือก</option>
+                <option value="1" >ศาลายา</option>
+                <option value="2" >วังไกลกังวล</option>
+                <option value="3" >บพิตรพิมุข</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>รูปประจำตัว</label>
+              <input type="file" name="avatar"  file-model="avatar">
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+          <a class="btn btn-info" type="button" ng-disabled="checkData()" ng-click="ok()" >ตกลง</a>
+          <a class="btn btn-danger" type="button" ng-click="cancel()" >ยกเลิก</a>
       </div>
   </script>
 
