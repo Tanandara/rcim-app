@@ -17,27 +17,6 @@ exports.GetJournal = function(req,res){
     // });
 }
 
-exports.test = function(req,res,next){
-    models.journals.findAll(
-      {
-        where:
-              {
-                ref_no:req.body.ref_no
-              }
-      })
-    .then(function(data){
-      if(data,data.length){
-        res.json({"message":"ref no is duplicate"});
-      }else{
-        next();
-      }
-    });
-}
-
-exports.test2 = function(req,res){
-    res.json([{"message":"success"}]);
-}
-
 
 
 //
