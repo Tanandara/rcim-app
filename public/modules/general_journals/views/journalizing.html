@@ -19,9 +19,15 @@
             </table>
           </div>
           <div ng-disabled="checkJournalizing()" ng-click="saveJournalizing()" class="pull-right btn btn-info" style="margin:2px"><i class="fa fa-save"></i>  บันทึกรายการ</div>
+          <div ng-click="clearData()" class="pull-right btn btn-danger" style="margin:2px"><i class="fa fa-file-o"></i>  ล้างข้อมูลรายการ</div>
         </div>
       </div>
       <hr>
+      <div class="col-md-12">
+        เลขที่เอกสารอ้างอิง :
+        <input name="ref_no" placeholder="เลขที่เอกสารอ้างอิง" ng-model="ref_no"  class="form-control" />
+        <br>
+      </div>
       <div class="col-md-12">
         คำอธิบาย :
         <textarea name="description" placeholder="คำอธิยายรายการ" ng-model="description"  class="form-control" row="2"></textarea>

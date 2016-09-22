@@ -75,7 +75,7 @@
           <tr ng-repeat="(key,i) in journal_details">
             <td ng-if="journal_details[key-1].journal_date != i.journal_date">{{i.journal_date}}</td>
             <td ng-if="journal_details[key-1].journal_date == i.journal_date"></td>
-            <td ng-if="journal_details[key-1].journal_id != i.journal_id">{{i.journal_id}}</td>
+            <td ng-if="journal_details[key-1].journal_id != i.journal_id">{{i.ref_no}}</td>
             <td ng-if="journal_details[key-1].journal_id == i.journal_id"></td>
             <td ng-class="{'text-indent':i.drcr=='2','border-end':i.drcr=='3'}">
                 {{i.detail}}

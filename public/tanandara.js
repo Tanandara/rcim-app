@@ -47,7 +47,7 @@ angular.module("general_journals").controller("JournalizingController",
 function($scope,$http,$uibModal){
 
 $scope.checkJournalizing = function(){
-  return !(_.size($scope.details) && ($scope.Dr ==$scope.Cr) && $scope.description && $scope.datejournal);
+  return !(_.size($scope.details) && ($scope.Dr ==$scope.Cr) && $scope.description && $scope.datejournal && $scope.ref_no);
 }
 $scope.searchText = function(typedthings){
   console.log("Do something like reload data with this: " + typedthings );
@@ -136,6 +136,7 @@ $scope.saveJournalizing = function(){
       {
         "coa_detail":data.detail,
         "coa_id":data.ledger_id,
+        "ref_no":$scope.ref_no,
         "drcr":data.drcr,
         "amount":data.amount,
         "date_time":datejournal
@@ -147,6 +148,7 @@ $scope.saveJournalizing = function(){
     {
       "coa_detail":$scope.description,
       "coa_id":"",
+      "ref_no":$scope.ref_no,
       "drcr":3,
       "amount":0,
       "date_time":datejournal
@@ -159,6 +161,14 @@ $scope.saveJournalizing = function(){
       headers: {'Content-Type': 'application/json'}
       })
   .success(function(data,status){
+    var modalmessage = "";
+    if(data[0].message =="success"){
+      modalmessage = "บันทึกสำเร็จ";
+      $scope.clearData();
+    }else{
+      modalmessage = "เลขที่เอกสารอ้างอิงซ้ำ";
+    }
+
     // แสดง modal
     var modalInstance = $uibModal.open({
             animation: true,
@@ -166,25 +176,22 @@ $scope.saveJournalizing = function(){
             size: undefined,
             controller: 'ModalAlert',
             resolve: {
-              message: function () {return "บันทึกสำเร็จ"}
+              message: function () {return modalmessage}
              }
           });
 
-    console.log(data);
-    console.log("save success");
-    clearData();
   });
 }
 
-
-
-function clearData(){
+$scope.clearData = function(){
   $scope.details=[];
   $scope.datejournal="";
   $scope.description="";
   $scope.Dr = 0;
   $scope.Cr = 0;
+  $scope.ref_no = "";
 }
+
 
 
 

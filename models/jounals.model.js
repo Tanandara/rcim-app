@@ -5,6 +5,7 @@ module.exports = function(sequelize, DataTypes) {
                 primaryKey: true
               },
     journal_no: DataTypes.INTEGER,
+    ref_no: DataTypes.STRING,
     coa_detail: DataTypes.STRING,
     coa_id: DataTypes.STRING,
     drcr: DataTypes.INTEGER,

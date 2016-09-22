@@ -17,6 +17,27 @@ exports.GetJournal = function(req,res){
     // });
 }
 
+exports.test = function(req,res,next){
+    models.journals.findAll(
+      {
+        where:
+              {
+                ref_no:req.body.ref_no
+              }
+      })
+    .then(function(data){
+      if(data,data.length){
+        res.json({"message":"ref no is duplicate"});
+      }else{
+        next();
+      }
+    });
+}
+
+exports.test2 = function(req,res){
+    res.json([{"message":"success"}]);
+}
+
 
 
 //
@@ -43,6 +64,23 @@ exports.GetJournal = function(req,res){
 // }
 
 
+exports.CheckRefNo = function(req,res,next){
+    models.journals.findAll(
+      {
+        where:
+              {
+                ref_no:req.body[0].ref_no
+              }
+      })
+    .then(function(data){
+      if(data.length){
+        res.json([{"message":"duplicate"}]);
+      }else{
+        next();
+      }
+    });
+}
+
 exports.AddJournals = function(req,res){
 
     models.journals.max("journal_id").then((max)=>{
@@ -58,6 +96,7 @@ exports.AddJournals = function(req,res){
           models.journals.create({
             journal_id: id,
             journal_no: index+1,
+            ref_no: data.ref_no,
             coa_detail: data.coa_detail,
             coa_id: data.coa_id,
             drcr: data.drcr,
@@ -71,14 +110,6 @@ exports.AddJournals = function(req,res){
 
       console.log(req.body);
       res.json([{"message":"success"}]);
-      //
-      //
-      //
-      //
-      //
-      //    console.log(max,"|||| id =" + id);
-      //    res.end(req.body.data+"\r\nmax = "+max+"|||| id = " + id);
-         //res.json(max);
     });
 
 }
@@ -94,6 +125,7 @@ exports.ShowDetails = function(req,res){
         "select " +
         "date_time as journal_date," +
         "journal_id as journal_id," +
+        "ref_no as ref_no," +
         "coa_detail as detail," +
         "coa_id as ledger_id," +
         "drcr as drcr," +
