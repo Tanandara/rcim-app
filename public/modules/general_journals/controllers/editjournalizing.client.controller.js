@@ -36,7 +36,7 @@ $scope.details = [];
 $scope.getJournal = function(){
   $http({
       method: 'POST',
-      url:"http://localhost:3000/journals/search",
+      url:"https://rcim-app.herokuapp.com/journals/search",
       data:"ref_no="+$stateParams.ref_no,
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       })
@@ -160,7 +160,7 @@ $scope.saveJournalizing = function(){
   );
   $http({
       method: 'POST',
-      url:"http://localhost:3000/journals/update",
+      url:"https://rcim-app.herokuapp.com/journals/update",
       data:journalsData,
       headers: {'Content-Type': 'application/json'}
       })
