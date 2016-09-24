@@ -8,6 +8,17 @@ angular.module("general_journals").config([
       url:"/journalizing",
       templateUrl:"/modules/general_journals/views/journalizing.html"
     })
+    .state("searchrefno",{
+      url:"/searchrefno",
+      templateUrl:"/modules/general_journals/views/searchrefno.html"
+    })
+    .state("editjournal",{
+      url:"/editjournal",
+      params: {
+            ref_no : "59/0001"
+      },
+      templateUrl:"/modules/general_journals/views/editjournalizing.html"
+    })
     .state("journals",{
       url:"/journals",
       templateUrl:"/modules/general_journals/views/journals.html"

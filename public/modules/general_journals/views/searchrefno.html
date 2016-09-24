@@ -1,0 +1,27 @@
+<div data-ng-controller="SearchRefNoController" data-ng-init="getJournals()" >
+  <div class="progressbar-heading grids-heading">
+    <h2>รายการบัญชีรายวัน (Journals List)</h2>
+  </div>
+  <div class="panel panel-widget">
+    <div class="block-page">
+      <h3>ค้นหารายการบัญชีทั่วไปรายวัน จากเลขที่เอกสารอ้างอิง</h3>
+      <hr>
+      <div class="row">
+        <style>
+        .searchJournal select,.searchJournal input{
+          margin:10px;
+        }
+        </style>
+        <div class="col-md-12 searchJournal">
+          <div class="col-md-12">
+              เลขที่เอกสารอ้างอิง :
+              <input type="text" class="form-control" id="ref_no"  placeholder="เลขที่เอกสารอ้างอิง" ng-model="ref_no" />
+          </div>
+          <div class="col-md-12">
+            <input type="button" ng-disabled="!ref_no" class="btn btn-primary form-control" value="ค้นหา" ng-click="goDetail()">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,164 @@
+<div data-ng-controller="EditJournalizingController" data-ng-init="getJournal()" >
+  <div class="progressbar-heading grids-heading">
+    <h2>แก้ไขบัญชีรายวัน (Edit Journal)</h2>Dr : {{Dr}} / Cr : {{Cr}}         ledger_id : {{ledger_id}} / ledger_name : {{ledger_name}}
+  </div>
+  <div class="panel panel-widget">
+    <div class="block-page">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="pull-left">
+            <table >
+              <tr>
+                <td>
+                  <h3>สมุดบัญชีรายวันของวันที่ :&nbsp;</h3>
+                </td>
+                <td>
+                  <input type="text" class="form-control" ng-disabled="true" placeholder="dd/mm/yyyy" id="datejournal" ng-model="datejournal" data-provide="datepicker" data-date-language="th" />
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div ng-disabled="checkJournalizing()" ng-click="saveJournalizing()" class="pull-right btn btn-info" style="margin:2px"><i class="fa fa-save"></i>  บันทึกรายการ</div>
+        </div>
+      </div>
+      <hr>
+      <div class="col-md-12">
+        เลขที่เอกสารอ้างอิง :
+        <input name="ref_no" ng-disabled="true" placeholder="เลขที่เอกสารอ้างอิง" ng-model="ref_no"  class="form-control" />
+        <br>
+      </div>
+      <div class="col-md-12">
+        คำอธิบาย :
+        <textarea name="description" placeholder="คำอธิยายรายการ" ng-model="description"  class="form-control" row="2"></textarea>
+        <hr>
+      </div>
+
+
+      <table class="table table-bordered" >
+        <style>
+          .table.table-bordered th,.table.table-bordered td{
+            text-align: center;
+          }
+          .table.table-bordered thead tr th{
+            background-color: #efe5e5;
+          }
+          .table.table-bordered tfoot tr td{
+            border-top: 2px !important;
+            border-top-style: solid !important;
+            border-top-color: black !important;
+          }
+          .table.table-bordered thead tr th:nth-child(1),
+          .table.table-bordered thead tr th:nth-child(2),
+          .table.table-bordered thead tr th:nth-child(6){
+            width:5%;
+          }
+          .table.table-bordered thead tr th:nth-child(3){
+            /*width:300px;*/
+          }
+          .table.table-bordered thead tr th:nth-child(4),
+          .table.table-bordered thead tr th:nth-child(5),
+          .table.table-bordered thead tr th:nth-child(6){
+            width:10%;
+          }
+
+          .table.table-bordered tbody tr td:nth-child(3){
+            text-align: left;
+          }
+
+          .table.table-bordered tbody tr td:nth-child(3).text-indent{
+            text-indent: 100px;
+          }
+
+
+
+
+
+        </style>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th></th>
+            <th>รายการ</th>
+            <th>เลขที่บัญชี</th>
+            <th>เดบิต</th>
+            <th>เครดิต</th>
+            <th>ลบ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="i in details">
+            <td>{{$index+1}}</td>
+            <td>
+              <div>
+                <i class="fa fa-arrow-up" style="color:red;cursor:pointer" ng-click="shiftUpDetail($index)"></i>
+                <i class="fa fa-arrow-down" style="color:red;cursor:pointer" ng-click="shiftDownDetail($index)"></i>
+              </div>
+            </td>
+            <td ng-class="{'text-indent':i.drcr=='2'}">
+              {{i.detail}}
+            </td>
+            <td>{{i.ledger_id}}</td>
+            <td ng-if="i.drcr=='1'">{{i.amount}}</td>
+            <td ng-if="i.drcr=='1' || i.drcr=='2' "></td>
+            <td ng-if="i.drcr=='2'">{{i.amount}}</td>
+            <td ><div><i class="fa fa-close" style="color:red;cursor:pointer" ng-click="removeDetail($index)"></i></div></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <td colspan="4" style="text-align:center"> รวม </td>
+          <td>{{SumDrCr("1")}}</td>
+          <td>{{SumDrCr("2")}}</td>
+        </tfoot>
+      </table>
+      <hr>
+      <h3>เพิ่มรายการ</h3>
+      <div class="row">
+        <div class="col-md-12 addJournal" ng-init="drcr = '';detail='';amount=''">
+          <style>
+            .addJournal select,.addJournal input{
+              margin:10px;
+            }
+          </style>
+          <select class="form-control" name="drcr" id="" ng-model="drcr">
+            <option value="" disabled selected>Debit/Credit</option>
+            <option value="1">Debit</option>
+            <option value="2">Credit</option>
+          </select>
+          <autocomplete ng-model="detail"
+          attr-placeholder="รายการบัญชี"
+          click-activation="true"
+          attr-input-class="form-control"
+          data="ledgers"
+          on-type="searchText"
+          on-select="selectedText">
+          </autocomplete>
+          <!-- <input class="form-control" type="text" name="detail" placeholder="รายการ" ng-model="detail" /> -->
+          <!-- <input class="form-control" type="hidden" value="{{ledger_id}}" /> -->
+          <input class="form-control" type="number" name="amount" placeholder="จำนวนเงิน" ng-model="amount" />
+          <input class="btn btn-primary form-control" type="button"  value="เพิ่มรายการ" ng-click="addDetail()" ng-disabled="detail == '' || amount == '' || drcr =='' " />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+$(function () {
+      $("#datejournal").datepicker({
+          format: 'dd/mm/yyyy',
+          todayBtn: "linked",
+          autoclose: true,
+          toggleActive: true
+      }).keydown(false);
+});
+</script>
+<script type="text/ng-template" id="myModalContent">
+       <div class="modal-header">
+           <h3 class="modal-title">ข้อความ</h3>
+       </div>
+       <div class="modal-body">
+           <h3>{{message}}</h3>
+       </div>
+       <div class="modal-footer">
+           <a class="btn btn-primary" type="button"  ng-click="ok()" >ตกลง</a>
+       </div>
+</script>

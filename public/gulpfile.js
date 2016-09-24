@@ -15,6 +15,8 @@ gulp.task('concat', function() {
         "modules/general_journals/controllers/journalizing.client.controller.js",
         "modules/general_journals/controllers/journals.client.controller.js",
         "modules/general_journals/controllers/journaldetail.client.controller.js",
+        "modules/general_journals/controllers/editjournalizing.client.controller.js",
+        "modules/general_journals/controllers/searchrefno.client.controller.js",
         "modules/general_ledgers/general_ledgers.client.module.js",
         "modules/general_ledgers/config/general_ledgers.client.routes.js",
         "modules/general_ledgers/controllers/ledgers.client.controller.js",
