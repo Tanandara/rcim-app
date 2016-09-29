@@ -343,7 +343,8 @@ $scope.getJournal = function(){
 
         // ถ้าเจอ ref_no จึงแสดงข้อมูล
         $scope.description = data[data.length - 1].detail;
-        $scope.account_id = data[data.length - 1].account_id;
+        $scope.account_id = data[data.length - 1].account_id + "";
+        console.log(">>>>>>>>>>>>",data[data.length - 1].account_id);
         $scope.datejournal = moment(data[data.length - 1].journal_date).format("DD/MM/YYYY");
         $scope.ref_no = data[data.length - 1].ref_no;
         data.every( (value,index) => {
