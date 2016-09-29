@@ -27,7 +27,7 @@ exports.GetJournal = function(req,res){
       "coa_detail as detail," +
       "coa_id as ledger_id," +
       "drcr as drcr," +
-      "amount as amount " +
+      "amount as amount ," +
       "account_id as account_id " +
       "from journals " +
       "where ref_no = :ref_no and campus_id = :campus_id " +
