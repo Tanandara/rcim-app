@@ -1,10 +1,10 @@
 angular.module("general_journals").controller("JournalizingController",
-["$scope","$http","$uibModal",
-function($scope,$http,$uibModal){
-
+["$scope","$http","$uibModal","DropdownList",
+function($scope,$http,$uibModal,DropdownList){
 $scope.checkJournalizing = function(){
-  return !(_.size($scope.details) && ($scope.Dr ==$scope.Cr) && $scope.description && $scope.datejournal && $scope.ref_no);
+  return !(_.size($scope.details) && ($scope.Dr ==$scope.Cr) && $scope.description && $scope.datejournal && $scope.ref_no && $scope.account_id);
 }
+
 $scope.searchText = function(typedthings){
   console.log("Do something like reload data with this: " + typedthings );
     // $http({
@@ -45,7 +45,8 @@ $scope.selectedText = function(suggestion){
 }
 
 $scope.details = [];
-$scope.getJournal = function(){
+$scope.initFunction = function(){
+  DropdownList.GET("account_list").then(function(data){$scope.accountList = data});
 }
 
 
@@ -95,6 +96,7 @@ $scope.saveJournalizing = function(){
         "ref_no":$scope.ref_no,
         "drcr":data.drcr,
         "amount":data.amount,
+        "account_id":$scope.account_id,
         "date_time":datejournal
       }
     );
@@ -107,6 +109,7 @@ $scope.saveJournalizing = function(){
       "ref_no":$scope.ref_no,
       "drcr":3,
       "amount":0,
+      "account_id":$scope.account_id,
       "date_time":datejournal
     }
   );
@@ -146,6 +149,7 @@ $scope.clearData = function(){
   $scope.Dr = 0;
   $scope.Cr = 0;
   $scope.ref_no = "";
+  $scope.account_id ="";
 }
 
 

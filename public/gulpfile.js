@@ -40,6 +40,7 @@ gulp.task('concat', function() {
         "modules/users/users.client.module.js",
         "modules/users/config/users.client.routes.js",
         "modules/users/controllers/users.client.controller.js",
+        "service.js",
 		    "application.js"
       ]
         )
@@ -56,7 +57,7 @@ gulp.task("copy",function(){
 
 gulp.task('default', function() {
 	//livereload.listen();
-	gulp.watch(["modules/**/**.js","application.js","!./node_modules","!tanandara.js","myfunction.js"],["concat"]);
+	gulp.watch(["modules/**/**.js","application.js","!./node_modules","!tanandara.js","myfunction.js","service.js"],["concat"]);
   gulp.watch("./index.html",["copy"]);
   //gulp.watch(["**/**.*","!./node_modules","!tanandara.js"],function(){
 	//	gulp.src(["index.html"]).pipe(livereload());

@@ -11,7 +11,8 @@ angular.module("Main",
 "trial_balance",
 "balance_sheet",
 "profit_loss",
-"users"]);
+"users",
+"service"]);
 
 
 angular.module("Main")

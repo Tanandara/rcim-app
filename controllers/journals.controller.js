@@ -28,6 +28,7 @@ exports.GetJournal = function(req,res){
       "coa_id as ledger_id," +
       "drcr as drcr," +
       "amount as amount " +
+      "account_id as account_id " +
       "from journals " +
       "where ref_no = :ref_no and campus_id = :campus_id " +
       "order by date_time,journal_id",
@@ -110,6 +111,7 @@ exports.AddJournals = function(req,res){
             amount: data.amount,
             date_time: data.date_time,
             campus_id:campus_id,
+            account_id:data.account_id,
             user_create:user_id,
             date_create:new Date()
           });
@@ -156,6 +158,7 @@ exports.UpdateJournals = function(req,res){
                 amount: data.amount,
                 date_time: data.date_time,
                 campus_id:campus_id,
+                account_id:data.account_id,
                 user_create:user_id,
                 date_create:new Date()
               });

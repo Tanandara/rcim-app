@@ -54,12 +54,12 @@ angular.module("general_journals").config([
 ]);
 
 angular.module("general_journals").controller("JournalizingController",
-["$scope","$http","$uibModal",
-function($scope,$http,$uibModal){
-
+["$scope","$http","$uibModal","DropdownList",
+function($scope,$http,$uibModal,DropdownList){
 $scope.checkJournalizing = function(){
-  return !(_.size($scope.details) && ($scope.Dr ==$scope.Cr) && $scope.description && $scope.datejournal && $scope.ref_no);
+  return !(_.size($scope.details) && ($scope.Dr ==$scope.Cr) && $scope.description && $scope.datejournal && $scope.ref_no && $scope.account_id);
 }
+
 $scope.searchText = function(typedthings){
   console.log("Do something like reload data with this: " + typedthings );
     // $http({
@@ -100,7 +100,8 @@ $scope.selectedText = function(suggestion){
 }
 
 $scope.details = [];
-$scope.getJournal = function(){
+$scope.initFunction = function(){
+  DropdownList.GET("account_list").then(function(data){$scope.accountList = data});
 }
 
 
@@ -150,6 +151,7 @@ $scope.saveJournalizing = function(){
         "ref_no":$scope.ref_no,
         "drcr":data.drcr,
         "amount":data.amount,
+        "account_id":$scope.account_id,
         "date_time":datejournal
       }
     );
@@ -162,6 +164,7 @@ $scope.saveJournalizing = function(){
       "ref_no":$scope.ref_no,
       "drcr":3,
       "amount":0,
+      "account_id":$scope.account_id,
       "date_time":datejournal
     }
   );
@@ -201,6 +204,7 @@ $scope.clearData = function(){
   $scope.Dr = 0;
   $scope.Cr = 0;
   $scope.ref_no = "";
+  $scope.account_id ="";
 }
 
 
@@ -275,11 +279,11 @@ function($scope,$http,$stateParams){
 }]);
 
 angular.module("general_journals").controller("EditJournalizingController",
-["$scope","$http","$uibModal","$stateParams","$state",
-function($scope,$http,$uibModal,$stateParams,$state){
+["$scope","$http","$uibModal","$stateParams","$state","DropdownList",
+function($scope,$http,$uibModal,$stateParams,$state,DropdownList){
 
 $scope.checkJournalizing = function(){
-  return !(_.size($scope.details) && ($scope.Dr ==$scope.Cr) && $scope.description && $scope.datejournal && $scope.ref_no);
+  return !(_.size($scope.details) && ($scope.Dr ==$scope.Cr) && $scope.description && $scope.datejournal && $scope.ref_no && $scope.account_id);
 }
 $scope.searchText = function(typedthings){
   console.log("Do something like reload data with this: " + typedthings );
@@ -310,6 +314,7 @@ $scope.selectedText = function(suggestion){
 
 $scope.details = [];
 $scope.getJournal = function(){
+  DropdownList.GET("account_list").then(function(data){$scope.accountList = data});
   $http({
       method: 'POST',
       url:"https://rcim-app.herokuapp.com/journals/search",
@@ -338,6 +343,7 @@ $scope.getJournal = function(){
 
         // ถ้าเจอ ref_no จึงแสดงข้อมูล
         $scope.description = data[data.length - 1].detail;
+        $scope.account_id = data[data.length - 1].account_id;
         $scope.datejournal = moment(data[data.length - 1].journal_date).format("DD/MM/YYYY");
         $scope.ref_no = data[data.length - 1].ref_no;
         data.every( (value,index) => {
@@ -419,6 +425,7 @@ $scope.saveJournalizing = function(){
         "ref_no":$scope.ref_no,
         "drcr":data.drcr,
         "amount":data.amount,
+        "account_id":$scope.account_id,
         "date_time":datejournal
       }
     );
@@ -431,6 +438,7 @@ $scope.saveJournalizing = function(){
       "ref_no":$scope.ref_no,
       "drcr":3,
       "amount":0,
+      "account_id":$scope.account_id,
       "date_time":datejournal
     }
   );
@@ -444,7 +452,7 @@ $scope.saveJournalizing = function(){
     var modalmessage = "";
     if(data[0].message =="success"){
       modalmessage = "แก้ไขสำเร็จ";
-      $scope.clearData();
+      //$scope.clearData();
     }else{
       console.log(data);
     }
@@ -470,6 +478,7 @@ $scope.clearData = function(){
   $scope.Dr = 0;
   $scope.Cr = 0;
   $scope.ref_no = "";
+  $scope.account_id ="";
 }
 
 
@@ -1360,6 +1369,22 @@ angular.module('users').directive('fileModel', ['$parse', function ($parse) {
    };
 }]);
 
+angular.module("service",[]);
+angular.module("service")
+.service('DropdownList', function($http,$q) {
+    this.GET = function(url) {
+      return $q(function(resolve, reject) {
+                $http({
+                 method: 'GET',
+                 url: "https://rcim-app.herokuapp.com/" + url
+               }).success(function(data, status) {
+                 resolve(data);
+               });
+             });
+    }
+
+});
+
 angular.module("Main",[]);
 angular.module("Main",
 ['ui.router',
@@ -1373,7 +1398,8 @@ angular.module("Main",
 "trial_balance",
 "balance_sheet",
 "profit_loss",
-"users"]);
+"users",
+"service"]);
 
 
 angular.module("Main")

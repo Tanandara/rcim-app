@@ -1,4 +1,4 @@
-<div data-ng-controller="JournalizingController" data-ng-init="getJournal()" >
+<div data-ng-controller="JournalizingController" data-ng-init="initFunction()" >
   <div class="progressbar-heading grids-heading">
     <h2>ทำบัญชีรายวัน (Journalizing)</h2>Dr : {{Dr}} / Cr : {{Cr}}         ledger_id : {{ledger_id}} / ledger_name : {{ledger_name}}
   </div>
@@ -23,9 +23,17 @@
         </div>
       </div>
       <hr>
-      <div class="col-md-12">
+      <div class="col-md-6">
         เลขที่เอกสารอ้างอิง :
         <input name="ref_no" placeholder="เลขที่เอกสารอ้างอิง" ng-model="ref_no"  class="form-control" />
+        <br>
+      </div>
+      <div class="col-md-6">
+        ชื่อบัญชี : {{account_id}}
+        <select name="account_id" ng-model="account_id" class="form-control">
+          <option value="" disabled selected>กรุณาเลือกชื่อบัญชี</option>
+          <option value="{{i.account_id}}" ng-repeat="i in accountList">{{i.account_name}}</option>
+        </select>
         <br>
       </div>
       <div class="col-md-12">

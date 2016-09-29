@@ -45,6 +45,7 @@ module.exports = function(){
   require("../routes/index.routes")(app);
   require("../routes/users.routes")(app);
   require("../routes/coa.routes")(app);
+  require("../routes/accounts.routes")(app);
   require("../routes/journals.routes")(app);
   require("../routes/report.routes")(app);
 
