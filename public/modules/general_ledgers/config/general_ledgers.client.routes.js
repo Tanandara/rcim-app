@@ -17,7 +17,7 @@ angular.module("general_ledgers").config([
       url:"/ledgers/detail",
       templateUrl:"/modules/general_ledgers/views/ledger_detail.html",
       params: {
-            campus_id:"1",
+            account_id:"1",
             ledger_id:"101",
             datestart:date,
             dateend:date

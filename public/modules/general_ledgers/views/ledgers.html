@@ -1,4 +1,4 @@
-<div data-ng-controller="LedgersController" data-ng-init="" >
+<div data-ng-controller="LedgersController" data-ng-init="initFunction()" >
   <div class="progressbar-heading grids-heading">
     <h2>รายการบัญชีแยกประเภท (Ledgers List)</h2>
   </div>
@@ -16,13 +16,10 @@
         </style>
         <div class="col-md-12 searchLedger">
           <div class="col-md-12">
-            วิทยาเขต :
-            <select name="campus" class="form-control" ng-model="campus_id">
-              <option value="" disabled selected>เลือกวิทยาเขต</option>
-              <option value="1">บพิตรพิมุข</option>
-              <option value="2">วังไกลกังวล</option>
-              <option value="3">ศาลายา</option>
-              <option value="4">ทุกวิทยาเขต</option>
+            ชื่อบัญชี :
+            <select name="account_id" ng-model="account_id" class="form-control">
+              <option value="" disabled selected>กรุณาเลือกชื่อบัญชี</option>
+              <option value="{{i.account_id}}" ng-repeat="i in accountList">{{i.account_name}}</option>
             </select>
           </div>
           <div class="col-md-12">

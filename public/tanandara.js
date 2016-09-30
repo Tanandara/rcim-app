@@ -540,7 +540,7 @@ angular.module("general_ledgers").config([
       url:"/ledgers/detail",
       templateUrl:"/modules/general_ledgers/views/ledger_detail.html",
       params: {
-            campus_id:"1",
+            account_id:"1",
             ledger_id:"101",
             datestart:date,
             dateend:date
@@ -552,8 +552,8 @@ angular.module("general_ledgers").config([
 ]);
 
 angular.module("general_ledgers").controller("LedgersController",
-["$scope","$http","$state",
-function($scope,$http,$state){
+["$scope","$http","$state","DropdownList",
+function($scope,$http,$state,DropdownList){
 
   // $scope.getLedgers = function(){
   //     $http({
@@ -568,6 +568,9 @@ function($scope,$http,$state){
   //   location.href = "#!/ledgers/" + id;
   // }
 
+  $scope.initFunction = function(){
+    DropdownList.GET("account_list").then(function(data){$scope.accountList = data});
+  }
 
 
 
@@ -575,13 +578,13 @@ function($scope,$http,$state){
   $scope.dateend = moment().format("DD/MM/YYYY");
 
   $scope.checkSearchLedger = function(){
-    return !($scope.campus_id && $scope.datestart && $scope.dateend && $scope.ledger_id );
+    return !($scope.account_id && $scope.datestart && $scope.dateend && $scope.ledger_id );
   }
 
   $scope.viewLedgerDetails = function(){
     //location.href = "#!/ledgers/" + $scope.ledger_id;
     $state.go("ledgerdetail",{
-      campus_id:$scope.campus_id,
+      campus_id:$scope.account_id,
       ledger_id:"101",
       datestart:$scope.datestart,
       dateend:$scope.dateend
@@ -593,14 +596,17 @@ function($scope,$http,$state){
   $scope.searchText = function(typedthings){
     console.log("Do something like reload data with this: " + typedthings );
       $http({
-          method: 'GET',
-          url:"https://rcim-json.herokuapp.com/ledgers/?q=" + typedthings
+          method: 'POST',
+          url:"https://rcim-app.herokuapp.com/coa",
+          data:"search="+typedthings,
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'}
           }).success(function(data, status) {
               $scope.ledgersJSON = data;
               $scope.ledgersJSON.map(function(item){
                 // เพิ่ม ledger detail   101 : เงินสด
-                item.ledger_detail=item.ledger_id+" : "+item.ledger_name;
-                item.ledger_name=item.ledger_name;
+                item.ledger_detail=item.coa_id+" : "+item.coa_detail;
+                item.ledger_name=item.coa_detail;
+                item.ledger_id=item.coa_id;
               });
               $scope.ledgers = _.map($scope.ledgersJSON, 'ledger_detail');
           });
