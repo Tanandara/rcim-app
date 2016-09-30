@@ -622,17 +622,25 @@ angular.module("general_ledgers").controller("LedgerDetailController",
 function($scope,$http,$stateParams){
 
   $scope.broughtForward = function(){
-    var value = 13000;
-    return value < 0 ? (value*-1) + " (Cr)" : value + " (Dr)" ;
+    var value = 10000;
+    return value == 0 ? value      + ""      :
+           value < 0  ? (value*-1) + " (Cr)" :
+                        value      + " (Dr)" ;
   }
   $scope.carryForward = function(){
-    if(/Dr/.test($scope.broughtForward())){
-      return ( $scope.SumDrCr("1") +  parseInt($scope.broughtForward().replace(/[^\d]+/,"")) ) - $scope.SumDrCr("2")
-    }else{
+    var broughtForward = parseInt($scope.broughtForward().replace(/[^\d]+/,""));
+    var sumDr = $scope.SumDrCr("1");
+    var sumCr = $scope.SumDrCr("2");
 
-      return $scope.SumDrCr("1") - ( parseInt($scope.broughtForward().replace(/[^\d]+/,""))  + $scope.SumDrCr("2") )
-    }
+    var carryForward = /Dr/.test($scope.broughtForward()) ?
+                      ( sumDr +  broughtForward ) - sumCr :
+                      sumDr - ( broughtForward  + sumCr ) ;
+
+    return carryForward == 0 ? carryForward                :
+           carryForward <  0 ? (carryForward*-1) + " (Cr)" :
+                               carryForward      + " (Dr)" ;
   }
+
   $scope.details =
   [
     {"journal_date":"2016-09-30","ref_no":"59/0001","detail":"จ่ายค่าอะไรสักอย่าง","drcr":"2","amount":"5000"},
