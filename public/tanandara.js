@@ -524,7 +524,7 @@ angular.module("general_ledgers",[]);
 angular.module("general_ledgers").config([
   "$stateProvider",
   function($stateProvider){
-    var date = new Date();
+    var date =  moment().format("DD/MM/YYYY");
 
     $stateProvider
     .state("ledgers",{
@@ -681,9 +681,13 @@ function($scope,$http,$stateParams){
     var sumCr = $scope.SumDrCr("2");
 
     var carryForward = /Dr/.test($scope.broughtForward()) ?
-                      ( sumDr +  broughtForward ) - sumCr :
-                      sumDr - ( broughtForward  + sumCr ) ;
+                      ( sumDr +  broughtForward )  - sumCr :
+                      sumDr - ((broughtForward*-1) + sumCr ) ;
 
+    // console.log("broughtForward:",broughtForward,
+    //             "sumDr:",sumDr,
+    //             "sumCr:",sumCr,
+    //             "carryForward:",carryForward);
 
     return carryForward == 0 ? carryForward                :
            carryForward <  0 ? (carryForward*-1) + " (Cr)" :
