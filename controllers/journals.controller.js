@@ -84,6 +84,10 @@ exports.CheckRefNo = function(req,res,next){
       if(data.length){
         res.json([{"message":"duplicate"}]);
       }else{
+        _.map(req.body,i => {
+          i.user_create = data[0].user_create;
+          i.date_create = data[0].date_create;
+        });
         next();
       }
     });
@@ -159,8 +163,10 @@ exports.UpdateJournals = function(req,res){
                 date_time: data.date_time,
                 campus_id:campus_id,
                 account_id:data.account_id,
-                user_create:user_id,
-                date_create:new Date()
+                user_create:data.user_create,
+                date_create:data.date_create,
+                user_update:user_id,
+                date_update:new Date()
               });
           });
 
