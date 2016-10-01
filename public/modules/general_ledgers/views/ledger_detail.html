@@ -1,4 +1,4 @@
-<div data-ng-controller="LedgerDetailController" data-ng-init="getLedgerDetail()" >
+<div data-ng-controller="LedgerDetailController" data-ng-init="initFunction()" >
   <div class="progressbar-heading grids-heading">
     <h2>รายการบัญชีแยกประเภท (Ledger)</h2>
   </div>
@@ -19,9 +19,9 @@
         </div>
       </div>
       <h4>วิทยาลัยนวัตกรรมการจัดการ มทร.รัตนโกสินทร์ </h4>
-      <h4>ชื่อบัญชี : <span class="value-font">บัญชี MBA บิพิตรพิมุข</span></h4>
-      <h4>ชื่อบัญชีแยกประเภท : <span class="value-font">บัญชีเงินสด</span></h4>
-      <h4>วันที่ <span class="value-font">14/07/2016</span> - <span class="value-font">14/07/2016</span></h4>
+      <h4>ชื่อบัญชี : <span class="value-font">{{account_name}}</span></h4>
+      <h4>ชื่อบัญชีแยกประเภท : <span class="value-font">{{ledger_name}}</span></h4>
+      <h4>วันที่ <span class="value-font">{{datestart}}</span> - <span class="value-font">{{dateend}}</span></h4>
       <hr>
       <table class="tbhead-ledger" style="width:100%">
         <style>
@@ -102,8 +102,8 @@
             <td>{{broughtForward()}}</td>
           </tr>
           <tr ng-repeat="(key,i) in details">
-              <td ng-if="details[key-1].journal_date != i.journal_date">{{i.journal_date}}</td>
-              <td ng-if="details[key-1].journal_date == i.journal_date"></td>
+              <td ng-if="details[key-1].date_time != i.date_time">{{i.date_time}}</td>
+              <td ng-if="details[key-1].date_time == i.date_time"></td>
               <td>{{i.ref_no}}</td>
               <td>{{i.detail}}</td>
               <td ng-if="i.drcr=='1'">{{i.amount}}</td>

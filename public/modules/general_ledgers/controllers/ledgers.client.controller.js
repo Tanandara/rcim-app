@@ -32,7 +32,8 @@ function($scope,$http,$state,DropdownList){
     //location.href = "#!/ledgers/" + $scope.ledger_id;
     $state.go("ledgerdetail",{
       account_id:$scope.account_id,
-      ledger_id:"101",
+      ledger_id:$scope.ledger_id,
+      ledger_name:$scope.ledger_name,
       datestart:$scope.datestart,
       dateend:$scope.dateend
     });

@@ -541,7 +541,9 @@ angular.module("general_ledgers").config([
       templateUrl:"/modules/general_ledgers/views/ledger_detail.html",
       params: {
             account_id:"1",
-            ledger_id:"101",
+            account_name:"บัญชี MBA บิพิตรพิมุข",
+            ledger_id:"1101000000",
+            ledger_name:"บัญชีเงินสดและรายการเทียบเท่าเงินสด",
             datestart:date,
             dateend:date
         },
@@ -585,7 +587,8 @@ function($scope,$http,$state,DropdownList){
     //location.href = "#!/ledgers/" + $scope.ledger_id;
     $state.go("ledgerdetail",{
       account_id:$scope.account_id,
-      ledger_id:"101",
+      ledger_id:$scope.ledger_id,
+      ledger_name:$scope.ledger_name,
       datestart:$scope.datestart,
       dateend:$scope.dateend
     });
@@ -627,14 +630,53 @@ angular.module("general_ledgers").controller("LedgerDetailController",
 ["$scope","$http","$stateParams",
 function($scope,$http,$stateParams){
 
+
+  $scope.initFunction = function(){
+    $scope.datestart = $stateParams.datestart;
+    $scope.dateend = $stateParams.dateend;
+    $scope.coa_id = $stateParams.ledger_id;
+    $scope.ledger_name = $stateParams.ledger_name;
+    $scope.account_id = $stateParams.account_id;
+    $scope.account_name = $stateParams.account_name;
+    $http({
+      method: 'POST',
+      url: 'https://rcim-app.herokuapp.com/ledger/brought_forward',
+      data: {
+              "datestart" : dateStringFormat($scope.datestart) ,
+              "coa_id" : $scope.coa_id,
+              "account_id" : $scope.account_id
+            }
+    }).success(function(data, status) {
+      $scope.brought_forward = data[0].brought_forward;
+    });
+
+
+    $http({
+      method: 'POST',
+      url: 'https://rcim-app.herokuapp.com/ledger',
+      data: {
+              "datestart" : dateStringFormat($scope.datestart) ,
+              "dateend" : dateStringFormat($scope.dateend) ,
+              "coa_id" : $scope.coa_id ,
+              "account_id" : $scope.account_id
+            }
+    }).success(function(data, status) {
+      data.map(function(i){ i.date_time = moment(i.date_time).format("DD/MM/YYYY")});
+      $scope.details =  data;
+    });
+
+
+  }
+
   $scope.broughtForward = function(){
-    var value = 10000;
+    var value = $scope.brought_forward;
     return value == 0 ? value      + ""      :
            value < 0  ? (value*-1) + " (Cr)" :
                         value      + " (Dr)" ;
   }
+
   $scope.carryForward = function(){
-    var broughtForward = parseInt($scope.broughtForward().replace(/[^\d]+/,""));
+    var broughtForward = $scope.brought_forward;
     var sumDr = $scope.SumDrCr("1");
     var sumCr = $scope.SumDrCr("2");
 
@@ -642,30 +684,13 @@ function($scope,$http,$stateParams){
                       ( sumDr +  broughtForward ) - sumCr :
                       sumDr - ( broughtForward  + sumCr ) ;
 
+
     return carryForward == 0 ? carryForward                :
            carryForward <  0 ? (carryForward*-1) + " (Cr)" :
                                carryForward      + " (Dr)" ;
   }
 
-  $scope.details =
-  [
-    {"journal_date":"2016-09-30","ref_no":"59/0001","detail":"จ่ายค่าอะไรสักอย่าง","drcr":"2","amount":"5000"},
-    {"journal_date":"2016-09-30","ref_no":"59/0002","detail":"จ่ายค่าอะไรสักอย่าง","drcr":"2","amount":"6000"},
-    {"journal_date":"2016-09-30","ref_no":"59/0003","detail":"จ่ายค่าอะไรสักอย่าง","drcr":"2","amount":"7000"},
-    {"journal_date":"2016-09-31","ref_no":"59/0004","detail":"ได้รับเงินจากการขาย","drcr":"1","amount":"8000"},
-    {"journal_date":"2016-09-31","ref_no":"59/0005","detail":"จ่ายค่าอะไรสักอย่าง","drcr":"2","amount":"5000"},
-    {"journal_date":"2016-10-01","ref_no":"59/0006","detail":"ได้รับเงินจากการขาย","drcr":"1","amount":"6000"},
-    {"journal_date":"2016-10-02","ref_no":"59/0007","detail":"จ่ายค่าอะไรสักอย่าง","drcr":"2","amount":"1000"}
-  ]
 
-  $scope.getLedgerDetail = function(){
-      // $http({
-      //   method: 'GET',
-      //   url: $scope.dbURL + '/ledger_detail?q='
-      // }).success(function(data, status) {
-      //   $scope.ledger = data;
-      // });
-  }
 
   $scope.SumDrCr = function(drcr){
     var sum = 0;

@@ -18,7 +18,9 @@ angular.module("general_ledgers").config([
       templateUrl:"/modules/general_ledgers/views/ledger_detail.html",
       params: {
             account_id:"1",
-            ledger_id:"101",
+            account_name:"บัญชี MBA บิพิตรพิมุข",
+            ledger_id:"1101000000",
+            ledger_name:"บัญชีเงินสดและรายการเทียบเท่าเงินสด",
             datestart:date,
             dateend:date
         },
