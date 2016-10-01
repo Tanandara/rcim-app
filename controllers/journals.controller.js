@@ -84,10 +84,6 @@ exports.CheckRefNo = function(req,res,next){
       if(data.length){
         res.json([{"message":"duplicate"}]);
       }else{
-        _.map(req.body,i => {
-          i.user_create = data[0].user_create;
-          i.date_create = data[0].date_create;
-        });
         next();
       }
     });
@@ -140,6 +136,10 @@ exports.UpdateJournals = function(req,res){
   .then(function(data){
     if(data.length){
       journal_id = data[0].journal_id;
+      _.map(req.body,i => {
+        i.user_create = data[0].user_create;
+        i.date_create = data[0].date_create;
+      });
       models.journals.destroy({
         where: {
                   journal_id: journal_id
@@ -149,7 +149,6 @@ exports.UpdateJournals = function(req,res){
           // define
           campus_id = 3;
           user_id = "10001";
-
 
           req.body.forEach((data,index)=>{
               models.journals.create({
