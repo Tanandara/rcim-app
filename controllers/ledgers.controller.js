@@ -43,7 +43,7 @@ exports.Query = function(req,res){
 
 
 exports.BroughtForward = function(req,res){
-    req.body.coa_id = (req.body.coa_id).replace(/0{6}$|0{4}$|0{2}$/,"");
+    req.body.coa_id = req.body.coa_id.replace(/0{6}$|0{4}$|0{2}$/,"");
     models.sequelize.query(
       `
       select Dr - Cr as brought_forward from
