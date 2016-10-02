@@ -33,7 +33,7 @@ exports.Query = function(req,res){
       select * from
       (
       	select * from coa
-        where coa_id like '%100%' or coa_detail like '%100%'
+        where coa_id like :search or coa_detail like :search
       ) as ledgers
       where coa_id regexp '^[1-5][1-9][0-9][1-9]'
       `
