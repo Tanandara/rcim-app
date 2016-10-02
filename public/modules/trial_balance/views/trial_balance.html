@@ -1,4 +1,4 @@
-<div data-ng-controller="TrialBalanceController" data-ng-init="getTrialBalance()" >
+<div data-ng-controller="TrialBalanceController" data-ng-init="initFunction()" >
   <div class="progressbar-heading grids-heading">
     <h2>รายงานงบทดลอง (Trial Balance)</h2>
   </div>
@@ -15,7 +15,7 @@
       </style>
       <div class="row">
         <div class="col-md-12">
-          <div class="pull-left"><h4>วิทยาเขต : <span class="value-font">{{campus_name}}</span></h4></div>
+          <div class="pull-left"><h4>ชื่อบัญชี : <span class="value-font">{{account_name}}</span></h4></div>
           <div class="pull-right btn btn-info"><i class="fa fa-print"></i>  พิมพ์รายงาน</div>
         </div>
       </div>
@@ -34,26 +34,26 @@
           background-color: #efe5e5;
         }
         .table.table-bordered thead tr th:nth-child(1){
-          width:10px;
-        }
-        .table.table-bordered thead tr th:nth-child(2){
-          width:300px;
-        }
-        .table.table-bordered thead tr th:nth-child(3){
-          width:70px;
-        }
-        .table.table-bordered thead tr th:nth-child(4),
-        .table.table-bordered thead tr th:nth-child(5){
           width:100px;
+        }
+        .table.table-bordered thead tr th:nth-child(3),
+        .table.table-bordered thead tr th:nth-child(4),
+        .table.table-bordered thead tr th:nth-child(5),
+        .table.table-bordered thead tr th:nth-child(6){
+          width:150px;
         }
         .table.table-bordered tbody tr td:nth-child(2){
           text-indent:  25px !important;
           text-align: left;
         }
+        .table.table-bordered tbody tr td:nth-child(3),
         .table.table-bordered tbody tr td:nth-child(4),
         .table.table-bordered tbody tr td:nth-child(5),
+        .table.table-bordered tbody tr td:nth-child(6),
+        .table.table-bordered tfoot tr td:nth-child(3),
         .table.table-bordered tfoot tr td:nth-child(4),
-        .table.table-bordered tfoot tr td:nth-child(5){
+        .table.table-bordered tfoot tr td:nth-child(5),
+        .table.table-bordered tfoot tr td:nth-child(6){
           text-align: right;
         }
         .table.table-bordered tfoot tr td{
@@ -64,20 +64,22 @@
       </style>
         <thead>
           <tr>
-            <th>#</th>
-            <th>ชื่อบัญชี</th>
             <th>เลขที่บัญชี</th>
+            <th>ชื่อบัญชี</th>
+            <th>ยอดยกมา</th>
             <th>เดบิต</th>
             <th>เครดิต</th>
+            <th>ยอดคงเหลือ</th>
           </tr>
         </thead>
         <tbody>
           <tr ng-repeat="i in trial">
-            <td>{{$index+1}}</td>
-            <td>{{i.coa_detail}}</td>
             <td>{{i.coa_id}}</td>
-            <td>{{i.amount_dr}}</td>
-            <td>{{i.amount_cr}}</td>
+            <td>{{i.coa_detail}}</td>
+            <td>{{FormatDrCr(i.brought_forward)}}</td>
+            <td>{{i.current_dr}}</td>
+            <td>{{i.current_cr}}</td>
+            <td>{{FormatDrCr(i.carry_forward)}}</td>
           </tr>
         </tbody>
         <tfoot>
@@ -85,8 +87,9 @@
             <td></td>
             <td></td>
             <td></td>
-            <td>{{SumDrCr("1")}}</td>
-            <td>{{SumDrCr("2")}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
           </tr>
         </tfoot>
       </table>

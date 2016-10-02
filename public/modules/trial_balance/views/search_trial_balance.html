@@ -15,7 +15,7 @@
         <div class="col-md-12 searchPanel">
           <div class="col-md-12">
             ชื่อบัญชี :
-            <select name="account_id" ng-model="account_id" class="form-control">
+            <select name="account_id" ng-model="account_id" class="form-control" ng-change="onDropdownChange()">
               <option value="" disabled selected>กรุณาเลือกชื่อบัญชี</option>
               <option value="{{i.account_id}}" ng-repeat="i in accountList">{{i.account_name}}</option>
               <option value="0">บัญชีทั้งหมด</option>

@@ -12,6 +12,7 @@ function($scope,$http,$state,DropdownList){
   $scope.viewTrialBalance = function(){
     $state.go("trialbalance",{
       account_id:$scope.account_id,
+      account_name:$scope.account_name,
       datestart:$scope.datestart,
       dateend:$scope.dateend
     });
@@ -22,6 +23,9 @@ function($scope,$http,$state,DropdownList){
   }
 
 
+  $scope.onDropdownChange = function(){
+    $scope.account_name = $("[name=account_id] option:selected").text();
+  }
 
 
 }]);

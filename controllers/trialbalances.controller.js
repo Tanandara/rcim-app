@@ -7,7 +7,9 @@ var _ = require('lodash');
 
 //Custom query
 exports.Query = function(req,res){
-    var account_id = req.body.account_id == 0 ? 'select account_id from accounts' : req.body.account_id
+    req.body.account_id = isNaN(req.body.account_id) ? 1 : req.body.account_id ;
+    var account_id = req.body.account_id == 0 ? 'select account_id from accounts' :  req.body.account_id;
+    console.log("account_id :",req.body.account_id);
     models.sequelize.query(
       `
       select
@@ -91,7 +93,7 @@ exports.Query = function(req,res){
         type: Sequelize.QueryTypes.SELECT
       })
       .then(function(data) {
-        console.log(data);
+        //console.log(data);
         res.json(data);
       });
 }

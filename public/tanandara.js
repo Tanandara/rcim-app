@@ -767,6 +767,7 @@ angular.module("trial_balance").config([
       url:"/trialbalance",
       params: {
             account_id:"0",
+            account_name:"บัญชีทั้งหมด",
             datestart:date,
             dateend:date
         },
@@ -789,6 +790,7 @@ function($scope,$http,$state,DropdownList){
   $scope.viewTrialBalance = function(){
     $state.go("trialbalance",{
       account_id:$scope.account_id,
+      account_name:$scope.account_name,
       datestart:$scope.datestart,
       dateend:$scope.dateend
     });
@@ -799,6 +801,9 @@ function($scope,$http,$state,DropdownList){
   }
 
 
+  $scope.onDropdownChange = function(){
+    $scope.account_name = $("[name=account_id] option:selected").text();
+  }
 
 
 }]);
@@ -806,22 +811,20 @@ function($scope,$http,$state,DropdownList){
 angular.module("trial_balance").controller("TrialBalanceController",
 ["$scope","$http","$stateParams",
 function($scope,$http,$stateParams){
-  $scope.datestart = $stateParams.datestart;
-  $scope.dateend = $stateParams.dateend;
-  $scope.campus_id = $stateParams.campus_id;
-  $scope.campus_name = $scope.campus_id == "1" ? "ศาลายา"     :
-                       $scope.campus_id == "2" ? "วังไกลกังวล"  :
-                       $scope.campus_id == "3" ? "บพิตรพิมุข"   :
-                                                 "ทุกวิทยาเขต" ;
 
-  $scope.getTrialBalance = function(){
+
+  $scope.initFunction = function(){
+    $scope.datestart = $stateParams.datestart;
+    $scope.dateend = $stateParams.dateend;
+    $scope.account_id = $stateParams.account_id;
+    $scope.account_name = $stateParams.account_name;
     $http({
       method: 'POST',
       url: 'https://rcim-app.herokuapp.com/trial_balance',
       data: {
         "datestart" : dateStringFormat($scope.datestart) ,
         "dateend" : dateStringFormat($scope.dateend) ,
-        "campus_id" : $stateParams.campus_id
+        "account_id" : $scope.account_id
       }
     }).success(function(data, status) {
       $scope.trial = data;
@@ -831,9 +834,15 @@ function($scope,$http,$stateParams){
   $scope.SumDrCr = function(drcr){
     var sum = 0;
     angular.forEach($scope.trial,function(item,index){
-        sum += ((parseFloat(drcr == "1" ? item.amount_dr : item.amount_cr ).toFixed(2))/1);
+        sum += ((parseFloat(drcr == "1" ? item.current_dr : item.current_cr ).toFixed(2))/1);
     });
     return sum;
+  }
+
+  $scope.FormatDrCr = function(x){
+    return x == 0 ? x                :
+           x <  0 ? (x*-1) + ' (Cr)' :
+                    x      + ' (Dr)' ;
   }
 
 

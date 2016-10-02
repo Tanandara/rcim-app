@@ -12,6 +12,7 @@ angular.module("trial_balance").config([
       url:"/trialbalance",
       params: {
             account_id:"0",
+            account_name:"บัญชีทั้งหมด",
             datestart:date,
             dateend:date
         },
