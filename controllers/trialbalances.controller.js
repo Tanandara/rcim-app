@@ -9,7 +9,6 @@ var _ = require('lodash');
 exports.Query = function(req,res){
     req.body.account_id = isNaN(req.body.account_id) ? 1 : req.body.account_id ;
     var account_id = req.body.account_id == 0 ? 'select account_id from accounts' :  req.body.account_id;
-    console.log("account_id :",req.body.account_id);
     models.sequelize.query(
       `
       select

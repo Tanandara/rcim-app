@@ -8,7 +8,9 @@ var moment = require('moment');
 
 //Custom query
 exports.Query = function(req,res){
-    var datestart = moment(new Date(0)).format("YYYY-MM-DD");
+    //var datestart = moment(new Date(0)).format("YYYY-MM-DD");
+    req.body.account_id = isNaN(req.body.account_id) ? 1 : req.body.account_id ;
+    var account_id = req.body.account_id == 0 ? 'select account_id from accounts' :  req.body.account_id;
     models.sequelize.query(
       `
       select
@@ -36,8 +38,8 @@ exports.Query = function(req,res){
       		(
       			select concat(substring(coa_id,1,4),'000000') as grp_coa_id,drcr,sum(amount) as amount from
       			(	select * from journals
-      				where date_time between :datestart and :dateend
-      				and campus_id in (:campus_id)
+      				where date_time <= :dateend
+      				and account_id in (` + account_id + `)
       			) as journals
       			where drcr != 3
       			group by grp_coa_id,drcr
@@ -50,9 +52,7 @@ exports.Query = function(req,res){
       ,
       {
         replacements: {
-                        datestart: datestart,
-                        dateend: req.body.dateend,
-                        campus_id : req.body.campus_id == 4 ? [1,2,3] : [req.body.campus_id]
+                        dateend: req.body.dateend
                       },
         type: Sequelize.QueryTypes.SELECT
       })

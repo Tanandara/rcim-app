@@ -1,25 +1,25 @@
 angular.module("balance_sheet").controller("BalanceSheetController",
 ["$scope","$http","$stateParams",
 function($scope,$http,$stateParams){
-  $scope.date = $stateParams.date;
-  $scope.campus_id = $stateParams.campus_id;
-  $scope.campus_name = $scope.campus_id == "1" ? "ศาลายา"     :
-                       $scope.campus_id == "2" ? "วังไกลกังวล"  :
-                       $scope.campus_id == "3" ? "บพิตรพิมุข"   :
-                                                 "ทุกวิทยาเขต" ;
 
-  $scope.getProfitLoss = function(){
+
+  $scope.initFunction = function(){
+    $scope.dateend = $stateParams.dateend;
+    $scope.account_id = $stateParams.account_id;
+    $scope.account_name = $stateParams.account_name;
     $http({
       method: 'POST',
       url: 'https://rcim-app.herokuapp.com/balance_sheet',
       data: {
-        "dateend" : dateStringFormat($scope.date) ,
-        "campus_id" : $stateParams.campus_id
+        "dateend" : dateStringFormat($scope.dateend) ,
+        "account_id" : $scope.account_id
       }
     }).success(function(data, status) {
       $scope.balancesheet = data;
     });
+
   }
+
 
 
   $scope.currentAssetFilter = function(i){
@@ -49,7 +49,7 @@ function($scope,$http,$stateParams){
                   c == 'Asset'                ? /^1/     :
                   c == 'currentLiability'     ? /^21/    :
                   c == 'noncurrentLiability'  ? /^22/    :
-                  c == 'Liability'            ? /^2/    :
+                  c == 'Liability'            ? /^2/     :
                   c == 'Shareholder'          ? /^3/     :
                                                 /^[1-3]/ ;
     _.each(_.filter($scope.balancesheet, i => pattern.test(i.coa_id) ) , i => sum+=i.amount_total);

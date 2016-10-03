@@ -11,8 +11,9 @@ angular.module("balance_sheet").config([
     .state("balancesheet",{
       url:"/balancesheet",
       params: {
-            campus_id:"4",
-            date:date
+            account_id:"0",
+            account_name:"บัญชีทั้งหมด",
+            dateend:date
         },
       templateUrl:"/modules/balance_sheet/views/balance_sheet.html"
     })

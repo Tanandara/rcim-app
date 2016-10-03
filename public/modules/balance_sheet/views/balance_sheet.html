@@ -1,4 +1,4 @@
-<div data-ng-controller="BalanceSheetController" data-ng-init="getProfitLoss()" >
+<div data-ng-controller="BalanceSheetController" data-ng-init="initFunction()" >
   <div class="progressbar-heading grids-heading">
     <h2>รายงานงบดุล (Balance Sheet)</h2>
   </div>
@@ -15,13 +15,13 @@
       </style>
       <div class="row">
         <div class="col-md-12">
-          <div class="pull-left"><h4>วิทยาเขต : <span class="value-font">{{campus_name}}</span></h4></div>
+          <div class="pull-left"><h4>ชื่อบัญชี : <span class="value-font">{{account_name}}</span></h4></div>
           <div class="pull-right btn btn-info"><i class="fa fa-print"></i>  พิมพ์รายงาน</div>
         </div>
       </div>
       <h4>วิทยาลัยนวัตกรรมการจัดการ มทร.รัตนโกสินทร์ </h4>
       <h4>งบดุล</h4>
-      <h4>ณ <span class="value-font">{{date}}</span></h4>
+      <h4>ณ <span class="value-font">{{dateend}}</span></h4>
       <hr>
       <div class="col-md-12 balancesheet">
         <style media="screen">
