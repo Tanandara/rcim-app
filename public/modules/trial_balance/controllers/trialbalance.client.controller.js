@@ -2,6 +2,10 @@ angular.module("trial_balance").controller("TrialBalanceController",
 ["$scope","$http","$stateParams",
 function($scope,$http,$stateParams){
 
+  $scope.sumBroughtForward = 0;
+  $scope.sumDr = 0;
+  $scope.sumCr = 0;
+  $scope.sumCarryForward = 0;
 
   $scope.initFunction = function(){
     $scope.datestart = $stateParams.datestart;
@@ -18,8 +22,16 @@ function($scope,$http,$stateParams){
       }
     }).success(function(data, status) {
       $scope.trial = data;
+      _.map($scope.trial, i => {
+        $scope.sumBroughtForward += i.brought_forward;
+        $scope.sumDr += i.current_dr;
+        $scope.sumCr += i.current_cr;
+        $scope.sumCarryForward += i.carry_forward;
+      })
     });
   }
+
+
 
   $scope.SumDrCr = function(drcr){
     var sum = 0;
