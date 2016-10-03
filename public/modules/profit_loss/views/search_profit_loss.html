@@ -1,4 +1,4 @@
-<div data-ng-controller="SearchProfitLossController" data-ng-init="" >
+<div data-ng-controller="SearchProfitLossController" data-ng-init="initFunction()" >
   <div class="progressbar-heading grids-heading">
     <h2>ค้นหางบกำไรขาดทุน (Search Profit Loss Statement)</h2>
   </div>
@@ -14,13 +14,11 @@
         </style>
         <div class="col-md-12 searchPanel">
           <div class="col-md-12">
-            วิทยาเขต :
-            <select name="campus" class="form-control" ng-model="campus_id">
-              <option value="" disabled selected>เลือกวิทยาเขต</option>
-              <option value="1">ศาลายา</option>
-              <option value="2">วังไกลกังวล</option>
-              <option value="3">บพิตรพิมุข</option>
-              <option value="4">ทุกวิทยาเขต</option>
+            ชื่อบัญชี :
+            <select name="account_id" ng-model="account_id" class="form-control" ng-change="onDropdownChange()">
+              <option value="" disabled selected>กรุณาเลือกชื่อบัญชี</option>
+              <option value="{{i.account_id}}" ng-repeat="i in accountList">{{i.account_name}}</option>
+              <option value="0">บัญชีทั้งหมด</option>
             </select>
           </div>
           <div class="col-md-6">

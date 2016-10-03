@@ -11,9 +11,10 @@ angular.module("profit_loss").config([
     .state("profitloss",{
       url:"/profitloss",
       params: {
-            campus_id:"4",
-            datestart:date,
-            dateend:date
+          account_id:"0",
+          account_name:"บัญชีทั้งหมด",
+          datestart:date,
+          dateend:date
         },
       templateUrl:"/modules/profit_loss/views/profit_loss.html"
     })

@@ -941,7 +941,7 @@ function($scope,$http,$stateParams){
                   c == 'noncurrentLiability'  ? /^22/    :
                   c == 'Liability'            ? /^2/     :
                   c == 'Shareholder'          ? /^3/     :
-                                                /^[1-3]/ ;
+                                                /^[2-3]/ ;
     _.each(_.filter($scope.balancesheet, i => pattern.test(i.coa_id) ) , i => sum+=i.amount_total);
     return sum;
   }
@@ -1006,9 +1006,10 @@ angular.module("profit_loss").config([
     .state("profitloss",{
       url:"/profitloss",
       params: {
-            campus_id:"4",
-            datestart:date,
-            dateend:date
+          account_id:"0",
+          account_name:"บัญชีทั้งหมด",
+          datestart:date,
+          dateend:date
         },
       templateUrl:"/modules/profit_loss/views/profit_loss.html"
     })
@@ -1018,22 +1019,20 @@ angular.module("profit_loss").config([
 angular.module("profit_loss").controller("ProfitLossController",
 ["$scope","$http","$stateParams",
 function($scope,$http,$stateParams){
-  $scope.datestart = $stateParams.datestart;
-  $scope.dateend = $stateParams.dateend;
-  $scope.campus_id = $stateParams.campus_id;
-  $scope.campus_name = $scope.campus_id == "1" ? "ศาลายา"     :
-                       $scope.campus_id == "2" ? "วังไกลกังวล"  :
-                       $scope.campus_id == "3" ? "บพิตรพิมุข"   :
-                                                 "ทุกวิทยาเขต" ;
 
-  $scope.getProfitLoss = function(){
+
+  $scope.initFunction = function(){
+    $scope.datestart = $stateParams.datestart;
+    $scope.dateend = $stateParams.dateend;
+    $scope.account_id = $stateParams.account_id;
+    $scope.account_name = $stateParams.account_name;
     $http({
       method: 'POST',
       url: 'https://rcim-app.herokuapp.com/profit_loss',
       data: {
         "datestart" : dateStringFormat($scope.datestart) ,
         "dateend" : dateStringFormat($scope.dateend) ,
-        "campus_id" : $stateParams.campus_id
+        "account_id" : $scope.account_id
       }
     }).success(function(data, status) {
       $scope.profitloss = data;
@@ -1051,31 +1050,40 @@ function($scope,$http,$stateParams){
   $scope.sumProfitLoss = function(c){
     var sum=0 ;
     var pattern = c == 'Profit' ? /^4/ : /^5/;
-    _.each(_.filter($scope.profitloss, i => pattern.test(i.coa_id) ) , i => sum+=i.amount_total);
+    _.each(_.filter($scope.profitloss, i => pattern.test(i.coa_id) ) , i => sum += (i.current_dr - i.current_cr) );
     return sum;
   }
 
 }]);
 
 angular.module("profit_loss").controller("SearchProfitLossController",
-["$scope","$http","$state",
-function($scope,$http,$state){
+["$scope","$http","$state","DropdownList",
+function($scope,$http,$state,DropdownList){
   $scope.datestart = moment().format("DD/MM/YYYY");
   $scope.dateend = moment().format("DD/MM/YYYY");
 
 
   $scope.checkCondition = function(){
-    return !($scope.campus_id && $scope.datestart && $scope.dateend );
+    return !($scope.account_id && $scope.datestart && $scope.dateend );
   }
 
   $scope.viewProfitLoss = function(){
     $state.go("profitloss",{
-      campus_id:$scope.campus_id,
+      account_id:$scope.account_id,
+      account_name:$scope.account_name,
       datestart:$scope.datestart,
       dateend:$scope.dateend
     });
   }
 
+  $scope.initFunction = function(){
+    DropdownList.GET("account_list").then(function(data){$scope.accountList = data});
+  }
+
+
+  $scope.onDropdownChange = function(){
+    $scope.account_name = $("[name=account_id] option:selected").text();
+  }
 
 
 

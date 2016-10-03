@@ -51,7 +51,7 @@ function($scope,$http,$stateParams){
                   c == 'noncurrentLiability'  ? /^22/    :
                   c == 'Liability'            ? /^2/     :
                   c == 'Shareholder'          ? /^3/     :
-                                                /^[1-3]/ ;
+                                                /^[2-3]/ ;
     _.each(_.filter($scope.balancesheet, i => pattern.test(i.coa_id) ) , i => sum+=i.amount_total);
     return sum;
   }
