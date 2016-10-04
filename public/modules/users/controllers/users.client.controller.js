@@ -185,6 +185,7 @@ angular.module('users').controller('addModalCtrl', function ($scope, $uibModalIn
 
 
   $scope.ok = function () {
+    if( $scope.checkData() ) return;
       $http({
         method: 'post',
         url: 'https://rcim-app.herokuapp.com/users/create',

@@ -86,6 +86,7 @@ $scope.SumDrCr = function(drcr){
 }
 
 $scope.saveJournalizing = function(){
+  if( $scope.checkJournalizing() ) return;
   var journalsData = [], datejournal = function(i){return i[3]+"-"+i[2]+"-"+i[1];}(/(\d+)\/(\d+)\/(\d+)/g.exec($scope.datejournal));
   // set Debit Credit
   $scope.details.forEach(function(data){

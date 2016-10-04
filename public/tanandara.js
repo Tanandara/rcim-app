@@ -141,6 +141,7 @@ $scope.SumDrCr = function(drcr){
 }
 
 $scope.saveJournalizing = function(){
+  if( $scope.checkJournalizing() ) return;
   var journalsData = [], datejournal = function(i){return i[3]+"-"+i[2]+"-"+i[1];}(/(\d+)\/(\d+)\/(\d+)/g.exec($scope.datejournal));
   // set Debit Credit
   $scope.details.forEach(function(data){
@@ -416,6 +417,7 @@ $scope.SumDrCr = function(drcr){
 }
 
 $scope.saveJournalizing = function(){
+  if( $scope.checkJournalizing() ) return;
   var journalsData = [], datejournal = function(i){return i[3]+"-"+i[2]+"-"+i[1];}(/(\d+)\/(\d+)\/(\d+)/g.exec($scope.datejournal));
   // set Debit Credit
   $scope.details.forEach(function(data){
@@ -1328,6 +1330,7 @@ angular.module('users').controller('addModalCtrl', function ($scope, $uibModalIn
 
 
   $scope.ok = function () {
+    if( $scope.checkData() ) return;
       $http({
         method: 'post',
         url: 'https://rcim-app.herokuapp.com/users/create',
