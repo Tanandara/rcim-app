@@ -12,6 +12,7 @@ angular.module("Main",
 "balance_sheet",
 "profit_loss",
 "users",
+"management",
 "service"]);
 
 

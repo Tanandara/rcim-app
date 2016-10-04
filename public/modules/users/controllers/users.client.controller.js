@@ -254,6 +254,7 @@ angular.module('users').controller('editModalCtrl', function ($scope, $uibModalI
 
 
   $scope.ok = function () {
+    if( $scope.checkData() ) return;
       $http({
         method: 'post',
         url: 'https://rcim-app.herokuapp.com/users/update',

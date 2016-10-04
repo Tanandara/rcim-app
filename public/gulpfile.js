@@ -40,6 +40,10 @@ gulp.task('concat', function() {
         "modules/users/users.client.module.js",
         "modules/users/config/users.client.routes.js",
         "modules/users/controllers/users.client.controller.js",
+        "modules/management/management.client.module.js",
+        "modules/management/config/management.client.routes.js",
+        "modules/management/controllers/coa.client.controller.js",
+        "modules/management/controllers/account.client.controller.js",
         "service.js",
 		    "application.js"
       ]

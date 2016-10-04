@@ -3,12 +3,65 @@ var Sequelize  = require('sequelize');
 var _ = require('lodash');
 
 
-// exports.GetAllCoa = function(req,res){
-//     models.coa.findAll()
-//     .then(function(data){
-//       res.json(data);
-//     });
-// }
+exports.GetAllCoa = function(req,res){
+    models.coa.findAll()
+    .then(function(data){
+      res.json(data);
+    });
+}
+
+
+exports.CreateCoa = function(req,res){
+  models.coa.create({
+      coa_id:req.body.coa_id,
+      coa_detail:req.body.coa_detail,
+    })
+    .then(function(data){
+      console.log(data,data.length);
+      //res.json(data);
+      res.json({"message":"success"});
+    })
+    .catch(function(error) {
+      console.log("catch",error);
+      if(error.errors[0].message =="PRIMARY must be unique"){
+        res.json({"message":"fail"});
+      }
+    });
+}
+
+exports.UpdateCoa = function(req,res){
+  models.coa.update({
+      coa_detail:req.body.coa_detail
+     },{
+     where: {
+              coa_id: req.body.coa_id
+            }
+     })
+    .then(function(data){
+      res.json({"message":"success"});
+    })
+    .catch(function(error) {
+      console.log("catch",error);
+      res.json({"message":"fail"});
+    });
+}
+
+
+exports.DeleteCoa = function(req,res){
+  models.coa.destroy({
+     where: {
+                coa_id: req.body.coa_id
+            }
+     })
+     .then(function(data){
+       res.json({"message":"success"});
+     })
+     .catch(function(error) {
+       console.log("catch",error);
+       res.json({"message":"fail"});
+     });
+}
+
 //
 // exports.GetCoa = function(req,res){
 //     models.coa.findAll(

@@ -1,0 +1,137 @@
+<div data-ng-controller="CoaController" data-ng-init="getAllCoa()">
+  <div class="progressbar-heading grids-heading">
+    <h2>จัดการผังบัญชีในระบบ</h2>
+  </div>
+  <div class="panel panel-widget">
+    <div class="row">
+        <div class="col-md-12">
+          <a class="hvr-bounce-to-right pull-right" ng-click="addCoaModal()">เพิ่มผังบัญชี</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+          ค้นหา :
+          <input type="text" ng-model="query" class="form-control" placeholder="ใส่เลขที่ผังบัญชี หรือ ชื่อผังบัญชี" />
+        </div>
+    </div>
+    <hr/>
+    <div class="tables">
+      <h4>&nbsp;</h4>
+      <table class="table table-bordered" data-ng-show="coa">
+        <style>
+          .table.table-bordered th,.table.table-bordered td{
+            text-align: center;
+          }
+          .table.table-bordered thead tr:first-child th{
+            background-color: #efe5e5;
+          }
+          .table.table-bordered th:nth-child(1){
+            width:150px;
+          }
+          .table.table-bordered th:nth-child(3){
+            width:150px;
+          }
+
+          .table.table-bordered td:nth-child(2){
+            text-align: left;
+            text-indent: 5px;
+          }
+        </style>
+        <thead>
+          <tr>
+            <th>เลขที่บัญชี</th>
+            <th>ชื่อบัญชี</th>
+            <th>Edit / Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr  ng-repeat="i in coa | filter: query">
+            <td>{{i.coa_id}}</td>
+            <td>{{i.coa_detail}}</td>
+            <td>
+              <div class="btn-group">
+                <button type="button" class="btn btn-danger">เลือก</button>
+                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+                  <span class="caret"></span>
+                  <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#" ng-click="editCoaModal(i)">แก้ไข</a></li>
+                  <li><a href="#" ng-click="deleteCoaModal(i)">ลบ</a></li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script type="text/ng-template" id="deleteModalContent">
+      <div class="modal-header">
+          <h3 class="modal-title">ข้อความ</h3>
+      </div>
+      <div class="modal-body" ng-init="initData()">
+          <h3>คุณต้องการที่จะลบ {{coa_id}} ใช่หรือไม่</h3>
+      </div>
+      <div class="modal-footer">
+          <a class="btn btn-info" type="button" ng-click="ok()" >ตกลง</a>
+          <a class="btn btn-danger" type="button" ng-click="cancel()" >ยกเลิก</a>
+      </div>
+  </script>
+
+
+  <script type="text/ng-template" id="addModalContent">
+      <div class="modal-header">
+          <h3 class="modal-title">เพิ่มผังบัญชี <span ng-if="duplicate" style="color:red;font-weight:bold">(เลขที่บัญชีซ้ำ)</span></h3>
+      </div>
+      <div class="modal-body" style="display: inline-block;width: 100%;">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>เลขที่บัญชี</label>
+              <input placeholder='ใส่เลขที่บัญชี' type="text" name="coa_id" ng-model="coa_id" class="form-control"  required>
+            </div>
+            <div class="form-group">
+              <label>ชื่อผังบัญชี</label>
+              <input placeholder='ใส่ชื่อบัญชี' type="text" name="coa_detail" ng-model="coa_detail" class="form-control"  required>
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+          <a class="btn btn-info" type="button" ng-disabled="checkData()" ng-click="ok()" >ตกลง</a>
+          <a class="btn btn-danger" type="button" ng-click="cancel()" >ยกเลิก</a>
+      </div>
+  </script>
+
+
+
+
+
+
+  <script type="text/ng-template" id="editModalContent" >
+      <div class="modal-header">
+          <h3 class="modal-title">แก้ไขข้อมูลผังบัญชี : <span style="color:red">{{coa_id}}</span></h3>
+      </div>
+      <div class="modal-body" style="display: inline-block;width: 100%;" ng-init="initData()">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>เลขที่บัญชี</label>
+            <input placeholder='ใส่เลขที่บัญชี' ng-disabled="true" type="text" name="coa_id" ng-model="coa_id" class="form-control"  required>
+          </div>
+          <div class="form-group">
+            <label>ชื่อผังบัญชี</label>
+            <input placeholder='ใส่ชื่อบัญชี' type="text" name="coa_detail" ng-model="coa_detail" class="form-control"  required>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+          <a class="btn btn-info" type="button" ng-disabled="checkData()" ng-click="ok()" >ตกลง</a>
+          <a class="btn btn-danger" type="button" ng-click="cancel()" >ยกเลิก</a>
+      </div>
+  </script>
+
+
+
+
+
+</div>
