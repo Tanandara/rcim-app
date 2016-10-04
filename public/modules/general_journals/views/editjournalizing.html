@@ -1,6 +1,6 @@
 <div data-ng-controller="EditJournalizingController" data-ng-init="getJournal()" >
   <div class="progressbar-heading grids-heading">
-    <h2>แก้ไขบัญชีรายวัน (Edit Journal)</h2>Dr : {{Dr}} / Cr : {{Cr}}         ledger_id : {{ledger_id}} / ledger_name : {{ledger_name}}
+    <h2>แก้ไขบัญชีรายวัน (Edit Journal)</h2> <!--Dr : {{Dr}} / Cr : {{Cr}}         ledger_id : {{ledger_id}} / ledger_name : {{ledger_name}} -->
   </div>
   <div class="panel panel-widget">
     <div class="block-page">
@@ -24,11 +24,11 @@
       <hr>
       <div class="col-md-6">
         เลขที่เอกสารอ้างอิง :
-        <input name="ref_no" placeholder="เลขที่เอกสารอ้างอิง" ng-model="ref_no"  class="form-control" />
+        <input name="ref_no" ng-disabled="true" placeholder="เลขที่เอกสารอ้างอิง" ng-model="ref_no"  class="form-control" />
         <br>
       </div>
       <div class="col-md-6">
-        ชื่อบัญชี : 
+        ชื่อบัญชี :
         <select name="account_id" ng-model="account_id" class="form-control">
           <option value="" disabled selected>กรุณาเลือกชื่อบัญชี</option>
           <option value="{{i.account_id}}" ng-repeat="i in accountList">{{i.account_name}}</option>
