@@ -1050,7 +1050,13 @@ function($scope,$http,$stateParams){
   $scope.sumProfitLoss = function(c){
     var sum=0 ;
     var pattern = c == 'Profit' ? /^4/ : /^5/;
-    _.each(_.filter($scope.profitloss, i => pattern.test(i.coa_id) ) , i => sum += (i.current_dr - i.current_cr) );
+    var carry_forward=0;
+    _.each(_.filter($scope.profitloss, i => pattern.test(i.coa_id) ) ,
+     i => {
+       carry_forward = i.carry_forward;
+       if(/^4/.test(i.coa_id) && i.carry_forward < 0) carry_forward = (i.carry_forward *-1);
+       sum += carry_forward
+     });
     return sum;
   }
 
