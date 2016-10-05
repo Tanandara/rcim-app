@@ -4,22 +4,18 @@ function($scope,$http,$state){
 
   $scope.datestart = moment().format("DD/MM/YYYY");
   $scope.dateend = moment().format("DD/MM/YYYY");
-  $scope.getJournals = function(){
-      $http({
-        method: 'GET',
-        url: $scope.dbURL + '/journals'
-      }).success(function(data, status) {
-        $scope.journals = data;
-      });
-  }
 
-  $scope.goDetail = function(){
+  $scope.goDetail = function(tab){
     //location.href = "#!/journals/details"
-    $state.go("journaldetail",
-    {
-      datestart:$scope.datestart,
-      dateend:$scope.dateend
-    });
+    data = tab == 1 ?
+          {
+            datestart:$scope.datestart,
+            dateend:$scope.dateend
+          }:
+          {
+            ref_no:$scope.ref_no
+          };
+    $state.go("journaldetail",data);
   }
 
 }]);

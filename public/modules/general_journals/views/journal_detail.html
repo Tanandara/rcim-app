@@ -4,7 +4,8 @@
   </div>
   <div class="panel panel-widget">
     <div class="block-page">
-      <h3>สมุดบัญชีรายวันของวันที่ {{datestart | date:"dd/MM/yyyy" }} ถึง {{dateend | date:"dd/MM/yyyy" }}</h3>
+      <h3 ng-if="!ref_no">สมุดบัญชีรายวันของวันที่ {{datestart | date:"dd/MM/yyyy" }} ถึง {{dateend | date:"dd/MM/yyyy" }}</h3>
+      <h3 ng-if="ref_no">รายการบัญชีรายวันของเอกสารอ้างอิง :  {{ ref_no }}</h3>
       <hr>
       <table class="table table-bordered" >
         <style>
@@ -99,3 +100,16 @@
     </div>
   </div>
 </div>
+
+
+<script type="text/ng-template" id="myModalContent">
+       <div class="modal-header">
+           <h3 class="modal-title">ข้อความ</h3>
+       </div>
+       <div class="modal-body">
+           <h3>{{message}}</h3>
+       </div>
+       <div class="modal-footer">
+           <a class="btn btn-primary" type="button"  ng-click="ok()" >ตกลง</a>
+       </div>
+</script>

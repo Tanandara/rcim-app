@@ -16,8 +16,7 @@ exports.GetJournal = function(req,res){
     //   res.json(data);
     // });
 
-    // set campus_id ดูได้เฉพาะวิทยาเขตของตนเอง
-    var campus_id = 3;
+
 
     models.sequelize.query(
       "select " +
@@ -30,12 +29,11 @@ exports.GetJournal = function(req,res){
       "amount as amount ," +
       "account_id as account_id " +
       "from journals " +
-      "where ref_no = :ref_no and campus_id = :campus_id " +
+      "where ref_no = :ref_no " +
       "order by date_time,journal_id",
       {
         replacements: {
-                        ref_no: req.body.ref_no,
-                        campus_id: campus_id
+                        ref_no: req.body.ref_no
                       },
         type: Sequelize.QueryTypes.SELECT
       })
@@ -96,7 +94,6 @@ exports.AddJournals = function(req,res){
       var id = isNaN(max) ? 1 : (max+1);
 
       // define
-      campus_id = 3;
       user_id = "10001";
 
 
@@ -110,7 +107,6 @@ exports.AddJournals = function(req,res){
             drcr: data.drcr,
             amount: data.amount,
             date_time: data.date_time,
-            campus_id:campus_id,
             account_id:data.account_id,
             user_create:user_id,
             date_create:new Date()
@@ -147,7 +143,6 @@ exports.UpdateJournals = function(req,res){
       })
       .then(function(data){
           // define
-          campus_id = 3;
           user_id = "10001";
 
           req.body.forEach((data,index)=>{
@@ -160,7 +155,6 @@ exports.UpdateJournals = function(req,res){
                 drcr: data.drcr,
                 amount: data.amount,
                 date_time: data.date_time,
-                campus_id:campus_id,
                 account_id:data.account_id,
                 user_create:data.user_create,
                 date_create:data.date_create,
@@ -182,8 +176,6 @@ exports.UpdateJournals = function(req,res){
 
 
 exports.ShowDetails = function(req,res){
-      // set campus_id ดูได้เฉพาะวิทยาเขตของตนเอง
-      var campus_id = 3;
 
       models.sequelize.query(
         "select " +
@@ -195,13 +187,12 @@ exports.ShowDetails = function(req,res){
         "drcr as drcr," +
         "amount as amount " +
         "from journals " +
-        "where (date_time BETWEEN :datestart AND :dateend) AND campus_id = :campus_id " +
+        "where (date_time BETWEEN :datestart AND :dateend)  " +
         "order by date_time,journal_id",
         {
           replacements: {
                           datestart: req.body.datestart,
-                          dateend: req.body.dateend,
-                          campus_id: campus_id
+                          dateend: req.body.dateend
                         },
           type: Sequelize.QueryTypes.SELECT
         })

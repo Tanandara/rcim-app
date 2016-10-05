@@ -6,26 +6,53 @@
     <div class="block-page">
       <h3>ค้นหารายการบัญชีทั่วไปรายวัน</h3>
       <hr>
-      <div class="row">
-        <style>
-        .searchJournal select,.searchJournal input{
-          margin:10px;
-        }
-        </style>
-        <div class="col-md-12 searchJournal">
-          <div class="col-md-6">
-              วันที่เริ่ม :
-              <input type="text" class="form-control" id="datestart"  placeholder="dd/mm/yyyy" data-provide="datepicker" data-date-language="th" ng-model="datestart" />
-          </div>
-          <div class="col-md-6">
-              วันที่สิ้นสุด :
-              <input type="text" class="form-control" id="dateend"   placeholder="dd/mm/yyyy" data-provide="datepicker" data-date-language="th" ng-model="dateend" />
-          </div>
-          <div class="col-md-12">
-            <input type="button" class="btn btn-primary form-control" value="ค้นหา" ng-click="goDetail()">
-          </div>
-        </div>
-      </div>
+      <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+									<ul id="myTab" class="nav nav-tabs" role="tablist">
+									  <li role="presentation" class="active"><a href="#!/journals#datetime" id="datetime-tab" role="tab" data-toggle="tab" aria-controls="datetime" aria-expanded="true">ค้นหาจากวันที่</a></li>
+                    <li role="presentation" class=""><a href="#!/journals#refno" role="tab" id="refno-tab" data-toggle="tab" aria-controls="refno" aria-expanded="false">ค้นหาจากเลขที่เอกสารอ้างอิง</a></li>
+
+									</ul>
+								<div id="myTabContent" class="tab-content" style="display: inline-block;width: 100%;">
+								  <div role=""  class="tab-pane fade active in" id="datetime" aria-labelledby="datetime-tab">
+                        <style>
+                        .searchJournal select,.searchJournal input{
+                          margin:10px;
+                        }
+                        </style>
+                        <div class="col-md-12 searchJournal">
+                          <div class="col-md-6">
+                              วันที่เริ่ม :
+                              <input type="text" class="form-control" id="datestart"  placeholder="dd/mm/yyyy" data-provide="datepicker" data-date-language="th" ng-model="datestart" />
+                          </div>
+                          <div class="col-md-6">
+                              วันที่สิ้นสุด :
+                              <input type="text" class="form-control" id="dateend"   placeholder="dd/mm/yyyy" data-provide="datepicker" data-date-language="th" ng-model="dateend" />
+                          </div>
+                          <div class="col-md-12">
+                            <input type="button" class="btn btn-primary form-control" value="ค้นหา" ng-click="goDetail(1)">
+                          </div>
+                        </div>
+								  </div>
+								  <div role="tabpanel"  class="tab-pane fade" id="refno" aria-labelledby="refno-tab">
+                  <style>
+                        .searchJournal select,.searchJournal input{
+                          margin:10px;
+                        }
+                        </style>
+                        <div class="col-md-12 searchJournal">
+                          <div class="col-md-12">
+                              เลขที่เอกสารอ้างอิง :
+                              <input type="text" class="form-control" id="ref_no"  placeholder="เลขที่เอกสารอ้างอิง" ng-model="ref_no" />
+                          </div>
+                          <div class="col-md-12">
+                            <input type="button" ng-disabled="!ref_no" class="btn btn-primary form-control" value="ค้นหา" ng-click="goDetail(2)">
+                          </div>
+                        </div>
+								  </div>
+
+
+								</div>
+			</div>
     </div>
   </div>
 </div>

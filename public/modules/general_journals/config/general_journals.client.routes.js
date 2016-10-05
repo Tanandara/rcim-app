@@ -27,7 +27,8 @@ angular.module("general_journals").config([
       url:"/journals/details",
       params: {
             datestart :date,
-            dateend:date
+            dateend:date,
+            ref_no:""
         },
       templateUrl:"/modules/general_journals/views/journal_detail.html"
     });
