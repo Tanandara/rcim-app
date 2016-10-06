@@ -36,7 +36,7 @@ angular.module("management").controller("BroughtForwardController",
   $scope.initFunction = function(){
     $http({
         method: 'get',
-        url:"http://localhost:3000/journals/broughtforward",
+        url:"https://rcim-app.herokuapp.com/journals/broughtforward",
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         })
         .success(function(data, status) {
