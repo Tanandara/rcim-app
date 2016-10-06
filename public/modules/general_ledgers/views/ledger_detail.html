@@ -2,19 +2,19 @@
   <div class="progressbar-heading grids-heading">
     <h2>รายการบัญชีแยกประเภท (Ledger)</h2>
   </div>
-  <div class="panel panel-widget">
-    <div class="block-page text-center" id="exportthis">
-      <style media="screen">
+  <div class="panel panel-widget" id="exportthis">
+    <div class="block-page text-center" >
+      <style>
         .block-page h4{
-          margin:10px;
+          margin:10px !important;
         }
         .value-font{
-          color:red;
-          font-weight: bold;
+          color:red !important;
+          font-weight: bold !important;
         }
       </style>
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12" id="print">
           <div class="pull-right btn btn-info" onclick="printDiv()"><i class="fa fa-print" ></i>  พิมพ์รายงาน</div>
         </div>
       </div>
@@ -50,7 +50,7 @@
             text-align: center;
           }
           .table.table-bordered thead tr th{
-            background-color: #efe5e5;
+            background-color: #efe5e5 !important;
           }
           .table.table-bordered thead tr th:nth-child(1){
             width:120px;
@@ -129,6 +129,7 @@
 <script type="text/javascript">
 
 function printDiv() {
+    $("#print").hide();
     newWin = window.open();
     newWin.document.write(
         `
@@ -146,37 +147,23 @@ function printDiv() {
         <link href="css/custom.css" rel="stylesheet">
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="lib/bootstrap-datepicker-thai/css/datepicker.css" rel="stylesheet">
-    		<link href="lib/autocomplete/autocomplete.css" rel="stylesheet">
-    		<link href="tanandara.css" rel="stylesheet">
+        <link href="lib/autocomplete/autocomplete.css" rel="stylesheet">
+        <link href="tanandara.css" rel="stylesheet">
         <style>
         @font-face {
-        		font-family: 'cloud';
-        		src:  url('fonts/Cloud-Light.otf');
-        	}
+            font-family: 'cloud';
+            src:  url('fonts/Cloud-Light.otf');
+          }
 
-        	li,p,h2,h3,h1,h4,div{
-        		font-family: 'cloud' !important;
-        	}
-        	.page-transition {
-        	display: block !important;
+          li,p,h2,h3,h1,h4,div{
+            font-family: 'cloud' !important;
+          }
 
-        	}
-        	.page-transition:before {
-        	  display: block;
-
-        	  left: 0;
-        	  top: -1px;
-        	  width: 0;
-        	  height: 3px;
-        	  background-color: red;
-        	  content: "";
-        	  transition: width 0.1s;
-        	  box-shadow: 1px 1px 25px black;
-        	}
-        	.page-transition.loading:before{
-        	  width: 100%;
-        	  transition: width 2.5s;
-        	}
+          @media print {
+            *{
+                -webkit-print-color-adjust: exact;
+            }
+          }
         </style>
         </head>
         <body style="background-color:white">
@@ -187,11 +174,12 @@ function printDiv() {
         </html>
         `
         );
-    console.log(newWin.document,$("#exportthis").html());
     newWin.document.close();
     newWin.focus();
-    newWin.print();
-    newWin.close();
+    setTimeout(function(){newWin.print();newWin.close();},100);
+    //newWin.print();
+
+    $("#print").show();
 }
 
 </script>
