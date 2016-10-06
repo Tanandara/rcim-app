@@ -84,6 +84,10 @@
       <div class="modal-body" style="display: inline-block;width: 100%;">
           <div class="col-md-6">
             <div class="form-group">
+              <label>ไอดี <span ng-if="duplicate" style="color:red;font-weight:bold;">(ID ซ้ำ , ถูกใช้งานไปแล้ว)</span></label>
+              <input placeholder='ใส่ไอดี ต้องเป็นตัวอักษรภาษาอังกฤษ หรือไม่ก็ตัวเลข และห้ามมีช่องว่าง' type="text" name="userid" ng-model="userid" class="form-control"  required>
+            </div>
+            <div class="form-group">
               <label>ชื่อ - นามสกุล</label>
               <input placeholder='ใส่ชื่อ - นามสกุล' type="text" name="username" ng-model="username" class="form-control"  required>
             </div>
@@ -99,12 +103,12 @@
               <label>อีเมล</label>
               <input placeholder='ใส่อีเมล' type="text" name="email" ng-model="email" class="form-control"  required>
             </div>
+          </div>
+          <div class="col-md-6">
             <div class="form-group">
               <label>เบอร์โทรศัพท์</label>
               <input placeholder='ใส่เบอร์โทรศัพท์' type="text" name="tel" ng-model="tel" class="form-control" required>
             </div>
-          </div>
-          <div class="col-md-6">
             <div class="form-group">
               <label>ที่อยู่</label>
               <input placeholder='ใส่ที่อยู่ปัจจุบัน' ng-model="address" type="text" name="address" class="form-control"  required>
@@ -147,10 +151,14 @@
 
   <script type="text/ng-template" id="editModalContent" >
       <div class="modal-header">
-          <h3 class="modal-title">แก้ไขข้อมูลผู้ใช้งาน : <span style="color:red">{{userid}}</span></h3>
+          <h3 class="modal-title">แก้ไขข้อมูลผู้ใช้งาน</h3>
       </div>
       <div class="modal-body" style="display: inline-block;width: 100%;" ng-init="initData()">
           <div class="col-md-6">
+            <div class="form-group">
+              <label>ไอดี</label>
+              <input ng-disabled="true" placeholder='ใส่ไอดี ต้องเป็นตัวอักษรภาษาอังกฤษ หรือไม่ก็ตัวเลข และห้ามมีช่องว่าง' type="text" name="userid" ng-model="userid" class="form-control"  required>
+            </div>
             <div class="form-group">
               <label>ชื่อ - นามสกุล</label>
               <input placeholder='ใส่ชื่อ - นามสกุล' type="text" name="username" ng-model="username" class="form-control"  required>
@@ -167,12 +175,12 @@
               <label>อีเมล</label>
               <input placeholder='ใส่อีเมล' type="text" name="email" ng-model="email" class="form-control"  required>
             </div>
+          </div>
+          <div class="col-md-6">
             <div class="form-group">
               <label>เบอร์โทรศัพท์</label>
               <input placeholder='ใส่เบอร์โทรศัพท์' type="text" name="tel" ng-model="tel" class="form-control" required>
             </div>
-          </div>
-          <div class="col-md-6">
             <div class="form-group">
               <label>ที่อยู่</label>
               <input placeholder='ใส่ที่อยู่ปัจจุบัน' ng-model="address" type="text" name="address" class="form-control"  required>

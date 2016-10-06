@@ -137,49 +137,27 @@ exports.CreateUser = function(req,res){
     2 = หัวหน้าพนักงานบัญชี
     3 = ผู้บริหาร
     4 = ผู้ดูแลระบบ
-
-    campus_id
-    1 = ศาลายา
-    2 = วังไกล
-    3 = บพิตร
   */
 
-  var user_id = req.body.campus_id+""+req.body.role_id;
-
-  models.sequelize.query("SELECT max(user_id) as max_id FROM users where user_id like :user_id",
-  {
-    replacements:  {
-                    user_id : user_id+"%"
-                  },
-    type: Sequelize.QueryTypes.SELECT
+  // Create User
+  models.users.create({
+    user_id:req.body.user_id.toUpperCase(),
+    user_name:req.body.user_name,
+    password:req.body.password,
+    email: req.body.email,
+    tel_no: req.body.tel_no,
+    address: req.body.address,
+    campus_id:req.body.campus_id,
+    role_id:req.body.role_id
   })
-  .then((max)=> {
-    // generate ID
-    if(max[0].max_id==null){
-      user_id += "001";
-    }else{
-      console.log(max);
-      var new_id = (parseInt(max[0].max_id.replace(/\d{2}(\d{3})/gm,"$1")) + 1).toString();
-      var pad = "000";
-      console.log("new_id = " + new_id);
-      user_id += pad.substring(0, pad.length - new_id.length) + new_id;
+  .then(function(data){
+    res.json({"message":"success","id": data.user_id});
+  })
+  .catch(function(error) {
+    console.log("catch",error);
+    if(error.errors[0].message =="PRIMARY must be unique"){
+      res.json({"message":"fail"});
     }
-
-    // Create User
-    models.users.create({
-      user_id:user_id,
-      user_name:req.body.user_name,
-      password:req.body.password,
-      email: req.body.email,
-      tel_no: req.body.tel_no,
-      address: req.body.address,
-      campus_id:req.body.campus_id,
-      role_id:req.body.role_id
-    }).then(function(data){
-      //res.json(data);
-      res.json([{"id": data.user_id}]);
-    });
-
   });
 
 }

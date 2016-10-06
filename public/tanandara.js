@@ -1342,8 +1342,10 @@ angular.module('users').controller('deleteModalCtrl', function ($scope, $uibModa
 
 // เพิ่ม user
 angular.module('users').controller('addModalCtrl', function ($scope, $uibModalInstance, $state , $http) {
+  $scope.duplicate = false;
   $scope.checkData = function(){
     return !(
+      $scope.userid &&
       $scope.username &&
       $scope.password &&
       $scope.password2 &&
@@ -1353,7 +1355,8 @@ angular.module('users').controller('addModalCtrl', function ($scope, $uibModalIn
       $scope.role &&
       $scope.campus &&
       ($scope.password == $scope.password2) &&
-      ($scope.password.length >= 8)
+      ($scope.password.length >= 8) &&
+      (/[0-9A-Za-z]/.test($scope.userid) && !/\s/.test($scope.userid))
     )
   };
 
@@ -1364,6 +1367,7 @@ angular.module('users').controller('addModalCtrl', function ($scope, $uibModalIn
         method: 'post',
         url: 'https://rcim-app.herokuapp.com/users/create',
         data: {
+                user_id   : $scope.userid,
                 user_name : $scope.username,
                 password  : $scope.password,
                 email     : $scope.email,
@@ -1374,19 +1378,24 @@ angular.module('users').controller('addModalCtrl', function ($scope, $uibModalIn
               }
       })
       .success(function(data){
-        if($scope.avatar){
-          var fd = new FormData();
-            fd.append('avatar', $scope.avatar);
-            fd.append('userid', data[0].id);
-          $http({
-            method:"post",
-            url:"https://rcim-app.herokuapp.com/uploadAvatar",
-            headers: {'Content-Type': undefined},
-            transformRequest: angular.identity,
-            data:fd
-          }).success(function(){ });
+        if(data.message =="fail"){
+          $scope.duplicate = true;
+        }else{
+          if($scope.avatar){
+            var fd = new FormData();
+              fd.append('avatar', $scope.avatar);
+              fd.append('userid', data[0].id);
+            $http({
+              method:"post",
+              url:"https://rcim-app.herokuapp.com/uploadAvatar",
+              headers: {'Content-Type': undefined},
+              transformRequest: angular.identity,
+              data:fd
+            }).success(function(){ });
+          }
+          $uibModalInstance.close();
         }
-        $uibModalInstance.close();
+
       });
 
   };
@@ -1413,6 +1422,7 @@ angular.module('users').controller('editModalCtrl', function ($scope, $uibModalI
 
   $scope.checkData = function(){
     return !(
+      $scope.userid &&
       $scope.username &&
       $scope.password &&
       $scope.password2 &&
