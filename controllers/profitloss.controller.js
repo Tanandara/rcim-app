@@ -8,7 +8,7 @@ var _ = require('lodash');
 //Custom query
 exports.Query = function(req,res){
     req.body.account_id = isNaN(req.body.account_id) ? 1 : req.body.account_id ;
-    var account_id = req.body.account_id == 0 ? 'select account_id from accounts' :  req.body.account_id;
+    var account_id = req.body.account_id == 0 ? 'select account_id from accounts union select 0' :  [0,req.body.account_id];
     models.sequelize.query(
       `
       select * from
@@ -45,7 +45,7 @@ exports.Query = function(req,res){
         				select concat(substring(coa_id,1,4),'000000') as grp_coa_id,drcr,sum(amount) as amount from
         				(	select * from journals
         					where date_time between :datestart and :dateend
-        					and account_id=1
+        					and account_id in (`+ account_id +`)
         				) as journals
         				where drcr != 3
         				group by grp_coa_id,drcr

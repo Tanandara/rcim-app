@@ -21,7 +21,7 @@ exports.Query = function(req,res){
       left outer join
       (select ref_no,coa_detail from journals where drcr = 3) as b
       on a.ref_no = b.ref_no
-      where a.coa_id regexp :coa_id and a.account_id = :account_id and a.date_time between :datestart and :dateend
+      where a.coa_id regexp :coa_id and a.account_id = :account_id and a.date_time between :datestart and :dateend and a.account_id = '0'
       group by date_time,ref_no,detail,drcr
       order by a.date_time
       `
@@ -65,7 +65,7 @@ exports.BroughtForward = function(req,res){
         					left outer join
         					(select ref_no,coa_detail from journals where drcr = 3) as b
         					on a.ref_no = b.ref_no
-        					where a.coa_id regexp :coa_id and a.account_id = :account_id and a.date_time < :datestart and a.drcr = 1
+        					where a.coa_id regexp :coa_id and ((a.account_id = :account_id and a.date_time < :datestart and a.drcr = 1) or (a.account_id ='0' and a.drcr = 1))
         					group by date_time,ref_no,detail,drcr
         					order by a.date_time
         			) as sumDr
@@ -87,7 +87,7 @@ exports.BroughtForward = function(req,res){
         					left outer join
         					(select ref_no,coa_detail from journals where drcr = 3) as b
         					on a.ref_no = b.ref_no
-        					where a.coa_id regexp :coa_id and a.account_id = :account_id and a.date_time < :datestart and a.drcr = 2
+        					where a.coa_id regexp :coa_id and ((a.account_id = :account_id and a.date_time < :datestart and a.drcr = 2) or (a.account_id ='0' and a.drcr = 2))
         					group by date_time,ref_no,detail,drcr
         					order by a.date_time
         			) as sumCr

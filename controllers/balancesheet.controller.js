@@ -10,7 +10,7 @@ var moment = require('moment');
 exports.Query = function(req,res){
     //var datestart = moment(new Date(0)).format("YYYY-MM-DD");
     req.body.account_id = isNaN(req.body.account_id) ? 1 : req.body.account_id ;
-    var account_id = req.body.account_id == 0 ? 'select account_id from accounts' :  req.body.account_id;
+    var account_id = req.body.account_id == 0 ? 'select account_id from accounts union select 0' :  [0,req.body.account_id];
     models.sequelize.query(
       `
       select
@@ -47,7 +47,7 @@ exports.Query = function(req,res){
       		on coa_sum.grp_coa_id = coa_2digit.coa_id
       	) as trial_balance
       	group by coa_id,coa_detail
-      ) as profit_loss
+      ) as balance_sheet
       `
       ,
       {
