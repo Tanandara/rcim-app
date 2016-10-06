@@ -684,7 +684,7 @@ function($scope,$http,$stateParams){
 
     $http({
       method: 'POST',
-      url: 'http://rcim-app.herokuapp.com/ledger',
+      url: 'https://rcim-app.herokuapp.com/ledger',
       data: {
               "datestart" : dateStringFormat($scope.datestart) ,
               "dateend" : dateStringFormat($scope.dateend) ,

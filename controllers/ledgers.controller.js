@@ -21,7 +21,7 @@ exports.Query = function(req,res){
       left outer join
       (select ref_no,coa_detail from journals where drcr = 3) as b
       on a.ref_no = b.ref_no
-      where a.coa_id regexp :coa_id and a.account_id = :account_id and a.date_time between :datestart and :dateend and a.account_id = '0'
+      where a.coa_id regexp :coa_id and a.account_id = :account_id and a.date_time between :datestart and :dateend
       group by date_time,ref_no,detail,drcr
       order by a.date_time
       `
