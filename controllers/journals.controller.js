@@ -45,6 +45,56 @@ exports.GetJournal = function(req,res){
 }
 
 
+exports.GetBroughtForward = function(req,res){
+    models.sequelize.query(
+      "select " +
+      "date_time as journal_date," +
+      "journal_id as journal_id," +
+      "ref_no as ref_no," +
+      "coa_detail as detail," +
+      "coa_id as ledger_id," +
+      "drcr as drcr," +
+      "amount as amount ," +
+      "account_id as account_id " +
+      "from journals " +
+      "where account_id = :account_id " +
+      "order by date_time,journal_id",
+      {
+        replacements: {
+                        account_id: 0
+                      },
+        type: Sequelize.QueryTypes.SELECT
+      })
+      .then(function(data) {
+        if(data.length == 0 ) CreateDefaultBroughtForward();
+        console.log(data);
+        res.json(data);
+      });
+
+}
+
+function CreateDefaultBroughtForward(){
+  models.journals.create({
+    journal_id: 0,
+    journal_no: 1,
+    ref_no: 0,
+    coa_detail: "ยอดยกมาในอดีต",
+    coa_id: "",
+    drcr: "3",
+    amount: 0,
+    date_time: new Date(0),
+    account_id:0,
+    user_create:"10001",
+    date_create:new Date()
+  })
+  .then(function(data){
+    console.log(data);
+    res.json(data);
+  })
+}
+
+
+
 
 //
 // exports.CreateUser = function(req,res){

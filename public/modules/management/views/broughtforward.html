@@ -1,43 +1,21 @@
-<div data-ng-controller="EditJournalizingController" data-ng-init="getJournal()" >
+<div data-ng-controller="BroughtForwardController" data-ng-init="initFunction()" >
   <div class="progressbar-heading grids-heading">
-    <h2>แก้ไขบัญชีรายวัน (Edit Journal)</h2> <!--Dr : {{Dr}} / Cr : {{Cr}}         ledger_id : {{ledger_id}} / ledger_name : {{ledger_name}} -->
+    <h2>ตั้งค่ายอดยกมา (Setup Brought Forward)</h2> <!--Dr : {{Dr}} / Cr : {{Cr}}         ledger_id : {{ledger_id}} / ledger_name : {{ledger_name}} -->
   </div>
   <div class="panel panel-widget">
     <div class="block-page">
       <div class="row">
         <div class="col-md-12">
           <div class="pull-left">
-            <table >
-              <tr>
-                <td>
-                  <h3>สมุดบัญชีรายวันของวันที่ :&nbsp;</h3>
-                </td>
-                <td>
-                  <input type="text" class="form-control" ng-disabled="true" placeholder="dd/mm/yyyy" id="datejournal" ng-model="datejournal" data-provide="datepicker" data-date-language="th" />
-                </td>
-              </tr>
-            </table>
+            <h3>ตั้งค่ายอดยกมา</h3>
           </div>
           <div ng-disabled="checkJournalizing()" ng-click="saveJournalizing()" class="pull-right btn btn-info" style="margin:2px"><i class="fa fa-save"></i>  บันทึกรายการ</div>
         </div>
       </div>
       <hr>
-      <div class="col-md-6">
-        เลขที่เอกสารอ้างอิง :
-        <input name="ref_no" ng-disabled="true" placeholder="เลขที่เอกสารอ้างอิง" ng-model="ref_no"  class="form-control" />
-        <br>
-      </div>
-      <div class="col-md-6">
-        ชื่อบัญชี :
-        <select name="account_id" ng-model="account_id" class="form-control">
-          <option value="" disabled selected>กรุณาเลือกชื่อบัญชี</option>
-          <option value="{{i.account_id}}" ng-repeat="i in accountList">{{i.account_name}}</option>
-        </select>
-        <br>
-      </div>
       <div class="col-md-12">
         คำอธิบาย :
-        <textarea name="description" placeholder="คำอธิยายรายการ" ng-model="description"  class="form-control" row="2"></textarea>
+        <textarea name="description" placeholder="คำอธิยายรายการ" ng-disabled="true" ng-model="description"  class="form-control" row="2">ยอดยกมาในอดีต</textarea>
         <hr>
       </div>
 
@@ -68,9 +46,11 @@
           .table.table-bordered thead tr th:nth-child(6){
             width:10%;
           }
+
           .table.table-bordered thead tr th:nth-child(7){
             width:50px;
           }
+
           .table.table-bordered tbody tr td:nth-child(3){
             text-align: left;
           }
@@ -151,16 +131,7 @@
     </div>
   </div>
 </div>
-<script type="text/javascript">
-$(function () {
-      $("#datejournal").datepicker({
-          format: 'dd/mm/yyyy',
-          todayBtn: "linked",
-          autoclose: true,
-          toggleActive: true
-      }).keydown(false);
-});
-</script>
+
 <script type="text/ng-template" id="myModalContent">
        <div class="modal-header">
            <h3 class="modal-title">ข้อความ</h3>

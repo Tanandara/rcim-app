@@ -12,6 +12,10 @@ angular.module("management").config([
       url:"/account",
       templateUrl:"/modules/management/views/account.html"
     })
+    .state("broughtforward",{
+      url:"/broughtforward",
+      templateUrl:"/modules/management/views/broughtforward.html"
+    })
 
     // .state("xxx",{
     //   url:"/xxxx",

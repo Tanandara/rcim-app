@@ -5,4 +5,5 @@ module.exports = function(app){
   app.post("/journals/update",journals.UpdateJournals);
   app.post("/journals/search",journals.GetJournal);
   app.post("/journal_detail",journals.ShowDetails);
+  app.get("/journals/broughtforward",journals.GetBroughtForward);
 }

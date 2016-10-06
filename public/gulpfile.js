@@ -44,6 +44,7 @@ gulp.task('concat', function() {
         "modules/management/config/management.client.routes.js",
         "modules/management/controllers/coa.client.controller.js",
         "modules/management/controllers/account.client.controller.js",
+        "modules/management/controllers/broughtforward.client.controller.js",
         "service.js",
 		    "application.js"
       ]
