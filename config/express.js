@@ -42,6 +42,7 @@ module.exports = function(){
 
 
   // Routes
+  require("../routes/login.routes")(app);
   require("../routes/index.routes")(app);
   require("../routes/users.routes")(app);
   require("../routes/coa.routes")(app);
@@ -49,6 +50,11 @@ module.exports = function(){
   require("../routes/journals.routes")(app);
   require("../routes/report.routes")(app);
 
+  app.get("*",function(req,res){
+   console.log("\033[31m  url : "+ req.url +"\033[0m");
+   console.log("\033[31m  ----- Page Not Found ----- \033[0m");
+   res.redirect("/");
+  });
 
   return app;
 }

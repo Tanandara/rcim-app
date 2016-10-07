@@ -42,9 +42,10 @@ exports.GetUser = function(req,res){
 }
 
 exports.LoginUser = function(req,res){
+  console.log("\033[31m  ----- LoginUser ----- \033[0m");
   models.users.findAll({
     where: {
-              user_id: req.body.user_id
+              user_id: req.body.user_id.toUpperCase()
           }
     })
     .then(function(data){
@@ -52,16 +53,23 @@ exports.LoginUser = function(req,res){
       if(_.isEmpty(data)){
         // ไม่เจอ user นี้
         console.log("user not found");
-        res.json([{"myerrormessage":"user not found"}]);
+        //res.json([{"myerrormessage":"user not found"}]);
+        res.redirect("login");
       }else{
         // เจอ user นี้
         // เช็คพาสเวิร์ด
         if(models.users.authenticate(req.body.password,data[0].salt,data[0].password)){
           console.log("password correct");
-          res.json(data);
+          req.session.user_id = data[0].user_id;
+          req.session.user_name = data[0].user_name;
+          req.session.role_id = data[0].role_id;
+          //res.json(data);
+          console.log("req.session.user_id", req.session.user_id);
+          res.redirect("/");
         }else{
           console.log("password incorrect");
-          res.json([{"myerrormessage":"password incorrect"}]);
+          res.redirect("login");
+          //res.json([{"myerrormessage":"password incorrect"}]);
         }
 
       }
