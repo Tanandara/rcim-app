@@ -115,7 +115,7 @@ function ClearAvatar(user_id,avatar_flag){
   if(!avatar_flag) return; // ถ้าไม่มีการอัพโหลดไฟล์จะออกจากฟังค์ชั่น
   var filename="";
   for (var i of fs.readdirSync("./public/images/users/")) {
-    if ((new RegExp(user_id)).test(i)) {
+    if ((new RegExp('^'+user_id+'\\.')).test(i)) {
       filename = i;
       break;
     }
@@ -123,20 +123,6 @@ function ClearAvatar(user_id,avatar_flag){
   if(filename!="") fs.unlink("./public/images/users/" + filename );
 }
 
-// exports.CreateUser = function(req,res){
-//   models.users.create({
-//     user_id:req.body.user_id,
-//     user_name:req.body.user_name,
-//     password:req.body.password,
-//     email: req.body.email,
-//     tel_no: req.body.tel_no,
-//     address: req.body.address,
-//     campus_id:req.body.campus_id,
-//     role_id:req.body.role_id
-//   }).then(function(user){
-//     res.send("success");
-//   });
-// }
 
 exports.CreateUser = function(req,res){
   /*

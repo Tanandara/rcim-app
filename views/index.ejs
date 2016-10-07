@@ -301,14 +301,14 @@
 							<table class="">
 								<tr>
 									<td style="text-align:right;padding: 15px 20px 0px 0px;">
-										<p>ฐานันดร์ เกตุแก้ว</p>
-										<p>พนักงานบัญชี</p>
+										<p><%= user_name %></p>
+										<p><%= role %></p>
 									</td>
 									<td>
 										<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 											<div class="profile_img">
 												<span class="prfil-img">
-													<img class="img-responsive img-circle" style="width:55px;height:55px;" src="images/users/tanandara.jpg" alt=""> </span>
+													<img class="img-responsive img-circle" style="width:55px;height:55px;"  <% if ( filename ){ %> src="images/users/<%= filename %>" <% }else{ %> src="images/no-avatar.png"  <% } %> alt="" > </span>
 												<div class="clearfix"></div>
 											</div>
 										</a>
