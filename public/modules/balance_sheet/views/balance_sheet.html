@@ -2,29 +2,34 @@
   <div class="progressbar-heading grids-heading">
     <h2>รายงานงบดุล (Balance Sheet)</h2>
   </div>
-  <div class="panel panel-widget" style="display: inline-block; width: 100%;">
+  <div class="panel panel-widget" style="display: inline-block; width: 100%;" id="printThis">
     <div class="block-page text-center">
-      <style media="screen">
+      <style>
         .block-page h4{
-          margin:10px;
+          margin:10px !important;
         }
         .value-font{
-          color:red;
-          font-weight: bold;
+          color:red !important;
+          font-weight: bold !important;
         }
       </style>
       <div class="row">
         <div class="col-md-12">
           <div class="pull-left"><h4>ชื่อบัญชี : <span class="value-font">{{account_name}}</span></h4></div>
-          <div class="pull-right btn btn-info"><i class="fa fa-print"></i>  พิมพ์รายงาน</div>
+          <div class="pull-right btn btn-info" id="print" onclick="beforePrint()"><i class="fa fa-print"></i>  พิมพ์รายงาน</div>
         </div>
       </div>
       <h4>วิทยาลัยนวัตกรรมการจัดการ มทร.รัตนโกสินทร์ </h4>
       <h4>งบดุล</h4>
       <h4>ณ <span class="value-font">{{dateend}}</span></h4>
       <hr>
-      <div class="col-md-12 balancesheet">
-        <style media="screen">
+      <div class="col-md-12" id="balancesheetPrint" style="display:none">
+        <table class="table">
+          <tr><td id="td1" class="balancesheet" style="width:50%"></td><td id="td2" class="balancesheet" style="width:50%"></td></tr>
+        </table>
+      </div>
+      <div id="balancesheet" class="col-md-12 balancesheet">
+        <style>
           .balancesheet table tr td:nth-child(1){
             text-align: left;
             width:70%
@@ -40,7 +45,7 @@
             text-align: right;
           }
           .balancesheet h3{
-                font-weight: bold;
+                font-weight: bold !important;
           }
 
 
@@ -52,10 +57,11 @@
           }
           .balancesheet tr:last-child td:nth-child(2),
           .balancesheet tr:last-child th:nth-child(2){
-            text-decoration: underline;
+            text-decoration: underline !important;
           }
         </style>
-        <div class="col-md-6">
+
+        <div class="col-md-6" id="assetDiv">
           <table class="table">
             <tr>
               <th colspan="2" style="text-align:center"><h3>สินทรัพย์</h3></th>
@@ -96,7 +102,7 @@
 
 
 
-        <div class="col-md-6">
+        <div class="col-md-6" id="liablestakeholderDiv">
           <table class="table">
             <tr>
               <th colspan="2" style="text-align:center"><h3>หนี้สินและส่วนของเจ้าของ</h3></th>
@@ -160,3 +166,21 @@
     </div>
   </div>
 </div>
+
+
+
+<script>
+var initClone = true;
+function beforePrint(){
+  if(initClone){
+    $("#td1").append($("#assetDiv").clone());
+    $("#td2").append($("#liablestakeholderDiv").clone());
+    initClone = false;
+  }
+  $("#balancesheetPrint").show();
+  $("#balancesheet").hide();
+  printReport();
+  $("#balancesheetPrint").hide();
+  $("#balancesheet").show();
+}
+</script>
