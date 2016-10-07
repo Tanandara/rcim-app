@@ -53,7 +53,7 @@ function printReport() {
         );
     newWin.document.close();
     newWin.focus();
-    setTimeout(function(){newWin.print();newWin.close();},100);
+    setTimeout(function(){newWin.print();newWin.close();},1000);
     //newWin.print();
 
     $("#print").show();
