@@ -58,3 +58,18 @@ function printReport() {
 
     $("#print").show();
 }
+
+
+function check_permission($http,$state,toStateObj){
+  $http({
+    method:"post",
+    url:"/check_permission",
+    data: toStateObj
+  })
+  .success(function(data){
+    if(data.permission == "fail") {
+      $state.go("dashboard");
+      //location.href = "#!/dashboard";
+    }
+  });
+}

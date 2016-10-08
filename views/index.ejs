@@ -86,43 +86,50 @@
 									<li>
 										<a href="#!/journals">ค้นหารายการประจำวัน</a>
 									</li>
+									<% if(!!~[ "1" , "4" ].indexOf(role_id)){ %>
 									<li>
 										<a href="#!/journalizing">ทำรายการประจำวัน</a>
 									</li>
+									<% } %>
+
+									<% if(!!~[ "2" , "4" ].indexOf(role_id)){ %>
 									<li>
 										<a href="#!/searchrefno">แก้ไขรายการประจำวัน</a>
 									</li>
-
+									<% } %>
 								</ul>
 								<!-- /nav-second-level -->
 							</li>
-							<li>
-								<a href="#!/ledgers"><i class="fa fa-book nav_icon"></i>สมุดบัญชีแยกประเภท</a>
+							<li><a href="#!/ledgers"><i class="fa fa-book nav_icon"></i>สมุดบัญชีแยกประเภท</a></li>
+							<li><a href="#!/searchtrial"><i class="fa fa-line-chart nav_icon"></i>งบทดลอง</a></li>
+							<li><a href="#!/searchbalance"><i class="fa fa-pie-chart nav_icon"></i>งบดุล</a></li>
+							<li><a href="#!/searchprofitloss"><i class="fa fa-bar-chart nav_icon"></i>งบกำไรขาดทุน</a></li>
 
-							</li>
-							<li>
-								<a href="#!/searchtrial"><i class="fa fa-line-chart nav_icon"></i>งบทดลอง</a>
-							</li>
-
-							<li>
-								<a href="#!/searchbalance"><i class="fa fa-pie-chart nav_icon"></i>งบดุล</a>
-
-							</li>
-							<li>
-								<a href="#!/searchprofitloss"><i class="fa fa-bar-chart nav_icon"></i>งบกำไรขาดทุน</a>
-							</li>
+							<% if(!!~[ "2" , "4" ].indexOf(role_id)) {%>
 							<li>
 								<a href="#!/user"><i class="fa fa-gears nav_icon"></i>จัดการข้อมูลระบบ<span class="fa arrow"></span></a>
 								<ul class="nav nav-second-level collapse">
 									<li>
+										<% if(!!~[ "4" ].indexOf(role_id)) {%>
 										<a href="#!/user">จัดการข้อมูลผู้ใช้</a>
+										<% } %>
+
+										<% if(!!~[ "2" , "4" ].indexOf(role_id)) {%>
 										<a href="#!/coa">จัดการข้อมูลผังบัญชี</a>
+										<% } %>
+
+										<% if(!!~[ "2" , "4" ].indexOf(role_id)) {%>
 										<a href="#!/account">จัดการข้อมูลบัญชี</a>
+										<% } %>
+
+										<% if(!!~[ "2" , "4" ].indexOf(role_id)) {%>
 										<a href="#!/broughtforward">ตั้งค่ายอดยกมา</a>
+										<% } %>
 									</li>
 								</ul>
 								<!-- //nav-second-level -->
 							</li>
+							<% } %>
 							<li>
 								<a href="/logout" class="chart-nav"><i class="fa fa-sign-out nav_icon"></i>ออกจากระบบ</a>
 							</li>
@@ -315,11 +322,6 @@
 								</td>
 							</tr>
 						</table>
-							<ul class="dropdown-menu drp-mnu">
-								<li> <a href="#"><i class="fa fa-cog"></i> Settings</a> </li>
-								<li> <a href="#"><i class="fa fa-user"></i> Profile</a> </li>
-								<li> <a href="#"><i class="fa fa-sign-out"></i> Logout</a> </li>
-							</ul>
 						</li>
 					</ul>
 				</div>

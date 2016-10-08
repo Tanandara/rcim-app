@@ -144,7 +144,7 @@ exports.AddJournals = function(req,res){
       var id = isNaN(max) ? 1 : (max+1);
 
       // define
-      user_id = "10001";
+      user_id = req.session.user_id;
 
 
       req.body.forEach((data,index)=>{
@@ -193,7 +193,7 @@ exports.UpdateJournals = function(req,res){
       })
       .then(function(data){
           // define
-          user_id = "10001";
+          user_id = req.session.user_id;
 
           req.body.forEach((data,index)=>{
               models.journals.create({

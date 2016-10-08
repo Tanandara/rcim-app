@@ -17,15 +17,5 @@ angular.module("management").config([
       templateUrl:"/modules/management/views/broughtforward.html"
     })
 
-    // .state("xxx",{
-    //   url:"/xxxx",
-    //   params: {
-    //       account_id:"0",
-    //       account_name:"บัญชีทั้งหมด",
-    //       datestart:date,
-    //       dateend:date
-    //     },
-    //   templateUrl:"/modules/profit_loss/views/profit_loss.html"
-    // })
   }
 ]);

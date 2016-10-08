@@ -5,6 +5,9 @@ function($scope,$http,$state){
   $scope.datestart = moment().format("DD/MM/YYYY");
   $scope.dateend = moment().format("DD/MM/YYYY");
 
+  $scope.initFunction = function(){
+  }
+
   $scope.goDetail = function(tab){
     //location.href = "#!/journals/details"
     data = tab == 1 ?

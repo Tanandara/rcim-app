@@ -17,7 +17,7 @@ angular.module("Main",
 
 
 angular.module("Main")
-.run(["$rootScope",function($rootScope){
+.run(["$rootScope","$state","$http",function($rootScope,$state,$http){
 
   $rootScope.dbURL = "https://rcim-json.herokuapp.com";
   //$rootScope.dbURL = "http://localhost:3000";
@@ -27,14 +27,16 @@ angular.module("Main")
             function(event, toState, toParams, fromState, fromParams){
                 //console.log("State Change: transition begins!");
                 $('.page-transition').toggleClass('loading');
+                //console.log("toState:",toState,"toParams:", toParams,"fromState:", fromState,"fromParams:" ,fromParams);
         });
 
     $rootScope
         .$on('$stateChangeSuccess',
             function(event, toState, toParams, fromState, fromParams){
                 //console.log("State Change: State change success!");
+                //console.log("toState:",toState,"toParams:", toParams,"fromState:", fromState,"fromParams:" ,fromParams);
                 $('.page-transition').toggleClass('loading');
-
+                check_permission($http,$state,toState);
         });
 
 }]);

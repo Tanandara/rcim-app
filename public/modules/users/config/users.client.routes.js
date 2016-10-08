@@ -7,13 +7,13 @@ angular.module("users").config([
             url:"/user",
             templateUrl:"/modules/users/views/userlist.html"
         }
-      )
-      .state("adduser",
-      {
-        url:"/user/add",
-        templateUrl:"/modules/users/views/manageuser.html"
-      }
-    )
+      );
+      // .state("adduser",
+      // {
+      //   url:"/user/add",
+      //   templateUrl:"/modules/users/views/manageuser.html"
+      // }
+      // )
   }
 
 ]);

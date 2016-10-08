@@ -11,17 +11,12 @@ exports.initRequest = function(req,res,next){
   req.session.role_id = 4;
 
 
-  console.log("\033[31m  ----- initRequest ----- \033[0m");
+  //console.log("\033[31m  ----- initRequest ----- \033[0m");
   if(!req.session.user_id){
-      console.log("\033[31m You are not login \033[0m");
+      //console.log("\033[31m You are not login \033[0m");
       res.redirect("/login");
   }else{
-    console.log("\033[31m You are logined \033[0m");
-    // if(req.method === "GET" && req.url==="/"){
-    //   res.render("index",{
-    //     username:req.session.user_name
-    //   });
-    // }
+    //console.log("\033[31m You are logined \033[0m");
     next();
   }
 }
@@ -32,7 +27,7 @@ exports.renderLoginPage = function(req,res){
 
 
 exports.destroySession = function(req,res){
-  console.log("\033[31m  ----- destroySession ----- \033[0m");
+  //console.log("\033[31m  ----- destroySession ----- \033[0m");
   req.session.destroy();
   res.redirect("/");
 }

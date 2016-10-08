@@ -59,6 +59,21 @@ function printReport() {
     $("#print").show();
 }
 
+
+function check_permission($http,$state,toStateObj){
+  $http({
+    method:"post",
+    url:"/check_permission",
+    data: toStateObj
+  })
+  .success(function(data){
+    if(data.permission == "fail") {
+      $state.go("dashboard");
+      //location.href = "#!/dashboard";
+    }
+  });
+}
+
 angular.module("core",[]);
 
 angular.module("core").config([
@@ -285,6 +300,9 @@ function($scope,$http,$state){
 
   $scope.datestart = moment().format("DD/MM/YYYY");
   $scope.dateend = moment().format("DD/MM/YYYY");
+
+  $scope.initFunction = function(){
+  }
 
   $scope.goDetail = function(tab){
     //location.href = "#!/journals/details"
@@ -1217,13 +1235,13 @@ angular.module("users").config([
             url:"/user",
             templateUrl:"/modules/users/views/userlist.html"
         }
-      )
-      .state("adduser",
-      {
-        url:"/user/add",
-        templateUrl:"/modules/users/views/manageuser.html"
-      }
-    )
+      );
+      // .state("adduser",
+      // {
+      //   url:"/user/add",
+      //   templateUrl:"/modules/users/views/manageuser.html"
+      // }
+      // )
   }
 
 ]);
@@ -1586,16 +1604,6 @@ angular.module("management").config([
       templateUrl:"/modules/management/views/broughtforward.html"
     })
 
-    // .state("xxx",{
-    //   url:"/xxxx",
-    //   params: {
-    //       account_id:"0",
-    //       account_name:"บัญชีทั้งหมด",
-    //       datestart:date,
-    //       dateend:date
-    //     },
-    //   templateUrl:"/modules/profit_loss/views/profit_loss.html"
-    // })
   }
 ]);
 
@@ -2196,7 +2204,7 @@ angular.module("Main",
 
 
 angular.module("Main")
-.run(["$rootScope",function($rootScope){
+.run(["$rootScope","$state","$http",function($rootScope,$state,$http){
 
   $rootScope.dbURL = "https://rcim-json.herokuapp.com";
   //$rootScope.dbURL = "http://localhost:3000";
@@ -2206,14 +2214,16 @@ angular.module("Main")
             function(event, toState, toParams, fromState, fromParams){
                 //console.log("State Change: transition begins!");
                 $('.page-transition').toggleClass('loading');
+                //console.log("toState:",toState,"toParams:", toParams,"fromState:", fromState,"fromParams:" ,fromParams);
         });
 
     $rootScope
         .$on('$stateChangeSuccess',
             function(event, toState, toParams, fromState, fromParams){
                 //console.log("State Change: State change success!");
+                //console.log("toState:",toState,"toParams:", toParams,"fromState:", fromState,"fromParams:" ,fromParams);
                 $('.page-transition').toggleClass('loading');
-
+                check_permission($http,$state,toState);
         });
 
 }]);
