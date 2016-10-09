@@ -26,7 +26,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 </head>
 <body class="login-bg" style="background:/*#504b4b*/url(../img/bg/bg.jpg) no-repeat 0px 0px;height:100%" >
 		<div class="login-body">
-			<div class="login-heading" style="text-align:center">
+			<div class="login-heading" style="text-align:center;background:#f2dede">
 				<!--h1>Login</h1-->
 				<img class="img-responsesive" style="height:100px" src="img/logo/LOGO-RICM2.png">
 			</div>
@@ -42,8 +42,24 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 					<hr>
 					<div class="login-icons">
 						รหัสในการเข้าใช้งาน<br>
-						id				:	tanandara<br>
-						password	:	123456789<br>
+						<table id="tablepass">
+							<style>
+							#tablepass th:nth-child(1),
+							#tablepass th:nth-child(2),
+							#tablepass th:nth-child(3){width:150px}
+							#tablepass th{border:1px solid black}
+							#tablepass td{border-left:1px solid black}
+							#tablepass td{border-right:1px solid black}
+							#tablepass tr:last-child td{border-bottom: 1px solid black}
+							#tablepass th,
+							#tablepass td{padding:2px}
+							</style>
+							<tr><th>ID</th><th>PASSWORD</th><th>ROLE</th></tr>
+							<tr><td>sirarus</td><td>123456789</td><td>พนักงานบัญชี</td></tr>
+							<tr><td>pariwat</td><td>123456789</td><td>หัวหน้าพนักงาน</td></tr>
+							<tr><td>nuttaporn</td><td>123456789</td><td>ผู้บริหาร</td></tr>
+							<tr><td>tanandara</td><td>123456789</td><td>ผู้ดูแลระบบ</td></tr>
+						</table>
 					</div>
 				</form>
 			</div>
