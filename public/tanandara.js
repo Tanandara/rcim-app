@@ -1278,49 +1278,7 @@ angular.module("users").controller("UserController",[
       $state.go(state);
     }
 
-    // ฟังค์ชั่นสำหรับการ insertUser + uploadAvatar
-    // $scope.insertUser=function(){
-    //   $http({
-    //     method: 'post',
-    //     url: '/createUser',
-    //     data: {
-    //             userid : $scope.user.userid ,
-    //             username : $scope.user.username ,
-    //             password : $scope.user.password ,
-    //             email : $scope.user.email ,
-    //             position : $scope.position.selectedOption.position_name ,
-    //             campus : $scope.campus.selectedOption.campus_name
-    //           }
-    //   }).success(function(data, status) {
-    //     var message="";
-    //     if(data.message==="success"){
-    //         message="สร้าง user สำเร็จแล้วครับ";
-    //         var fd = new FormData();
-    //         fd.append('avatar', $scope.avatar);
-    //         fd.append('userid', $scope.user.userid);
-    //         $http({
-    //   				method:"post",
-    //   				url:"/uploadAvatar",
-    //   				headers: {'Content-Type': undefined},
-    //   				transformRequest: angular.identity,
-    //   				data:fd
-    // 			   }).success(function(){ })
-    //     }else{
-    //         message="สร้าง user ไม่สำเร็จครับ";
-    //     }
-    //     var modalInstance = $uibModal.open({
-    //         animation: true,
-    //         templateUrl: 'myModalContent',
-    //         size: undefined,
-    //         controller: 'addModalCtrl',
-    //         resolve: {
-    //           message: function () {return message},
-    //           status:function(){return data.message}
-    //          }
-    //       });
-    //
-    //   });
-    // }
+
 
     $scope.addUserModal = function(){
         var modalInstance = $uibModal.open({
@@ -1374,7 +1332,7 @@ angular.module("users").controller("UserController",[
        modalInstance.result.then(function (id) {
          $http({
            method: 'post',
-           url: 'https://rcim-app.herokuapp.com/users/delete',
+           url: 'http://localhost:3000/users/delete',
            data: {
                    user_id : id
                  }
@@ -1461,13 +1419,14 @@ angular.module('users').controller('addModalCtrl', function ($scope, $uibModalIn
         if(data.message =="fail"){
           $scope.duplicate = true;
         }else{
+          //console.log("$scope.avatar :",$scope.avatar);
           if($scope.avatar){
             var fd = new FormData();
               fd.append('avatar', $scope.avatar);
-              fd.append('userid', data[0].id);
+              fd.append('userid', data.id);
             $http({
               method:"post",
-              url:"https://rcim-app.herokuapp.com/uploadAvatar",
+              url:"http://localhost:3000/uploadAvatar",
               headers: {'Content-Type': undefined},
               transformRequest: angular.identity,
               data:fd
@@ -1541,7 +1500,7 @@ angular.module('users').controller('editModalCtrl', function ($scope, $uibModalI
             fd.append('userid', $scope.userid);
           $http({
             method:"post",
-            url:"https://rcim-app.herokuapp.com/uploadAvatar",
+            url:"http://localhost:3000/uploadAvatar",
             headers: {'Content-Type': undefined},
             transformRequest: angular.identity,
             data:fd

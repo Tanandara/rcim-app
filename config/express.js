@@ -5,9 +5,13 @@ var bodyParser = require("body-parser");
 var ejs = require('ejs');
 var session = require("express-session");
 var validator = require("express-validator");
+var helmet = require('helmet');
 
 module.exports = function(){
   var app = express();
+
+  // Security
+  app.use(helmet());
 
   // Cors
   app.use(cors());

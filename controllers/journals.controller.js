@@ -138,7 +138,6 @@ exports.CheckRefNo = function(req,res,next){
 }
 
 exports.AddJournals = function(req,res){
-
     models.journals.max("journal_id").then((max)=>{
       // check max of journal_id
       var id = isNaN(max) ? 1 : (max+1);

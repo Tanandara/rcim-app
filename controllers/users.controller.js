@@ -115,6 +115,7 @@ function ClearAvatar(user_id,avatar_flag){
   if(!avatar_flag) return; // ถ้าไม่มีการอัพโหลดไฟล์จะออกจากฟังค์ชั่น
   var filename="";
   for (var i of fs.readdirSync("./public/images/users/")) {
+    //console.log("\033[31m  filename : \033[0m",i,(new RegExp('^'+user_id+'\\.')).test(i));
     if ((new RegExp('^'+user_id+'\\.')).test(i)) {
       filename = i;
       break;
@@ -158,6 +159,8 @@ exports.CreateUser = function(req,res){
 
 
 exports.uploadAvatar = function(req,res){
+  console.log("\033[31m  ----- uploadAvatar ----- \033[0m");
+  console.log("\033[31m  req.file : \033[0m",req.file);
     if(req.file){
         var fileExtension = (req.file.originalname).replace(/.+\.(gif|jpe?g|png)$/i,"$1");
         if((/^(gif|jpe?g|png)$/i).test(fileExtension)){

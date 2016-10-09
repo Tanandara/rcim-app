@@ -1,6 +1,6 @@
 <div data-ng-controller="JournalizingController" data-ng-init="initFunction()" >
   <div class="progressbar-heading grids-heading">
-    <h2>ทำบัญชีรายวัน (Journalizing)</h2>Dr : {{Dr}} / Cr : {{Cr}}         ledger_id : {{ledger_id}} / ledger_name : {{ledger_name}}
+    <h2>ทำบัญชีรายวัน (Journalizing)</h2><!--Dr : {{Dr}} / Cr : {{Cr}}         ledger_id : {{ledger_id}} / ledger_name : {{ledger_name}}-->
   </div>
   <div class="panel panel-widget">
     <div class="block-page">
@@ -29,7 +29,7 @@
         <br>
       </div>
       <div class="col-md-6">
-        ชื่อบัญชี : 
+        ชื่อบัญชี :
         <select name="account_id" ng-model="account_id" class="form-control">
           <option value="" disabled selected>กรุณาเลือกชื่อบัญชี</option>
           <option value="{{i.account_id}}" ng-repeat="i in accountList">{{i.account_name}}</option>

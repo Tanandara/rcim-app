@@ -6,9 +6,9 @@ var _ = require('lodash');
 
 
 exports.initRequest = function(req,res,next){
-  req.session.user_id = "TANANDARA";
-  req.session.user_name = "ฐานันดร์ เกตุแก้ว";
-  req.session.role_id = 4;
+  // req.session.user_id = "TANANDARA";
+  // req.session.user_name = "ฐานันดร์ เกตุแก้ว";
+  // req.session.role_id = 4;
 
 
   //console.log("\033[31m  ----- initRequest ----- \033[0m");
