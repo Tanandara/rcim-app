@@ -52,7 +52,7 @@ function($scope,$http,$stateParams){
                   c == 'Liability'            ? /^2/     :
                   c == 'Shareholder'          ? /^3/     :
                                                 /^[2-3]/ ;
-    _.each(_.filter($scope.balancesheet, i => pattern.test(i.coa_id) ) , i => sum+=i.amount_total);
+    _.each(_.filter($scope.balancesheet, function(i){ pattern.test(i.coa_id) } ) , function(i){sum+=i.amount_total});
     return sum;
   }
 

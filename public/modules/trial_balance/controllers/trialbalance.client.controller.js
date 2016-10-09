@@ -22,7 +22,7 @@ function($scope,$http,$stateParams){
       }
     }).success(function(data, status) {
       $scope.trial = data;
-      _.map($scope.trial, i => {
+      _.map($scope.trial, function(i) {
         $scope.sumBroughtForward += i.brought_forward;
         $scope.sumDr += i.current_dr;
         $scope.sumCr += i.current_cr;

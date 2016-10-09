@@ -922,7 +922,7 @@ function($scope,$http,$stateParams){
       }
     }).success(function(data, status) {
       $scope.trial = data;
-      _.map($scope.trial, i => {
+      _.map($scope.trial, function(i) {
         $scope.sumBroughtForward += i.brought_forward;
         $scope.sumDr += i.current_dr;
         $scope.sumCr += i.current_cr;
@@ -1032,7 +1032,7 @@ function($scope,$http,$stateParams){
                   c == 'Liability'            ? /^2/     :
                   c == 'Shareholder'          ? /^3/     :
                                                 /^[2-3]/ ;
-    _.each(_.filter($scope.balancesheet, i => pattern.test(i.coa_id) ) , i => sum+=i.amount_total);
+    _.each(_.filter($scope.balancesheet, function(i){ pattern.test(i.coa_id) } ) , function(i){sum+=i.amount_total});
     return sum;
   }
 
@@ -1141,8 +1141,8 @@ function($scope,$http,$stateParams){
     var sum=0 ;
     var pattern = c == 'Profit' ? /^4/ : /^5/;
     var carry_forward=0;
-    _.each(_.filter($scope.profitloss, i => pattern.test(i.coa_id) ) ,
-     i => {
+    _.each(_.filter($scope.profitloss, function(i){ pattern.test(i.coa_id) } ) ,
+     function(i) {
        carry_forward = i.carry_forward;
        if(/^4/.test(i.coa_id) && i.carry_forward < 0) carry_forward = (i.carry_forward *-1);
        sum += carry_forward
