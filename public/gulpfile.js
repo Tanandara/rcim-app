@@ -37,6 +37,7 @@ gulp.task('concat', function() {
         "modules/dashboard/dashboard.client.module.js",
         "modules/dashboard/config/dashboard.client.routes.js",
         "modules/dashboard/controllers/dashboard.client.controller.js",
+        "modules/dashboard/controllers/homepage.client.controller.js",
         "modules/users/users.client.module.js",
         "modules/users/config/users.client.routes.js",
         "modules/users/controllers/users.client.controller.js",
@@ -53,17 +54,25 @@ gulp.task('concat', function() {
         .pipe(gulp.dest(__dirname));
 });
 
+// gulp.task("copy",function(){
+// console.log("copy index.html to ../views/index.ejs");
+// gulp.src("index.html")
+//   .pipe(rename('index.ejs'))
+//   .pipe(gulp.dest('../views'));
+// });
+
 gulp.task("copy",function(){
-  console.log("copy index.html to ../views/index.ejs");
-  gulp.src("index.html")
-    .pipe(rename('index.ejs'))
-    .pipe(gulp.dest('../views'));
-  });
+console.log("copy modules/dashboard/views/homepage.html to ../views/homepage.ejs");
+gulp.src("modules/dashboard/views/homepage.html")
+  .pipe(rename('homepage.ejs'))
+  .pipe(gulp.dest('../views'));
+});
 
 gulp.task('default', function() {
 	//livereload.listen();
 	gulp.watch(["modules/**/**.js","application.js","!./node_modules","!tanandara.js","myfunction.js","service.js"],["concat"]);
-  gulp.watch("./index.html",["copy"]);
+  //gulp.watch("./index.html",["copy"]);
+  gulp.watch("./modules/dashboard/views/homepage.html",["copy"]);
   //gulp.watch(["**/**.*","!./node_modules","!tanandara.js"],function(){
 	//	gulp.src(["index.html"]).pipe(livereload());
 	//});

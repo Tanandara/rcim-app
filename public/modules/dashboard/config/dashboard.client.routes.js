@@ -4,7 +4,11 @@ angular.module("dashboard").config([
     $stateProvider
     .state("dashboard",{
       url:"/dashboard",
-      templateUrl:"/modules/dashboard/views/dashboard.client.view.ejs"
-    });
+      templateUrl:"/modules/dashboard/views/dashboard.html"
+    })
+    .state("homepage",{
+      url:"/homepage",
+      templateUrl:"/modules/dashboard/views/homepage.html"
+    })
   }
 ]);

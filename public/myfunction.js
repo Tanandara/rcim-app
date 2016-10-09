@@ -68,7 +68,7 @@ function check_permission($http,$state,toStateObj){
   })
   .success(function(data){
     if(data.permission == "fail") {
-      $state.go("dashboard");
+      $state.go("homepage");
       //location.href = "#!/dashboard";
     }
   });

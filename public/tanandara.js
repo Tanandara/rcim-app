@@ -68,7 +68,7 @@ function check_permission($http,$state,toStateObj){
   })
   .success(function(data){
     if(data.permission == "fail") {
-      $state.go("dashboard");
+      $state.go("homepage");
       //location.href = "#!/dashboard";
     }
   });
@@ -1210,15 +1210,21 @@ angular.module("dashboard").config([
     $stateProvider
     .state("dashboard",{
       url:"/dashboard",
-      templateUrl:"/modules/dashboard/views/dashboard.client.view.ejs"
-    });
+      templateUrl:"/modules/dashboard/views/dashboard.html"
+    })
+    .state("homepage",{
+      url:"/homepage",
+      templateUrl:"/modules/dashboard/views/homepage.html"
+    })
   }
 ]);
 
 angular.module("dashboard").controller("dashboardController",
 ["$scope","$http",function($scope,$http){
-  $scope.yourName = "No Name";
-  //var users_json = $http.get("/testjson");
+}]);
+
+angular.module("dashboard").controller("homepageController",
+["$scope","$http",function($scope,$http){
 }]);
 
 angular.module("users",[]);
