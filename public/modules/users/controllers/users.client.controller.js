@@ -78,7 +78,7 @@ angular.module("users").controller("UserController",[
        modalInstance.result.then(function (id) {
          $http({
            method: 'post',
-           url: 'http://localhost:3000/users/delete',
+           url: 'https://rcim-app.herokuapp.com/users/delete',
            data: {
                    user_id : id
                  }
@@ -172,7 +172,7 @@ angular.module('users').controller('addModalCtrl', function ($scope, $uibModalIn
               fd.append('userid', data.id);
             $http({
               method:"post",
-              url:"http://localhost:3000/uploadAvatar",
+              url:"https://rcim-app.herokuapp.com/uploadAvatar",
               headers: {'Content-Type': undefined},
               transformRequest: angular.identity,
               data:fd
@@ -246,7 +246,7 @@ angular.module('users').controller('editModalCtrl', function ($scope, $uibModalI
             fd.append('userid', $scope.userid);
           $http({
             method:"post",
-            url:"http://localhost:3000/uploadAvatar",
+            url:"https://rcim-app.herokuapp.com/uploadAvatar",
             headers: {'Content-Type': undefined},
             transformRequest: angular.identity,
             data:fd

@@ -5,7 +5,8 @@
   <div class="panel panel-widget">
     <div class="row">
         <div class="col-md-12">
-          <a class="hvr-bounce-to-right pull-right" ng-click="addUserModal()">เพิ่มผู้ใช้งาน</a>
+          <div  ng-click="addUserModal()" class="pull-right btn btn-info" style="font-size:16px;margin:2px"><i class="fa fa-user-plus"></i>  เพิ่มผู้ใช้งาน</div>
+          <!--a class="hvr-bounce-to-right pull-right" ng-click="addUserModal()">เพิ่มผู้ใช้งาน</a-->
         </div>
     </div>
     <div class="tables">
@@ -56,7 +57,7 @@
             <td>{{user.campus_name}}</td>
             <td>
               <div class="btn-group">
-                <button type="button" class="btn btn-danger">เลือก</button>
+                <button type="button" class="btn btn-danger" ng-click="editUserModal(user)">เลือก</button>
                 <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
                   <span class="caret"></span>
                   <span class="sr-only">Toggle Dropdown</span>
