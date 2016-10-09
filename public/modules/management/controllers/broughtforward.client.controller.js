@@ -45,7 +45,7 @@ angular.module("management").controller("BroughtForwardController",
           $scope.account_id = data[data.length - 1].account_id + "";
           $scope.datejournal = moment(data[data.length - 1].journal_date).format("DD/MM/YYYY");
           $scope.ref_no = data[data.length - 1].ref_no;
-          data.every( (value,index) => {
+          data.every( function(value,index) {
             if(index == data.length - 1) return false;
             var transaction =   {
                                   "detail":value.detail,
