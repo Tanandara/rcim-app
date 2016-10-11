@@ -411,3 +411,17 @@
 		<!--//My javascript-->
 </body>
 </html>
+<script>
+setInterval(function(){
+	$.ajax({
+			type: "GET",
+			url: "/active",
+			success: function(result,status,xhr){
+
+	    },
+			error: function(xhr,status,error){
+					location.href = "/logout";
+			}
+	});
+},60000);
+</script>
