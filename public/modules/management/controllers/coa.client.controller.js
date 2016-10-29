@@ -58,7 +58,7 @@ angular.module("management").controller("CoaController",[
     $scope.getAllCoa = function(){
         $http({
           method: 'GET',
-          url: 'https://rcim-app.herokuapp.com/coa'
+          url: '/coa'
         }).success(function(data, status) {
           $scope.coa = data;
         });
@@ -90,7 +90,7 @@ angular.module('management').controller('addCoaModalCtrl', function ($scope, $ui
     if( $scope.checkData() ) return;
       $http({
         method: 'post',
-        url: 'https://rcim-app.herokuapp.com/coa/create',
+        url: '/coa/create',
         data: {
                 coa_id       : $scope.coa_id,
                 coa_detail   : $scope.coa_detail
@@ -132,7 +132,7 @@ angular.module('management').controller('editCoaModalCtrl', function ($scope, $u
     if( $scope.checkData() ) return;
       $http({
         method: 'post',
-        url: 'https://rcim-app.herokuapp.com/coa/update',
+        url: '/coa/update',
         data: {
                     coa_id       : $scope.coa_id,
                     coa_detail   : $scope.coa_detail
@@ -163,7 +163,7 @@ angular.module('management').controller('deleteCoaModalCtrl', function ($scope, 
   $scope.ok = function () {
       $http({
         method: 'post',
-        url: 'https://rcim-app.herokuapp.com/coa/delete',
+        url: '/coa/delete',
         data: {
                   coa_id  : $scope.coa_id
               }

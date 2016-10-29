@@ -10,11 +10,11 @@ function($scope,$http,$stateParams,$uibModal,$state){
       var data  = "";
       if($scope.ref_no) {
         console.log("journal/search");
-        url   = "https://rcim-app.herokuapp.com/journals/search";
+        url   = "/journals/search";
         data  = {"ref_no" : $scope.ref_no };
       }else{
         console.log("journal_detail");
-        url   = "https://rcim-app.herokuapp.com/journal_detail" ;
+        url   = "/journal_detail" ;
         data  = {"datestart" : dateStringFormat($scope.datestart) ,"dateend" : dateStringFormat($scope.dateend)};
       }
 

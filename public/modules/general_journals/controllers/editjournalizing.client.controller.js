@@ -9,7 +9,7 @@ $scope.searchText = function(typedthings){
   console.log("Do something like reload data with this: " + typedthings );
     $http({
         method: 'POST',
-        url:"https://rcim-app.herokuapp.com/coa",
+        url:"/coa",
         data:"search="+typedthings,
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function(data, status) {
@@ -37,7 +37,7 @@ $scope.getJournal = function(){
   DropdownList.GET("account_list").then(function(data){$scope.accountList = data});
   $http({
       method: 'POST',
-      url:"https://rcim-app.herokuapp.com/journals/search",
+      url:"/journals/search",
       data:"ref_no="+$stateParams.ref_no,
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       })
@@ -166,7 +166,7 @@ $scope.saveJournalizing = function(){
   );
   $http({
       method: 'POST',
-      url:"https://rcim-app.herokuapp.com/journals/update",
+      url:"/journals/update",
       data:journalsData,
       headers: {'Content-Type': 'application/json'}
       })

@@ -10,7 +10,7 @@ function($scope,$http,$stateParams){
     $scope.account_name = $stateParams.account_name;
     $http({
       method: 'POST',
-      url: 'https://rcim-app.herokuapp.com/profit_loss',
+      url: '/profit_loss',
       data: {
         "datestart" : dateStringFormat($scope.datestart) ,
         "dateend" : dateStringFormat($scope.dateend) ,
@@ -33,7 +33,7 @@ function($scope,$http,$stateParams){
     var sum=0 ;
     var pattern = c == 'Profit' ? /^4/ : /^5/;
     var carry_forward=0;
-    _.each(_.filter($scope.profitloss, function(i){ pattern.test(i.coa_id) } ) ,
+    _.each(_.filter($scope.profitloss, function(i){ return pattern.test(i.coa_id) } ) ,
      function(i) {
        carry_forward = i.carry_forward;
        if(/^4/.test(i.coa_id) && i.carry_forward < 0) carry_forward = (i.carry_forward *-1);

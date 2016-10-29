@@ -9,7 +9,7 @@ function($scope,$http,$stateParams){
     $scope.account_name = $stateParams.account_name;
     $http({
       method: 'POST',
-      url: 'https://rcim-app.herokuapp.com/balance_sheet',
+      url: '/balance_sheet',
       data: {
         "dateend" : dateStringFormat($scope.dateend) ,
         "account_id" : $scope.account_id
@@ -52,7 +52,7 @@ function($scope,$http,$stateParams){
                   c == 'Liability'            ? /^2/     :
                   c == 'Shareholder'          ? /^3/     :
                                                 /^[2-3]/ ;
-    _.each(_.filter($scope.balancesheet, function(i){ pattern.test(i.coa_id) } ) , function(i){sum+=i.amount_total});
+    _.each(_.filter($scope.balancesheet, function(i){ return pattern.test(i.coa_id) } ) , function(i){sum+=i.amount_total});
     return sum;
   }
 

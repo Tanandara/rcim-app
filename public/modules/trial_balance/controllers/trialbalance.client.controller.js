@@ -14,7 +14,7 @@ function($scope,$http,$stateParams){
     $scope.account_name = $stateParams.account_name;
     $http({
       method: 'POST',
-      url: 'https://rcim-app.herokuapp.com/trial_balance',
+      url: '/trial_balance',
       data: {
         "datestart" : dateStringFormat($scope.datestart) ,
         "dateend" : dateStringFormat($scope.dateend) ,

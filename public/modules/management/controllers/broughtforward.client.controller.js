@@ -9,7 +9,7 @@ angular.module("management").controller("BroughtForwardController",
     console.log("Do something like reload data with this: " + typedthings );
       $http({
           method: 'POST',
-          url:"https://rcim-app.herokuapp.com/coa",
+          url:"/coa",
           data:"search="+typedthings,
           headers: {'Content-Type': 'application/x-www-form-urlencoded'}
           }).success(function(data, status) {
@@ -36,7 +36,7 @@ angular.module("management").controller("BroughtForwardController",
   $scope.initFunction = function(){
     $http({
         method: 'get',
-        url:"https://rcim-app.herokuapp.com/journals/broughtforward",
+        url:"/journals/broughtforward",
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         })
         .success(function(data, status) {
@@ -144,7 +144,7 @@ angular.module("management").controller("BroughtForwardController",
     );
     $http({
         method: 'POST',
-        url:"https://rcim-app.herokuapp.com/journals/update",
+        url:"/journals/update",
         data:journalsData,
         headers: {'Content-Type': 'application/json'}
         })

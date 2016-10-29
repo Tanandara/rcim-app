@@ -58,7 +58,7 @@ angular.module("management").controller("AccountController",[
     $scope.GetAllaccounts = function(){
         $http({
           method: 'GET',
-          url: 'https://rcim-app.herokuapp.com/account_list'
+          url: '/account_list'
         }).success(function(data, status) {
           $scope.accounts = data;
         });
@@ -91,7 +91,7 @@ angular.module("management").controller("AccountController",[
       if( $scope.checkData() ) return;
         $http({
           method: 'post',
-          url: 'https://rcim-app.herokuapp.com/account/create',
+          url: '/account/create',
           data: {
                   account_id       : $scope.account_id,
                   account_name   : $scope.account_name
@@ -132,7 +132,7 @@ angular.module("management").controller("AccountController",[
       if( $scope.checkData() ) return;
         $http({
           method: 'post',
-          url: 'https://rcim-app.herokuapp.com/account/update',
+          url: '/account/update',
           data: {
                       account_id       : $scope.account_id,
                       account_name   : $scope.account_name
@@ -163,7 +163,7 @@ angular.module("management").controller("AccountController",[
     $scope.ok = function () {
         $http({
           method: 'post',
-          url: 'https://rcim-app.herokuapp.com/account/delete',
+          url: '/account/delete',
           data: {
                     account_id  : $scope.account_id
                 }

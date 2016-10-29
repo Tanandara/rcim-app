@@ -21,7 +21,7 @@ $scope.searchText = function(typedthings){
     //     });
     $http({
         method: 'POST',
-        url:"https://rcim-app.herokuapp.com/coa",
+        url:"/coa",
         data:"search="+typedthings,
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function(data, status) {
@@ -116,7 +116,7 @@ $scope.saveJournalizing = function(){
   );
   $http({
       method: 'POST',
-      url:"https://rcim-app.herokuapp.com/journals/add",
+      url:"/journals/add",
       data:journalsData,
       headers: {'Content-Type': 'application/json'}
       })

@@ -5,7 +5,7 @@ angular.module("service")
       return $q(function(resolve, reject) {
                 $http({
                  method: 'GET',
-                 url: "https://rcim-app.herokuapp.com/" + url
+                 url: "/" + url
                }).success(function(data, status) {
                  resolve(data);
                });

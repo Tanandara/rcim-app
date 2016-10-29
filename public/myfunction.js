@@ -48,7 +48,7 @@ function printReport() {
 function check_permission($http,$state,toStateObj){
   $http({
     method:"post",
-    url:"https://rcim-app.herokuapp.com/check_permission",
+    url:"/check_permission",
     data: toStateObj
   })
   .success(function(data){

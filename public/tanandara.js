@@ -48,7 +48,7 @@ function printReport() {
 function check_permission($http,$state,toStateObj){
   $http({
     method:"post",
-    url:"https://rcim-app.herokuapp.com/check_permission",
+    url:"/check_permission",
     data: toStateObj
   })
   .success(function(data){
@@ -133,7 +133,7 @@ $scope.searchText = function(typedthings){
     //     });
     $http({
         method: 'POST',
-        url:"https://rcim-app.herokuapp.com/coa",
+        url:"/coa",
         data:"search="+typedthings,
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function(data, status) {
@@ -228,7 +228,7 @@ $scope.saveJournalizing = function(){
   );
   $http({
       method: 'POST',
-      url:"https://rcim-app.herokuapp.com/journals/add",
+      url:"/journals/add",
       data:journalsData,
       headers: {'Content-Type': 'application/json'}
       })
@@ -316,11 +316,11 @@ function($scope,$http,$stateParams,$uibModal,$state){
       var data  = "";
       if($scope.ref_no) {
         console.log("journal/search");
-        url   = "https://rcim-app.herokuapp.com/journals/search";
+        url   = "/journals/search";
         data  = {"ref_no" : $scope.ref_no };
       }else{
         console.log("journal_detail");
-        url   = "https://rcim-app.herokuapp.com/journal_detail" ;
+        url   = "/journal_detail" ;
         data  = {"datestart" : dateStringFormat($scope.datestart) ,"dateend" : dateStringFormat($scope.dateend)};
       }
 
@@ -378,7 +378,7 @@ $scope.searchText = function(typedthings){
   console.log("Do something like reload data with this: " + typedthings );
     $http({
         method: 'POST',
-        url:"https://rcim-app.herokuapp.com/coa",
+        url:"/coa",
         data:"search="+typedthings,
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function(data, status) {
@@ -406,7 +406,7 @@ $scope.getJournal = function(){
   DropdownList.GET("account_list").then(function(data){$scope.accountList = data});
   $http({
       method: 'POST',
-      url:"https://rcim-app.herokuapp.com/journals/search",
+      url:"/journals/search",
       data:"ref_no="+$stateParams.ref_no,
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       })
@@ -535,7 +535,7 @@ $scope.saveJournalizing = function(){
   );
   $http({
       method: 'POST',
-      url:"https://rcim-app.herokuapp.com/journals/update",
+      url:"/journals/update",
       data:journalsData,
       headers: {'Content-Type': 'application/json'}
       })
@@ -690,7 +690,7 @@ function($scope,$http,$state,DropdownList){
     console.log("Do something like reload data with this: " + typedthings );
       $http({
           method: 'POST',
-          url:"https://rcim-app.herokuapp.com/coa",
+          url:"/coa",
           data:"search="+typedthings,
           headers: {'Content-Type': 'application/x-www-form-urlencoded'}
           }).success(function(data, status) {
@@ -730,7 +730,7 @@ function($scope,$http,$stateParams){
     $scope.account_name = $stateParams.account_name;
     $http({
       method: 'POST',
-      url: 'https://rcim-app.herokuapp.com/ledger/brought_forward',
+      url: '/ledger/brought_forward',
       data: {
               "datestart" : dateStringFormat($scope.datestart) ,
               "coa_id" : $scope.coa_id,
@@ -743,7 +743,7 @@ function($scope,$http,$stateParams){
 
     $http({
       method: 'POST',
-      url: 'https://rcim-app.herokuapp.com/ledger',
+      url: '/ledger',
       data: {
               "datestart" : dateStringFormat($scope.datestart) ,
               "dateend" : dateStringFormat($scope.dateend) ,
@@ -914,7 +914,7 @@ function($scope,$http,$stateParams){
     $scope.account_name = $stateParams.account_name;
     $http({
       method: 'POST',
-      url: 'https://rcim-app.herokuapp.com/trial_balance',
+      url: '/trial_balance',
       data: {
         "datestart" : dateStringFormat($scope.datestart) ,
         "dateend" : dateStringFormat($scope.dateend) ,
@@ -989,7 +989,7 @@ function($scope,$http,$stateParams){
     $scope.account_name = $stateParams.account_name;
     $http({
       method: 'POST',
-      url: 'https://rcim-app.herokuapp.com/balance_sheet',
+      url: '/balance_sheet',
       data: {
         "dateend" : dateStringFormat($scope.dateend) ,
         "account_id" : $scope.account_id
@@ -1032,7 +1032,7 @@ function($scope,$http,$stateParams){
                   c == 'Liability'            ? /^2/     :
                   c == 'Shareholder'          ? /^3/     :
                                                 /^[2-3]/ ;
-    _.each(_.filter($scope.balancesheet, function(i){ pattern.test(i.coa_id) } ) , function(i){sum+=i.amount_total});
+    _.each(_.filter($scope.balancesheet, function(i){ return pattern.test(i.coa_id) } ) , function(i){sum+=i.amount_total});
     return sum;
   }
 
@@ -1118,7 +1118,7 @@ function($scope,$http,$stateParams){
     $scope.account_name = $stateParams.account_name;
     $http({
       method: 'POST',
-      url: 'https://rcim-app.herokuapp.com/profit_loss',
+      url: '/profit_loss',
       data: {
         "datestart" : dateStringFormat($scope.datestart) ,
         "dateend" : dateStringFormat($scope.dateend) ,
@@ -1141,7 +1141,7 @@ function($scope,$http,$stateParams){
     var sum=0 ;
     var pattern = c == 'Profit' ? /^4/ : /^5/;
     var carry_forward=0;
-    _.each(_.filter($scope.profitloss, function(i){ pattern.test(i.coa_id) } ) ,
+    _.each(_.filter($scope.profitloss, function(i){ return pattern.test(i.coa_id) } ) ,
      function(i) {
        carry_forward = i.carry_forward;
        if(/^4/.test(i.coa_id) && i.carry_forward < 0) carry_forward = (i.carry_forward *-1);
@@ -1253,7 +1253,7 @@ angular.module("users").controller("UserController",[
     $scope.getAllUsers = function(){
         $http({
           method: 'GET',
-          url: 'https://rcim-app.herokuapp.com/users'
+          url: '/users'
         }).success(function(data, status) {
           $scope.users = data;
         });
@@ -1317,7 +1317,7 @@ angular.module("users").controller("UserController",[
        modalInstance.result.then(function (id) {
          $http({
            method: 'post',
-           url: 'https://rcim-app.herokuapp.com/users/delete',
+           url: '/users/delete',
            data: {
                    user_id : id
                  }
@@ -1388,7 +1388,7 @@ angular.module('users').controller('addModalCtrl', function ($scope, $uibModalIn
     if( $scope.checkData() ) return;
       $http({
         method: 'post',
-        url: 'https://rcim-app.herokuapp.com/users/create',
+        url: '/users/create',
         data: {
                 user_id   : $scope.userid,
                 user_name : $scope.username,
@@ -1411,7 +1411,7 @@ angular.module('users').controller('addModalCtrl', function ($scope, $uibModalIn
               fd.append('userid', data.id);
             $http({
               method:"post",
-              url:"https://rcim-app.herokuapp.com/uploadAvatar",
+              url:"/uploadAvatar",
               headers: {'Content-Type': undefined},
               transformRequest: angular.identity,
               data:fd
@@ -1465,7 +1465,7 @@ angular.module('users').controller('editModalCtrl', function ($scope, $uibModalI
     if( $scope.checkData() ) return;
       $http({
         method: 'post',
-        url: 'https://rcim-app.herokuapp.com/users/update',
+        url: '/users/update',
         data: {
                 user_id       : $scope.userid,
                 user_name     : $scope.username,
@@ -1485,7 +1485,7 @@ angular.module('users').controller('editModalCtrl', function ($scope, $uibModalI
             fd.append('userid', $scope.userid);
           $http({
             method:"post",
-            url:"https://rcim-app.herokuapp.com/uploadAvatar",
+            url:"/uploadAvatar",
             headers: {'Content-Type': undefined},
             transformRequest: angular.identity,
             data:fd
@@ -1617,7 +1617,7 @@ angular.module("management").controller("CoaController",[
     $scope.getAllCoa = function(){
         $http({
           method: 'GET',
-          url: 'https://rcim-app.herokuapp.com/coa'
+          url: '/coa'
         }).success(function(data, status) {
           $scope.coa = data;
         });
@@ -1649,7 +1649,7 @@ angular.module('management').controller('addCoaModalCtrl', function ($scope, $ui
     if( $scope.checkData() ) return;
       $http({
         method: 'post',
-        url: 'https://rcim-app.herokuapp.com/coa/create',
+        url: '/coa/create',
         data: {
                 coa_id       : $scope.coa_id,
                 coa_detail   : $scope.coa_detail
@@ -1691,7 +1691,7 @@ angular.module('management').controller('editCoaModalCtrl', function ($scope, $u
     if( $scope.checkData() ) return;
       $http({
         method: 'post',
-        url: 'https://rcim-app.herokuapp.com/coa/update',
+        url: '/coa/update',
         data: {
                     coa_id       : $scope.coa_id,
                     coa_detail   : $scope.coa_detail
@@ -1722,7 +1722,7 @@ angular.module('management').controller('deleteCoaModalCtrl', function ($scope, 
   $scope.ok = function () {
       $http({
         method: 'post',
-        url: 'https://rcim-app.herokuapp.com/coa/delete',
+        url: '/coa/delete',
         data: {
                   coa_id  : $scope.coa_id
               }
@@ -1799,7 +1799,7 @@ angular.module("management").controller("AccountController",[
     $scope.GetAllaccounts = function(){
         $http({
           method: 'GET',
-          url: 'https://rcim-app.herokuapp.com/account_list'
+          url: '/account_list'
         }).success(function(data, status) {
           $scope.accounts = data;
         });
@@ -1832,7 +1832,7 @@ angular.module("management").controller("AccountController",[
       if( $scope.checkData() ) return;
         $http({
           method: 'post',
-          url: 'https://rcim-app.herokuapp.com/account/create',
+          url: '/account/create',
           data: {
                   account_id       : $scope.account_id,
                   account_name   : $scope.account_name
@@ -1873,7 +1873,7 @@ angular.module("management").controller("AccountController",[
       if( $scope.checkData() ) return;
         $http({
           method: 'post',
-          url: 'https://rcim-app.herokuapp.com/account/update',
+          url: '/account/update',
           data: {
                       account_id       : $scope.account_id,
                       account_name   : $scope.account_name
@@ -1904,7 +1904,7 @@ angular.module("management").controller("AccountController",[
     $scope.ok = function () {
         $http({
           method: 'post',
-          url: 'https://rcim-app.herokuapp.com/account/delete',
+          url: '/account/delete',
           data: {
                     account_id  : $scope.account_id
                 }
@@ -1932,7 +1932,7 @@ angular.module("management").controller("BroughtForwardController",
     console.log("Do something like reload data with this: " + typedthings );
       $http({
           method: 'POST',
-          url:"https://rcim-app.herokuapp.com/coa",
+          url:"/coa",
           data:"search="+typedthings,
           headers: {'Content-Type': 'application/x-www-form-urlencoded'}
           }).success(function(data, status) {
@@ -1959,7 +1959,7 @@ angular.module("management").controller("BroughtForwardController",
   $scope.initFunction = function(){
     $http({
         method: 'get',
-        url:"https://rcim-app.herokuapp.com/journals/broughtforward",
+        url:"/journals/broughtforward",
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         })
         .success(function(data, status) {
@@ -2067,7 +2067,7 @@ angular.module("management").controller("BroughtForwardController",
     );
     $http({
         method: 'POST',
-        url:"https://rcim-app.herokuapp.com/journals/update",
+        url:"/journals/update",
         data:journalsData,
         headers: {'Content-Type': 'application/json'}
         })
@@ -2126,7 +2126,7 @@ angular.module("service")
       return $q(function(resolve, reject) {
                 $http({
                  method: 'GET',
-                 url: "https://rcim-app.herokuapp.com/" + url
+                 url: "/" + url
                }).success(function(data, status) {
                  resolve(data);
                });

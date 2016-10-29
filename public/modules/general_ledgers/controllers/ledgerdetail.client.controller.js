@@ -12,7 +12,7 @@ function($scope,$http,$stateParams){
     $scope.account_name = $stateParams.account_name;
     $http({
       method: 'POST',
-      url: 'https://rcim-app.herokuapp.com/ledger/brought_forward',
+      url: '/ledger/brought_forward',
       data: {
               "datestart" : dateStringFormat($scope.datestart) ,
               "coa_id" : $scope.coa_id,
@@ -25,7 +25,7 @@ function($scope,$http,$stateParams){
 
     $http({
       method: 'POST',
-      url: 'https://rcim-app.herokuapp.com/ledger',
+      url: '/ledger',
       data: {
               "datestart" : dateStringFormat($scope.datestart) ,
               "dateend" : dateStringFormat($scope.dateend) ,
