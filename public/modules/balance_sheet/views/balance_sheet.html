@@ -117,9 +117,9 @@
             </tr>
             <tr ng-repeat="i in balancesheet | filter:currentLiabilityFilter">
               <td>{{i.coa_detail}}</td>
-              <td>{{i.amount_total}}</td>
+              <td>{{i.amount_total < 0 && i.amount_total *-1 || i.amount_total >= 0 && i.amount_total}}</td>
             </tr>
-            <tr><td>&nbsp;&nbsp;รวมหนี้หมุนเวียน</td><td>{{sumBalance('currentLiability')}}</td></tr>
+            <tr><td>&nbsp;&nbsp;รวมหนี้หมุนเวียน</td><td>{{sumBalance('currentLiability') * -1 }}</td></tr>
           </table>
 
           <table class="table">
@@ -128,15 +128,15 @@
             </tr>
             <tr ng-repeat="i in balancesheet | filter:noncurrentLiabilityFilter">
               <td>{{i.coa_detail}}</td>
-              <td>{{i.amount_total}}</td>
+              <td>{{i.amount_total < 0 && i.amount_total *-1 || i.amount_total >= 0 && i.amount_total }}</td>
             </tr>
-            <tr><td>&nbsp;&nbsp;รวมหนี้ทรัพย์ไม่หมุนเวียน</td><td>{{sumBalance('noncurrentLiability')}}</td></tr>
+            <tr><td>&nbsp;&nbsp;รวมหนี้ทรัพย์ไม่หมุนเวียน</td><td>{{sumBalance('noncurrentLiability') * -1}}</td></tr>
           </table>
 
           <table class="table">
             <tr>
               <th>รวมหนี้สิน</th>
-              <th>{{sumBalance('Liability')}}</th>
+              <th>{{sumBalance('Liability') * -1}}</th>
             </tr>
           </table>
 
@@ -146,15 +146,15 @@
             </tr>
             <tr ng-repeat="i in balancesheet | filter:shareholderFilter">
               <td>{{i.coa_detail}}</td>
-              <td>{{i.amount_total}}</td>
+              <td>{{i.amount_total < 0 && i.amount_total *-1 || i.amount_total >= 0 && i.amount_total}}</td>
             </tr>
-            <tr><td>&nbsp;&nbsp;รวมส่วนของผู้ถือหุ้น</td><td>{{sumBalance('Shareholder')}}</td></tr>
+            <tr><td>&nbsp;&nbsp;รวมส่วนของผู้ถือหุ้น</td><td>{{sumBalance('Shareholder') * -1}}</td></tr>
           </table>
 
           <table class="table">
             <tr>
               <th>รวมหนี้สินและส่วนของผู้ถือหุ้น</th>
-              <th>{{sumBalance('LiabilityAndShareholder')}}</th>
+              <th>{{sumBalance('LiabilityAndShareholder') * -1}}</th>
             </tr>
           </table>
 
