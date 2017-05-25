@@ -6,39 +6,83 @@
     <div class="block-page">
       <h3>เงื่อนไขในการแสดงงบกำไรขาดทุน </h3>
       <hr>
-      <div class="row">
-        <style>
-        .searchPanel select,.searchPanel input{
-          margin:10px;
-        }
-        </style>
-        <div class="col-md-12 searchPanel">
-          <div class="col-md-12">
-            ชื่อบัญชี :
-            <select name="account_id" ng-model="account_id" class="form-control" ng-change="onDropdownChange()">
-              <option value="" disabled selected>กรุณาเลือกชื่อบัญชี</option>
-              <option value="{{i.account_id}}" ng-repeat="i in accountList">{{i.account_name}}</option>
-              <option value="0">บัญชีทั้งหมด</option>
-            </select>
-          </div>
-          <div class="col-md-6">
-              วันที่เริ่ม :
-              <input type="text" class="form-control" id="datestart"  placeholder="dd/mm/yyyy" data-provide="datepicker" data-date-language="th" ng-model="datestart" />
-          </div>
-          <div class="col-md-6">
-              วันที่สิ้นสุด :
-              <input type="text" class="form-control" id="dateend"   placeholder="dd/mm/yyyy" data-provide="datepicker" data-date-language="th" ng-model="dateend" />
-          </div>
-          <div class="col-md-12">
-            <input type="button" ng-disabled="checkCondition()" ng-click="viewProfitLoss()" class="btn btn-primary form-control" value="แสดงรายงานงบกำไรขาดทุน">
-          </div>
 
+
+
+
+
+      <div class="bs-example bs-example-tabs searchPanel" role="tabpanel" data-example-id="togglable-tabs">
+        <ul id="myTab" class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active"><a href="#!/searchprofitloss#report" id="report-tab" role="tab" data-toggle="tab" aria-controls="report" aria-expanded="true">รูปแบบรายงาน</a></li>
+          <li role="presentation" class=""><a href="#!/searchprofitloss#statement" role="tab" id="statement-tab" data-toggle="tab" aria-controls="statement" aria-expanded="false">รูปแบบงบแสดงฐานะทางการเงิน</a></li>
+        </ul>
+        <div id="myTabContent" class="tab-content" style="display: inline-block;width: 100%;">
+          <div role=""  class="tab-pane fade active in" id="report" aria-labelledby="report-tab">
+
+
+            <div class="col-md-12">
+              <div class="col-md-12">
+                ชื่อบัญชี :
+                <select name="account_id" ng-model="account_id" class="form-control" ng-change="onDropdownChange()">
+                  <option value="" disabled selected>กรุณาเลือกชื่อบัญชี</option>
+                  <option value="{{i.account_id}}" ng-repeat="i in accountList">{{i.account_name}}</option>
+                  <option value="0">บัญชีทั้งหมด</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                  วันที่เริ่ม :
+                  <input type="text" class="form-control" id="datestart"  placeholder="dd/mm/yyyy" data-provide="datepicker" data-date-language="th" ng-model="datestart" />
+              </div>
+              <div class="col-md-6">
+                  วันที่สิ้นสุด :
+                  <input type="text" class="form-control" id="dateend"   placeholder="dd/mm/yyyy" data-provide="datepicker" data-date-language="th" ng-model="dateend" />
+              </div>
+              <div class="col-md-12">
+                <input type="button" ng-disabled="checkCondition()" ng-click="viewProfitLoss()" class="btn btn-primary form-control" value="แสดงรายงานงบกำไรขาดทุน">
+              </div>
+            </div>
+
+
+          </div>
+          <div role=""  class="tab-pane fade" id="statement" aria-labelledby="report-tab">
+            <div class="col-md-12">
+              <div class="col-md-12">
+                ชื่อบัญชี :
+                <select ng-model="account_id" class="form-control" ng-change="onDropdownChange()">
+                  <option value="" disabled selected>กรุณาเลือกชื่อบัญชี</option>
+                  <option value="{{i.account_id}}" ng-repeat="i in accountList">{{i.account_name}}</option>
+                  <option value="0">บัญชีทั้งหมด</option>
+                </select>
+              </div>
+              <div class="col-md-12">
+                  ปี :
+                  <select ng-model="year" class="form-control" ng-change="onDropdownChange()">
+                    <option value="" disabled selected>กรุณาเลือกปี</option>
+                    <option value="{{year}}" ng-repeat="year in years">{{year}}</option>
+                  </select>
+              </div>
+              <div class="col-md-12">
+                <input type="button" ng-disabled="checkCondition2()" ng-click="viewProfitLoss2()" class="btn btn-primary form-control" value="แสดงรายงานงบกำไรขาดทุน">
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
+
+
+
+
+
 
     </div>
   </div>
 </div>
+<style>
+.searchPanel select,.searchPanel input{
+  margin:10px;
+}
+</style>
 <script type="text/javascript">
 
 $(function () {

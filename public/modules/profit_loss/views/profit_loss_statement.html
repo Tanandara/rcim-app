@@ -1,0 +1,126 @@
+<div data-ng-controller="ProfitLossController" data-ng-init="initFunction()" >
+  <div class="progressbar-heading grids-heading">
+    <h2>รายงานงบกำไรขาดทุน(แบบแสดงฐานะการเงิน) (Profit Loss)</h2>
+  </div>
+  <div class="panel panel-widget" id="printThis">
+    <div class="block-page text-center">
+      <style>
+      .block-page h4{
+        margin:10px !important;
+      }
+      .value-font{
+        color:red !important;
+        font-weight: bold !important;
+      }
+      </style>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="pull-left"><h4>ชื่อ : <span class="value-font">{{account_name}}</span></h4></div>
+          <div class="pull-right btn btn-info" id="print" onclick="beforePrint()"><i class="fa fa-print"></i>  พิมพ์รายงาน</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <h4>วิทยาลัยนวัตกรรมการจัดการ มทร.รัตนโกสินทร์ </h4>
+          <h4>งบกำไรขาดทุน</h4>
+          <h4>แบบแสดงฐานะทางการเงิน</h4>
+          <hr>
+        </div>
+        <div class="col-md-12" id="profitlossPrint" style="display:none">
+          <table class="table">
+            <tr><td id="td1" class="profitloss" style="width:100%"></td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="row" id="profitloss">
+        <style>
+          .profitloss h4{
+            font-weight: bold !important;
+          }
+          .profitloss table tr td:nth-child(1){
+            width: 70%;
+            text-indent: 5% !important;
+            text-align: left;
+          }
+          .profitloss table tr th:nth-child(n+2),.profitloss table tr td:nth-child(n+2){
+            text-align: right;
+          }
+          .profitloss table tr:last-child td:nth-child(1){
+            text-indent: 15% !important;
+          }
+          .profitloss table tr:last-child td:nth-child(n+2){
+            text-decoration: underline !important;
+          }
+          @media print {
+            .profitloss table tr td:nth-child(1){
+              width:80% !important;
+            }
+          }
+        </style>
+        <div class="col-md-12 profitloss">
+          <table class="table" id="profitTable">
+              <tr>
+                <th>
+                  <h4>รายได้ :</h4>
+                </th>
+                <th>
+                  <h4>ปี {{year}}</h4>
+                </th>
+                <th>
+                  <h4>ปี {{year-1}}</h4>
+                </th>
+              </tr>
+              <tr ng-repeat="i in profitloss | filter:profitFilter">
+                <td>{{i.coa_detail}}</td>
+                <td>{{i.carry_forward *-1 }}</td>
+                <td>{{i.prev_carry_forward *-1 }}</td>
+              </tr>
+              <tr>
+                <td>รวมรายได้</td>
+                <td>{{sumProfitLoss("Profit")}}</td>
+                <td>{{sumPrevProfitLoss("Profit")}}</td>
+              </tr>
+          </table>
+        </div>
+        <div class="col-md-12 profitloss">
+          <table class="table" id="lossTable">
+              <tr>
+                <th colspan="2">
+                  <h4>ค่าใช้จ่าย :</h4>
+                </th>
+              </tr>
+              <tr ng-repeat="i in profitloss | filter:lossFilter">
+                <td>{{i.coa_detail}}</td>
+                <td>{{i.carry_forward}}</td>
+                <td>{{i.prev_carry_forward}}</td>
+              </tr>
+              <tr>
+                <td>รวมค่าใช้จ่าย</td>
+                <td>{{sumProfitLoss("Loss")}}</td>
+                <td>{{sumPrevProfitLoss("Loss")}}</td>
+              </tr>
+          </table>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+
+<script>
+var initClone = true;
+function beforePrint(){
+  if(initClone){
+    $("#td1").append($("#profitTable").clone());
+    $("#td1").append($("#lossTable").clone());
+    initClone = false;
+  }
+  $("#profitlossPrint").show();
+  $("#profitloss").hide();
+  printReport();
+  $("#profitlossPrint").hide();
+  $("#profitloss").show();
+}
+</script>
